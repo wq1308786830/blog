@@ -1,5 +1,3 @@
-import {observer} from "mobx-react-lite";
-
 function Clock(props) {
   return (
     <div className={props.light ? 'light' : ''}>
@@ -24,4 +22,4 @@ const format = t => `${pad(t.getUTCHours())}:${pad(t.getUTCMinutes())}:${pad(t.g
 
 const pad = n => (n < 10 ? `0${n}` : n);
 
-export default observer(Clock);
+export default Clock;

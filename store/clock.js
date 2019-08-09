@@ -1,32 +1,43 @@
-import { action, decorate, observable } from 'mobx';
-import { useStaticRendering } from 'mobx-react-lite';
-import { createContext } from 'react';
+import { action } from 'mobx';
+import { useObservable, useStaticRendering } from 'mobx-react-lite';
+import { createContext, useCallback } from 'react';
 
 const isServer = typeof window === 'undefined';
 useStaticRendering(isServer);
 
-class Clock {
-  timerInterval = null;
-  clock = { lastUpdate: Date.now(), light: true };
+let StoreContext = createContext();
+let start;
+let stop;
+let store;
 
-  start = () => {
-    this.timerInterval = setInterval(() => {
-      this.clock.lastUpdate = Date.now();
-      this.clock.light = true;
-    }, 1000);
-  };
-
-  stop = () => {
-    if (this.timerInterval) {
-      clearInterval(this.timerInterval);
-    }
+function initializeData(initialData = store || {}) {
+  const { lastUpdate = Date.now(), light } = initialData;
+  return {
+    lastUpdate,
+    light: Boolean(light)
   };
 }
 
-decorate(Clock, {
-  start: action.bound,
-  stop: action.bound,
-  clock: observable
-});
+function InjectStoreContext({ children, initialData }) {
+  let timerInterval = null;
+  store = useObservable(initializeData(initialData));
 
-export default createContext(new Clock());
+  start = useCallback(
+    action(() => {
+      timerInterval = setInterval(() => {
+        store.lastUpdate = Date.now();
+        store.light = true;
+      }, 1000);
+    })
+  );
+
+  stop = () => {
+    if (timerInterval) {
+      clearInterval(timerInterval);
+    }
+  };
+
+  return <StoreContext.Provider value={store}>{children}</StoreContext.Provider>;
+}
+
+export { InjectStoreContext, StoreContext, initializeData, start, stop, store };

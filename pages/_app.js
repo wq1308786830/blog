@@ -1,25 +1,30 @@
 import App, { Container } from 'next/app';
 import React from 'react';
+import { InjectStoreContext, initializeData } from '../store/clock';
 
 class MyMobxApp extends App {
   static async getInitialProps({ Component, ctx }) {
     let pageProps = {};
+    const initialStoreData = initializeData();
 
     // Provide the store to getInitialProps of pages
     if (Component.getInitialProps) {
-      pageProps = await Component.getInitialProps({ ...ctx });
+      pageProps = await Component.getInitialProps({ ...ctx, initialStoreData });
     }
 
     return {
-      pageProps
+      pageProps,
+      initialStoreData
     };
   }
 
   render() {
-    const { Component, pageProps } = this.props;
+    const { Component, pageProps, initialStoreData } = this.props;
     return (
       <Container>
-        <Component {...pageProps} />
+        <InjectStoreContext initialData={initialStoreData}>
+          <Component {...pageProps} />
+        </InjectStoreContext>
       </Container>
     );
   }

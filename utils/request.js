@@ -1,14 +1,21 @@
-import axios from 'axios';
-import config from '../config';
+import fetch from 'isomorphic-unfetch';
 import tools from './tools';
+import config from '../config';
 
-const { prefix } = config;
-const TIMEOUT = 3 * 60 * 1000; // 请求超时3min
-
-axios.defaults.baseURL = prefix;
-axios.defaults.timeout = TIMEOUT;
-axios.defaults.headers.common.Authorization = '111';
-axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded;charset=UTF-8';
+function checkStatus(response) {
+  if (response.status < 200 || response.status >= 300) {
+    const error = new Error(response.statusText);
+    error.response = response;
+    error.errMessage = '网络错误~';
+    throw error;
+  } else if (response.data && response.data.message === 'GENERAL') {
+    const error = new Error(response.statusText);
+    error.response = response;
+    error.errMessage = '哎呀，系统开小差啦！';
+    throw error;
+  }
+  return response;
+}
 
 /**
  * 请求后端返回Promise
@@ -19,18 +26,16 @@ axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded
  * @return {Promise}          返回数据，Promise或者undefined
  */
 async function request(url, options, isShowLoading) {
+  const { prefix } = config;
+
   if (isShowLoading) {
     tools.loading(true);
   }
-
-  let response;
-  const option = {
-    url,
-    method: options.method,
-    data: options.body
-  };
+  let res;
   try {
-    response = await axios(option);
+    const response = await fetch(prefix + url, options);
+    checkStatus(response);
+    res = await response.json();
   } catch (e) {
     tools.loading(false, undefined, () => {
       if (e.errMessage) {
@@ -44,45 +49,84 @@ async function request(url, options, isShowLoading) {
   if (isShowLoading) {
     tools.loading(false);
   }
-  return response;
+  return res;
 }
 
 /**
- * 请求发送前的全局处理
+ * 调用非login接口且失败原因是`token失效`的需要重刷token
+ * @param url 请求url
+ * @param result 后端返回字段`result`
+ * @param message 后端返回字段`message`
+ * @returns {boolean}
  */
-axios.interceptors.request.use(
-  conf => {
-    return conf;
-  },
-  error => {
-    return Promise.reject(error);
-  }
-);
+const isNeedFreshCode = (url, result, message) => {
+  return !/login/.test(url) && (result === 'fail' && message === 'token失效');
+};
 
 /**
- * 请求返回的全局处理
+ * 用户登录
+ * @returns {boolean} 是否登陆成功
  */
-axios.interceptors.response.use(
-  response => {
-    if (response.status >= 200 && response.status < 300) {
-      return Promise.resolve(response.data);
+function login() {
+  try {
+    db.Set('token', '1111111');
+    return true;
+  } catch (e) {
+    return false;
+  }
+}
+
+/**
+ * 每个请求都会携带登录的token
+ * @param url 请求url
+ * @param options fetch options
+ * @param showLoading 是否展示loading
+ * @returns {Promise<void>} 请求返回结果
+ */
+const requestWithLogin = async (url, options, showLoading) => {
+  const token = db.Get('token');
+
+  let isLogin = false;
+  if (token) {
+    isLogin = true;
+  } else {
+    isLogin = await login();
+  }
+
+  const fetchOptions = {
+    ...options,
+    headers: {
+      Authorization: token,
+      Accept: 'application/json',
+      'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
     }
-    return Promise.reject(response);
-  },
-  error => {
-    return Promise.reject(error);
+  };
+
+  let resp;
+  if (isLogin) {
+    resp = await request(url, fetchOptions, showLoading);
+    if (resp && isNeedFreshCode(url, resp.result, resp.message)) {
+      isLogin = await login();
+      if (isLogin) {
+        resp = await request(url, fetchOptions, showLoading);
+      } else {
+        tools.toast('登录失败');
+      }
+    }
   }
-);
+
+  return resp;
+};
 
 /**
- * GET请求，注意请求参数直接缀到url地址
+ * fetch下method=GET，options配置必须没有body
  * @param url 请求的url
  * @param {Object} params 请求参数
  * @param showLoading 是否展示loading
  * @returns {Promise<void>} 返回结果
  * @constructor
  */
-function GET(url, params = null, showLoading = false) {
+const GET = (url, params = null, showLoading = false) => {
   let searchParams = tools.parseObj2SearchParams(params);
   searchParams = searchParams === '' ? searchParams : `?${searchParams}`;
 
@@ -90,18 +134,10 @@ function GET(url, params = null, showLoading = false) {
     method: 'GET'
   };
 
-  return request(`${url}${searchParams}`, options, showLoading);
-}
+  return requestWithLogin(`${url}${searchParams}`, options, showLoading);
+};
 
-/**
- * POST请求
- * @param url 请求的url
- * @param {Object} params 请求参数
- * @param showLoading 是否展示loading
- * @returns {Promise<void>} 返回结果
- * @constructor
- */
-function POST(url, params = null, showLoading = false) {
+const POST = (url, params = null, showLoading = false) => {
   const searchParams = tools.parseObj2SearchParams(params);
 
   const options = {
@@ -109,18 +145,10 @@ function POST(url, params = null, showLoading = false) {
     body: searchParams
   };
 
-  return request(url, options, showLoading);
-}
+  return requestWithLogin(url, options, showLoading);
+};
 
-/**
- * PUT请求
- * @param url 请求的url
- * @param {Object} params 请求参数
- * @param showLoading 是否展示loading
- * @returns {Promise<void>} 返回结果
- * @constructor
- */
-function PUT(url, params = null, showLoading = false) {
+const PUT = (url, params = null, showLoading = false) => {
   const searchParams = tools.parseObj2SearchParams(params);
 
   const options = {
@@ -128,26 +156,18 @@ function PUT(url, params = null, showLoading = false) {
     body: searchParams
   };
 
-  return request(url, options, showLoading);
-}
+  return requestWithLogin(url, options, showLoading);
+};
 
-/**
- * DELETE请求
- * @param url 请求的url
- * @param {Object} params 请求参数
- * @param showLoading 是否展示loading
- * @returns {Promise<void>} 返回结果
- * @constructor
- */
-function DELETE(url, params = null, showLoading = false) {
-  let searchParams = tools.parseObj2SearchParams(params);
-  searchParams = searchParams === '' ? searchParams : `?${searchParams}`;
+const DELETE = (url, params = null, showLoading = false) => {
+  const searchParams = tools.parseObj2SearchParams(params);
 
   const options = {
-    method: 'DELETE'
+    method: 'DELETE',
+    body: searchParams
   };
-  return request(`${url}${searchParams}`, options, showLoading);
-}
+  return requestWithLogin(url, options, showLoading);
+};
 
 export default {
   GET,
