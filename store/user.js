@@ -1,10 +1,8 @@
+import { createContext } from 'react';
 import { action, decorate, flow, observable } from 'mobx';
 import md5 from 'md5';
 import Service from '../services/AdminServices';
-import { useStaticRendering } from 'mobx-react';
 
-const isServer = typeof window === 'undefined';
-useStaticRendering(isServer);
 class User {
   token = '';
 
@@ -18,4 +16,4 @@ decorate(User, {
   getToken: action.bound
 });
 
-export default User;
+export default createContext(new User());
