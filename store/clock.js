@@ -1,32 +1,21 @@
-import { action, decorate, observable } from 'mobx';
-import { useStaticRendering } from 'mobx-react-lite';
-import { createContext } from 'react';
+import { action, observable } from 'mobx';
+import { useStaticRendering } from 'mobx-react';
 
 const isServer = typeof window === 'undefined';
 useStaticRendering(isServer);
 
-class Clock {
-  timerInterval = null;
-  clock = { lastUpdate: Date.now(), light: true };
+export default class Clock {
+  @observable lastUpdate = 0;
+  @observable light = false;
 
+  @action
   start = () => {
-    this.timerInterval = setInterval(() => {
-      this.clock.lastUpdate = Date.now();
-      this.clock.light = true;
+    this.timer = setInterval(() => {
+      this.lastUpdate = Date.now();
+      this.light = true;
     }, 1000);
   };
 
-  stop = () => {
-    if (this.timerInterval) {
-      clearInterval(this.timerInterval);
-    }
-  };
+  @action
+  stop = () => clearInterval(this.timer);
 }
-
-decorate(Clock, {
-  start: action.bound,
-  stop: action.bound,
-  clock: observable
-});
-
-export default createContext(new Clock());

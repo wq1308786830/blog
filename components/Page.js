@@ -1,11 +1,11 @@
 import Link from 'next/link';
-import { useContext, useEffect } from 'react';
-import {observer, useObserver} from 'mobx-react-lite';
-import ClockStore from '../store/clock';
+import { useEffect } from 'react';
+import { observer } from 'mobx-react';
 import Clock from './Clock';
+import useStores from '../store';
 
 function Page({ linkTo, title }) {
-  const { start, clock } = useContext(ClockStore);
+  const { start, lastUpdate, light } = useStores().store.clock;
 
   useEffect(() => {
     start();
@@ -14,7 +14,7 @@ function Page({ linkTo, title }) {
   return (
     <div>
       <h1>{title}</h1>
-      <Clock lastUpdate={clock.lastUpdate} light={clock.light} />
+      <Clock lastUpdate={lastUpdate} light={light} />
       <nav>
         <Link href={linkTo}>
           <a>Navigate</a>
