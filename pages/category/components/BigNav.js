@@ -12,7 +12,7 @@ function BigNav(props) {
       <nav>
         {category &&
           category.map(i => (
-            <Link key={i.id} href={`/category/${i.id}`}>
+            <Link key={i.id} href="/category/[id]" as={`/category/${i.id}`}>
               <a>{i.name}</a>
             </Link>
           ))}

@@ -26,7 +26,7 @@ function CategoryList(props) {
             <Collapse.Panel header={c.name} key={c.id} style={customPanelStyle}>
               {c.subCategory &&
                 c.subCategory.map(s => (
-                  <Link key={s.id} href={`/articles/${s.id}`}>
+                  <Link key={s.id} href="/category/[id]" as={`/category/${s.id}`}>
                     <a>{s.name}</a>
                   </Link>
                 ))}

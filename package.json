@@ -4,9 +4,10 @@
   "private": true,
   "scripts": {
     "dev": "next dev -p 5003",
+    "prod": "rimraf .next && next build && next start -p 5003",
     "build": "next build",
     "start": "next start -p 5003",
-    "clean": "rimraf build & rimraf dist",
+    "clean": "rimraf .next",
     "lint": "eslint ./pages && echo 'Lint complete.'",
     "lint-fix": "eslint --fix ./pages ./components ./services ./store && echo 'Lint fix complete.'"
   },
