@@ -1,7 +1,7 @@
 import React from 'react';
 import { Collapse, Icon } from 'antd';
 import PropTypes from 'prop-types';
-import Link from "next/link";
+import Link from 'next/link';
 
 function CategoryList(props) {
   const { category } = props;
@@ -22,18 +22,16 @@ function CategoryList(props) {
         expandIcon={({ isActive }) => <Icon type="caret-right" rotate={isActive ? 90 : 0} />}
       >
         {category &&
-          category.map(c => {
-            return (
-              <Collapse header={c.name} key={c.id} style={customPanelStyle}>
-                {c.subCategory &&
-                  c.subCategory.map(s => (
-                    <Link key={s.id} href={`/articles/${s.id}`}>
-                      <a>{s.name}</a>
-                    </Link>
-                  ))}
-              </Collapse>
-            );
-          })}
+          category.map(c => (
+            <Collapse.Panel header={c.name} key={c.id} style={customPanelStyle}>
+              {c.subCategory &&
+                c.subCategory.map(s => (
+                  <Link key={s.id} href={`/articles/${s.id}`}>
+                    <a>{s.name}</a>
+                  </Link>
+                ))}
+            </Collapse.Panel>
+          ))}
       </Collapse>
     </>
   );

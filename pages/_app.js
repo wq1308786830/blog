@@ -1,30 +1,38 @@
 import App, { Container } from 'next/app';
 import React from 'react';
-import { InjectStoreContext, initializeData } from '../store/clock';
+import { fetchInitialStoreState, RootStore } from '../store';
+import { Provider } from 'mobx-react';
 
 class MyMobxApp extends App {
-  static async getInitialProps({ Component, ctx }) {
-    let pageProps = {};
-    const initialStoreData = initializeData();
+  state = {
+    store: new RootStore()
+  };
 
-    // Provide the store to getInitialProps of pages
-    if (Component.getInitialProps) {
-      pageProps = await Component.getInitialProps({ ...ctx, initialStoreData });
-    }
+  // Fetching serialized(JSON) store state
+  static async getInitialProps(appContext) {
+    const appProps = await App.getInitialProps(appContext);
+    const initialStoreState = await fetchInitialStoreState();
 
     return {
-      pageProps,
-      initialStoreData
+      ...appProps,
+      initialStoreState
     };
   }
 
+  // Hydrate serialized state to store
+  static getDerivedStateFromProps(props, state) {
+    state.store.hydrate(props.initialStoreState);
+    return state;
+  }
+
   render() {
-    const { Component, pageProps, initialStoreData } = this.props;
+    const { Component, pageProps } = this.props;
+    const { store } = this.state;
     return (
       <Container>
-        <InjectStoreContext initialData={initialStoreData}>
+        <Provider store={store}>
           <Component {...pageProps} />
-        </InjectStoreContext>
+        </Provider>
       </Container>
     );
   }
