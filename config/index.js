@@ -8,8 +8,6 @@ const Config = {
 
 const prefix = Config[env];
 
-console.log(env);
-
 export default {
   env,
   Config,
