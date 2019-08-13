@@ -1,7 +1,7 @@
 import App, { Container } from 'next/app';
 import React from 'react';
-import { fetchInitialStoreState, RootStore } from '../store';
 import { Provider } from 'mobx-react';
+import { fetchInitialStoreState, RootStore } from '../store';
 
 class MyMobxApp extends App {
   state = {

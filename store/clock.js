@@ -6,6 +6,7 @@ useStaticRendering(isServer);
 
 export default class Clock {
   @observable lastUpdate = 0;
+
   @observable light = false;
 
   @action

@@ -69,7 +69,7 @@ const isNeedFreshCode = (url, result, message) => {
  */
 function login() {
   try {
-    db.Set('token', '1111111');
+    localStorage.setItem('token', '1111111');
     return true;
   } catch (e) {
     return false;
@@ -84,7 +84,7 @@ function login() {
  * @returns {Promise<void>} 请求返回结果
  */
 const requestWithLogin = async (url, options, showLoading) => {
-  const token = db.Get('token');
+  const token = localStorage.getItem('token');
 
   let isLogin = false;
   if (token) {

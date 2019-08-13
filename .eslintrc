@@ -12,6 +12,7 @@
     "jest": true
   },
   "rules": {
+    "jsx-a11y/anchor-is-valid": "off",
     "class-methods-use-this": "off",
     "react/jsx-wrap-multilines": ["error", { "arrow": true, "return": true, "declaration": true }],
     "react/forbid-prop-types": "off",

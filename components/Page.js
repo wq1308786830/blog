@@ -1,6 +1,7 @@
 import Link from 'next/link';
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { observer } from 'mobx-react';
+import PropTypes from 'prop-types';
 import Clock from './Clock';
 import useStores from '../store';
 
@@ -25,3 +26,8 @@ function Page({ linkTo, title }) {
 }
 
 export default observer(Page);
+
+Page.propTypes = {
+  linkTo: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired
+};

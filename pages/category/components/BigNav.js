@@ -1,6 +1,6 @@
 import React from 'react';
+import Link from 'next/link';
 import PropTypes from 'prop-types';
-import Link from "next/link";
 
 function BigNav(props) {
   const { category } = props;
@@ -10,14 +10,19 @@ function BigNav(props) {
         <img alt="avatar" src="https://oss.biosan.cn/weichat/mine/WechatIMG1.jpeg" />
       </div>
       <nav>
-        {category && category.map(i => <Link key={i.id} href={`/category/${i.id}`}><a>{i.name}</a></Link>)}
+        {category &&
+          category.map(i => (
+            <Link key={i.id} href={`/category/${i.id}`}>
+              <a>{i.name}</a>
+            </Link>
+          ))}
       </nav>
     </>
   );
 }
 
+export default BigNav;
+
 BigNav.propTypes = {
   category: PropTypes.array.isRequired
 };
-
-export default BigNav;

@@ -1,11 +1,22 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import BlogServices from '../../services/BlogServices';
+import Layout from '../../components/Layout';
 import BigNav from './components/BigNav';
 import TimeLineArticleList from './components/TimeLineArticleList';
 import CategoryList from './components/CategoryList';
-import fetch from 'isomorphic-unfetch';
-import Layout from "../../components/Layout";
 
-export default function Index({categories}) {
+export default function Index() {
+  const [categories, setCategories] = useState([]);
+
+  const getAllCategories = async () => {
+    const categoryResp = await BlogServices.getAllCategories();
+    setCategories(categoryResp.data);
+  };
+
+  useEffect(() => {
+    getAllCategories();
+  }, []);
+
   return (
     <Layout>
       <BigNav category={categories} />
@@ -14,11 +25,3 @@ export default function Index({categories}) {
     </Layout>
   );
 }
-
-Index.getInitialProps = async function() {
-  const resp = await fetch('http://localhost:5002/category/getAllCategories');
-  const data = await resp.json();
-  return {
-    categories: data.data
-  }
-};

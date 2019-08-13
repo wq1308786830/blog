@@ -1,7 +1,7 @@
 import React from 'react';
-import { Collapse, Icon } from 'antd';
-import PropTypes from 'prop-types';
 import Link from 'next/link';
+import PropTypes from 'prop-types';
+import { Collapse, Icon } from 'antd';
 
 function CategoryList(props) {
   const { category } = props;
@@ -37,8 +37,8 @@ function CategoryList(props) {
   );
 }
 
+export default CategoryList;
+
 CategoryList.propTypes = {
   category: PropTypes.array.isRequired
 };
-
-export default CategoryList;

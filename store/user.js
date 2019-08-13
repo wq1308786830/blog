@@ -1,7 +1,7 @@
 import { flow, observable } from 'mobx';
 import md5 from 'md5';
-import Service from '../services/AdminServices';
 import { useStaticRendering } from 'mobx-react';
+import Service from '../services/AdminServices';
 
 const isServer = typeof window === 'undefined';
 useStaticRendering(isServer);
