@@ -10,7 +10,7 @@ function BigNav(props) {
         <img alt="avatar" src="https://oss.biosan.cn/weichat/mine/WechatIMG1.jpeg" />
       </div>
       <nav>
-        {category ? category.map(i => <Link key={i.id} href={`/category/${i.id}`}><a>{i.name}</a></Link>) : null}
+        {category && category.map(i => <Link key={i.id} href={`/category/${i.id}`}><a>{i.name}</a></Link>)}
       </nav>
     </>
   );
