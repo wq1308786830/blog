@@ -1,13 +1,14 @@
 import React from 'react';
 import Link from 'next/link';
 import PropTypes from 'prop-types';
+import './BigNav.less';
 
 function BigNav(props) {
   const { category } = props;
   return (
     <>
       <div>
-        <img alt="avatar" src="https://oss.biosan.cn/weichat/mine/WechatIMG1.jpeg" />
+        <img className='avatar' alt="avatar" src="https://oss.biosan.cn/weichat/mine/WechatIMG1.jpeg" />
       </div>
       <nav>
         {category &&

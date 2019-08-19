@@ -1,4 +1,4 @@
-// import { message } from 'antd';
+import { message } from 'antd';
 
 /**
  * 展示loading
@@ -8,13 +8,10 @@
  */
 function loading(isShow = true, content = '正在加载...', afterClose = undefined) {
   if (isShow) {
-    console.log(isShow);
+    message.loading(content, 0, afterClose);
   } else {
-    console.log(isShow);
-
-    if (afterClose !== undefined) {
-      afterClose();
-    }
+    message.destroy();
+    afterClose && afterClose();
   }
 }
 
@@ -24,8 +21,7 @@ function loading(isShow = true, content = '正在加载...', afterClose = undefi
  * @param content toast文案
  */
 function toast(content, afterClose = undefined) {
-  // message.info(content, 2, afterClose);
-  console.log(content);
+  message.info(content, 2, afterClose);
   afterClose && afterClose();
 }
 

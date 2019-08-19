@@ -6,7 +6,7 @@ const Config = {
   development: 'http://localhost:5002'
 };
 
-env = 'development';
+env = 'production';
 
 const prefix = Config[env];
 
