@@ -6,11 +6,11 @@ import './BigNav.less';
 function BigNav(props) {
   const { category } = props;
   return (
-    <>
+    <section className="bignav-container">
       <div>
         <img className='avatar' alt="avatar" src="https://oss.biosan.cn/weichat/mine/WechatIMG1.jpeg" />
       </div>
-      <nav>
+      <nav className='nav'>
         {category &&
           category.map(i => (
             <Link key={i.id} href="/category/[id]" as={`/category/${i.id}`}>
@@ -18,7 +18,7 @@ function BigNav(props) {
             </Link>
           ))}
       </nav>
-    </>
+    </section>
   );
 }
 

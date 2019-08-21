@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import BlogServices from '../../services/BlogServices';
-import Layout from '../../components/Layout';
 import BigNav from './components/BigNav';
 import TimeLineArticleList from './components/TimeLineArticleList';
 import CategoryList from './components/CategoryList';
+import './index.less';
 
 export default function Index() {
   const [categories, setCategories] = useState([]);
@@ -18,10 +18,10 @@ export default function Index() {
   }, []);
 
   return (
-    <Layout>
+    <div className="index-container">
       <BigNav category={categories} />
       <TimeLineArticleList />
       <CategoryList category={categories} />
-    </Layout>
+    </div>
   );
 }
