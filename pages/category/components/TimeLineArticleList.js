@@ -1,17 +1,18 @@
-import React from 'react';
-import { Avatar, Card } from 'antd';
+import React, { useState } from 'react';
+import ArticleItem from './ArticleItem';
 import './TimeLine.less';
 
-function TimeLineArticleList() {
+function TimeLineArticleList({ id, articles }) {
+  const [title, setTitle] = useState('');
+  if (id) {
+    setTitle('某个');
+  } else {
+    setTitle('所有');
+  }
   return (
     <section className="timeline-list-container">
-      <Card style={{ width: 300, marginTop: 16 }} loading={false}>
-        <Card.Meta
-          avatar={<Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
-          title="Card title"
-          description="This is the description"
-        />
-      </Card>
+      <h2>{title}</h2>
+      {articles && articles.length && articles.map(article => <ArticleItem article={article} />)}
     </section>
   );
 }

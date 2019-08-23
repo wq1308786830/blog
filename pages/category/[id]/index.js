@@ -1,9 +1,10 @@
 import React from 'react';
 import { useRouter } from 'next/router';
+import Category from '../../category';
 
-export default function Category() {
+export default function CategorySub() {
   const { id } = useRouter().query;
   return (
-    <div>{id}</div>
+    <Category id={id} />
   );
 }
