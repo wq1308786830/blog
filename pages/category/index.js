@@ -10,21 +10,21 @@ export default function Index(props) {
   const [subCategories, setSubCategories] = useState(null);
 
   const { id } = props;
-  const getAllCategories = async () => {
+  const getAllCategories = useCallback(async () => {
     const categoryResp = await BlogServices.getAllCategories();
     setCategories(categoryResp.data);
     const subC =
       categoryResp &&
       categoryResp.data &&
       categoryResp.data.find(sub => {
-        return sub.id + '' === id;
+        return `${sub.id}` === id;
       });
     subC && setSubCategories(subC.subCategory);
-  };
+  }, [id]);
 
   useEffect(() => {
     getAllCategories();
-  }, [id]);
+  }, [getAllCategories]);
 
   return (
     <div className="index-container">

@@ -2,10 +2,10 @@ import React from 'react';
 import Link from 'next/link';
 import PropTypes from 'prop-types';
 import { Collapse, Icon } from 'antd';
-import './CategoryList.less'
+import './CategoryList.less';
 
 function CategoryList(props) {
-  const { category, id } = props;
+  const { category } = props;
 
   const customPanelStyle = {
     background: '#ffffff',
@@ -18,7 +18,7 @@ function CategoryList(props) {
   return (
     <>
       <Collapse
-        className='categories-container'
+        className="categories-container"
         bordered={false}
         defaultActiveKey={['1']}
         expandIcon={({ isActive }) => <Icon type="caret-right" rotate={isActive ? 90 : 0} />}

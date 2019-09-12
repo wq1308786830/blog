@@ -8,9 +8,13 @@ function BigNav(props) {
   return (
     <section className="bignav-container">
       <div>
-        <img className='avatar' alt="avatar" src="https://oss.biosan.cn/weichat/mine/WechatIMG1.jpeg" />
+        <img
+          className="avatar"
+          alt="avatar"
+          src="https://oss.biosan.cn/weichat/mine/WechatIMG1.jpeg"
+        />
       </div>
-      <nav className='nav'>
+      <nav className="nav">
         {category &&
           category.map(i => (
             <Link key={i.id} href="/category/[id]" as={`/category/${i.id}`}>
