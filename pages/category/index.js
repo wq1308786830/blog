@@ -13,6 +13,9 @@ export default function Index(props) {
   const getAllCategories = useCallback(async () => {
     const categoryResp = await BlogServices.getAllCategories();
     setCategories(categoryResp.data);
+    if (!id) {
+      return;
+    }
     const subC =
       categoryResp &&
       categoryResp.data &&
@@ -28,9 +31,9 @@ export default function Index(props) {
 
   return (
     <div className="index-container">
-      {categories && <BigNav category={categories} />}
-      <TimeLineArticleList id={id} articles={[]} />
-      {subCategories && <CategoryList category={subCategories} />}
+      {categories && <BigNav category={categories}/>}
+      <TimeLineArticleList id={id} articles={[]}/>
+      {subCategories && <CategoryList category={subCategories}/>}
     </div>
   );
 }

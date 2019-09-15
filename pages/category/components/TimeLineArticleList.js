@@ -1,8 +1,7 @@
+import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import ArticleItem from './ArticleItem';
 import './TimeLine.less';
-import PropTypes from 'prop-types';
-import CategoryList from './CategoryList';
 
 function TimeLineArticleList({ id, articles }) {
   const [title, setTitle] = useState('');
@@ -18,7 +17,7 @@ function TimeLineArticleList({ id, articles }) {
   return (
     <section className="timeline-list-container">
       <h2>{title}</h2>
-      {articles && articles.map(article => <ArticleItem article={article} />)}
+      {articles && articles.map(article => <ArticleItem article={article}/>)}
     </section>
   );
 }
@@ -26,6 +25,10 @@ function TimeLineArticleList({ id, articles }) {
 export default TimeLineArticleList;
 
 TimeLineArticleList.propTypes = {
-  id: PropTypes.number.isRequired,
-  articles: PropTypes.object.isRequired
+  id: PropTypes.string,
+  articles: PropTypes.array.isRequired
+};
+
+TimeLineArticleList.defaultProps = {
+  id: null
 };
