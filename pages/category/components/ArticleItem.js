@@ -1,23 +1,29 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import './ArticleItem.less';
+import Link from 'next/link';
 
-function ArticleItem() {
-  const str = `EllisLab have been building up to their latest release of ExpressionEngine for a while by
-          sharing upcoming features through their blog. It's a given that anything EllisLab release
-          will have its fair share of controversy and they have always had the adage of 'Can't do
-          right for doing wrong'. …Read More`;
+function ArticleItem({ article }) {
   return (
     <div className="article-item-wrap">
       <div>
-        <p>8-29</p>
-        <p>2019</p>
+        <p>{article.date_publish.substring(5, 10)}</p>
+        <p>{article.date_publish.split('-')[0]}</p>
       </div>
       <div>
-        <h3>大三大四的卡上</h3>
-        <p>{str}</p>
+        <Link key={article.id} href="/article/[id]" as={`/article/${article.id}`}>
+          <a>
+            <h3>{article.title}</h3>
+          </a>
+        </Link>
+        <p>{article.description}</p>
       </div>
     </div>
   );
 }
+
+ArticleItem.propTypes = {
+  article: PropTypes.object.isRequired
+};
 
 export default ArticleItem;
