@@ -84,7 +84,7 @@ function login() {
  * @returns {Promise<void>} 请求返回结果
  */
 const requestWithLogin = async (url, options, showLoading) => {
-  const token = localStorage.getItem('token');
+  const token = '11111';
 
   let isLogin = false;
   if (token) {

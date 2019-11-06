@@ -1,19 +1,23 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
+import React from 'react';
 import BlogServices from '../../services/BlogServices';
 
-export default function Article() {
-  const { id } = useRouter().query;
-  const [detail, setDetail] = useState({});
+const Article = ({ detail }) => {
+  return (
+    <>
+      <h2>{detail.title}</h2>
+      <comment>{detail.date_publish}</comment>
+      <p>{detail.content}</p>
+    </>
+  );
+};
 
-  const getArticle = useCallback(async () => {
-    const articleResp = await BlogServices.getArticleDetail(id);
-    setDetail(articleResp.data);
-  }, [id]);
+Article.getInitialProps = async context => {
+  const { id } = context.query;
+  const res = await BlogServices.getArticleDetail(id);
+  console.log(`Show data fetched. Count: ${res.data}`);
+  return {
+    detail: res.data
+  };
+};
 
-  useEffect(() => {
-    getArticle();
-  }, [getArticle]);
-
-  return <div>{detail.content}</div>;
-}
+export default Article;
