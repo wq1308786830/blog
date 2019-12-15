@@ -20,12 +20,13 @@ function TimeLineArticleList({ id }) {
     } else {
       setTitle('所有');
     }
-  }, [id]);
+  }, [getArticleList, id]);
 
   return (
     <section className="timeline-list-container">
       <h2>{title}</h2>
-      {articleList && articleList.map(article => <ArticleItem article={article} />)}
+      {articleList &&
+        articleList.map(article => <ArticleItem key={article.id} article={article} />)}
     </section>
   );
 }
@@ -33,8 +34,7 @@ function TimeLineArticleList({ id }) {
 export default TimeLineArticleList;
 
 TimeLineArticleList.propTypes = {
-  id: PropTypes.string,
-  articles: PropTypes.array.isRequired
+  id: PropTypes.string
 };
 
 TimeLineArticleList.defaultProps = {

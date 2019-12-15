@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 import BlogServices from '../../services/BlogServices';
 import BigNav from './components/BigNav';
 import TimeLineArticleList from './components/TimeLineArticleList';
@@ -17,12 +18,13 @@ export default function Index(props) {
       return;
     }
     const subC =
-      categoryResp &&
-      categoryResp.data &&
-      categoryResp.data.find(sub => {
-        return `${sub.id}` === id;
-      });
-    subC && setSubCategories(subC.subCategory);
+      (categoryResp &&
+        categoryResp.data &&
+        categoryResp.data.find(sub => {
+          return `${sub.id}` === id;
+        })) ||
+      {};
+    setSubCategories(subC.subCategory);
   }, [id]);
 
   useEffect(() => {
@@ -31,9 +33,13 @@ export default function Index(props) {
 
   return (
     <div className="index-container">
-      {categories && <BigNav category={categories}/>}
-      <TimeLineArticleList id={id} articles={[]}/>
-      {subCategories && <CategoryList category={subCategories}/>}
+      {categories && <BigNav category={categories} />}
+      <TimeLineArticleList id={id} articles={[]} />
+      {subCategories && <CategoryList category={subCategories} />}
     </div>
   );
 }
+
+Index.propTypes = {
+  id: PropTypes.string.isRequired
+};
