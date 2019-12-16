@@ -5,7 +5,7 @@ import { Collapse, Icon } from 'antd';
 import './CategoryList.less';
 
 function CategoryList(props) {
-  const { category } = props;
+  const { id, category } = props;
 
   const customPanelStyle = {
     background: '#ffffff',
@@ -28,7 +28,7 @@ function CategoryList(props) {
             <Collapse.Panel header={c.name} key={c.id} style={customPanelStyle}>
               {c.subCategory &&
                 c.subCategory.map(s => (
-                  <Link key={s.id} href="/category/[id]" as={`/category/${s.id}`}>
+                  <Link key={s.id} href="/category/[id]/[leafId]" as={`/category/${id}/${s.id}`}>
                     <a>{s.name}</a>
                   </Link>
                 ))}

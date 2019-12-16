@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
 import React, { useCallback, useEffect, useState } from 'react';
 import ArticleItem from './ArticleItem';
+import BlogServices from '../../services/BlogServices';
 import './TimeLine.less';
-import BlogServices from '../../../services/BlogServices';
 
 function TimeLineArticleList({ id }) {
   const [title, setTitle] = useState('');

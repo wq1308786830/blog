@@ -1,45 +1,43 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import BlogServices from '../../services/BlogServices';
-import BigNav from './components/BigNav';
-import TimeLineArticleList from './components/TimeLineArticleList';
-import CategoryList from './components/CategoryList';
+import BigNav from '../components/BigNav';
+import TimeLineArticleList from '../components/TimeLineArticleList';
+import CategoryList from '../components/CategoryList';
 import './index.less';
 
-export default function Index(props) {
-  const [categories, setCategories] = useState(null);
-  const [subCategories, setSubCategories] = useState(null);
-
-  const { id } = props;
-  const getAllCategories = useCallback(async () => {
-    const categoryResp = await BlogServices.getAllCategories();
-    setCategories(categoryResp.data);
-    if (!id) {
-      return;
-    }
-    const subC =
-      (categoryResp &&
-        categoryResp.data &&
-        categoryResp.data.find(sub => {
-          return `${sub.id}` === id;
-        })) ||
-      {};
-    setSubCategories(subC.subCategory);
-  }, [id]);
-
-  useEffect(() => {
-    getAllCategories();
-  }, [getAllCategories]);
-
+export default function Index({ id, leafId, categories, subCategories }) {
   return (
     <div className="index-container">
       {categories && <BigNav category={categories} />}
-      <TimeLineArticleList id={id} articles={[]} />
-      {subCategories && <CategoryList category={subCategories} />}
+      <TimeLineArticleList id={leafId} articles={[]} />
+      {subCategories && <CategoryList id={id} category={subCategories} />}
     </div>
   );
 }
 
+Index.getInitialProps = async context => {
+  const { id, leafId } = context.query;
+  if (id) return;
+  const categoryResp = await BlogServices.getAllCategories();
+  const subC =
+    (categoryResp &&
+      categoryResp.data &&
+      categoryResp.data.find(sub => {
+        return `${sub.id}` === id;
+      })) ||
+    {};
+  return {
+    id: id || '',
+    leafId: leafId || '',
+    categories: categoryResp.data || [],
+    subCategories: subC.subCategory || []
+  };
+};
+
 Index.propTypes = {
-  id: PropTypes.string.isRequired
+  id: PropTypes.string,
+  leafId: PropTypes.string,
+  categories: PropTypes.array.isRequired,
+  subCategories: PropTypes.array.isRequired
 };

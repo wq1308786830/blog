@@ -7,11 +7,15 @@ import { message } from 'antd';
  * @param content loading下的文案
  */
 function loading(isShow = true, content = '正在加载...', afterClose = undefined) {
-  if (isShow) {
-    message.loading(content, 0, afterClose);
+  if (typeof window === 'object') {
+    if (isShow) {
+      message.loading(content, 0, afterClose);
+    } else {
+      message.destroy();
+      afterClose && afterClose();
+    }
   } else {
-    message.destroy();
-    afterClose && afterClose();
+    console.log(content);
   }
 }
 
@@ -21,8 +25,12 @@ function loading(isShow = true, content = '正在加载...', afterClose = undefi
  * @param content toast文案
  */
 function toast(content, afterClose = undefined) {
-  message.info(content, 2, afterClose);
-  afterClose && afterClose();
+  if (typeof window === 'object') {
+    message.info(content, 2, afterClose);
+    afterClose && afterClose();
+  } else {
+    console.log(content);
+  }
 }
 
 /**

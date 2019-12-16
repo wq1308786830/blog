@@ -4,19 +4,20 @@ import './ArticleItem.less';
 import Link from 'next/link';
 
 function ArticleItem({ article }) {
+  const { id, title, description, date_publish: date } = article;
   return (
     <div className="article-item-wrap">
-      <div>
-        <p>{article.date_publish.substring(5, 10)}</p>
-        <p>{article.date_publish.split('-')[0]}</p>
-      </div>
-      <div>
-        <Link key={article.id} href="/article/[id]" as={`/article/${article.id}`}>
+      <time className="time">
+        <strong>{date && date.substring(5, 10)}</strong>
+        <span>{date && date.split('-')[0]}</span>
+      </time>
+      <div className="desc">
+        <Link key={id} href="/article/[id]" as={`/article/${id}`}>
           <a>
-            <h3>{article.title}</h3>
+            <h2>{title}</h2>
           </a>
         </Link>
-        <p>{article.description}</p>
+        <p>{description}</p>
       </div>
     </div>
   );
