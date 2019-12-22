@@ -1,5 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
+import Router from 'next/router';
 import PropTypes from 'prop-types';
 import './BigNav.less';
 
@@ -9,6 +10,7 @@ function BigNav(props) {
     <section className="bignav-container">
       <div>
         <img
+          onClick={() => Router.push('/')}
           className="avatar"
           alt="avatar"
           src="https://oss.biosan.cn/weichat/mine/WechatIMG1.jpeg"

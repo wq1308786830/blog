@@ -21,18 +21,25 @@ const Article = ({ detail, categories, subCategories }) => {
         {detail.keywords &&
           detail.keywords.map(keyword => <meta name="keywords" content={keyword} />)}
       </Head>
-      <main className="main">
-        <section>{categories && <BigNav category={categories} />}</section>
-        <section>
-          <h2>{title}</h2>
-          <code>{datePublish}</code>
-          {textType === 'html' ? (
-            <div dangerouslySetInnerHTML={createHtml(content)} />
-          ) : (
-            <ReactMarkdown source={content} />
-          )}
-        </section>
-        <section>{subCategories && <CategoryList category={subCategories} />}</section>
+      <main className="doc">
+        <main className="main index-container">
+          <section>{categories && <BigNav category={categories} />}</section>
+          <article className="content">
+            <time className="time">
+              <strong>{datePublish && datePublish.substring(5, 10)}</strong>
+              <span>{datePublish && datePublish.split('-')[0]}</span>
+            </time>
+            <h1>{title}</h1>
+            <div className="article-content">
+              {textType === 'html' ? (
+                <div dangerouslySetInnerHTML={createHtml(content)} />
+              ) : (
+                <ReactMarkdown source={content} />
+              )}
+            </div>
+          </article>
+          <section>{subCategories && <CategoryList category={subCategories} />}</section>
+        </main>
       </main>
     </>
   );

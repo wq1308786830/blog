@@ -8,10 +8,10 @@ function CategoryList(props) {
   const { id, category } = props;
 
   const customPanelStyle = {
-    background: '#ffffff',
     minWidth: '20rem',
     borderRadius: 4,
     border: 0,
+    color: '#2E9286',
     overflow: 'hidden'
   };
 
@@ -42,5 +42,6 @@ function CategoryList(props) {
 export default CategoryList;
 
 CategoryList.propTypes = {
+  id: PropTypes.string,
   category: PropTypes.array.isRequired
 };

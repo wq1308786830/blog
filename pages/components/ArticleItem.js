@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import './ArticleItem.less';
 import Link from 'next/link';
+import './ArticleItem.less';
 
 function ArticleItem({ article }) {
   const { id, title, description, date_publish: date } = article;
@@ -24,7 +24,12 @@ function ArticleItem({ article }) {
 }
 
 ArticleItem.propTypes = {
-  article: PropTypes.object.isRequired
+  article: {
+    id: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
+    description: PropTypes.string.isRequired,
+    date_publish: PropTypes.string.isRequired
+  }.isRequired
 };
 
 export default ArticleItem;

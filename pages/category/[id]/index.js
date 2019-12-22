@@ -9,7 +9,9 @@ export default function CategorySub(props) {
 
 CategorySub.getInitialProps = async context => {
   const { id, leafId } = context.query;
-  if (leafId) return ;
+  if (leafId) {
+    return;
+  }
   const categoryResp = await BlogServices.getAllCategories();
   const subC =
     (categoryResp &&
@@ -25,10 +27,8 @@ CategorySub.getInitialProps = async context => {
   };
 };
 
-
 CategorySub.propTypes = {
   id: PropTypes.string.isRequired,
   categories: PropTypes.array.isRequired,
   subCategories: PropTypes.array.isRequired
 };
-

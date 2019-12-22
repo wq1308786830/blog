@@ -1,30 +1,11 @@
 import PropTypes from 'prop-types';
-import React, { useCallback, useEffect, useState } from 'react';
+import React from 'react';
 import ArticleItem from './ArticleItem';
-import BlogServices from '../../services/BlogServices';
 import './TimeLine.less';
 
-function TimeLineArticleList({ id }) {
-  const [title, setTitle] = useState('');
-  const [articleList, setArticleList] = useState([]);
-
-  const getArticleList = useCallback(async () => {
-    const articleListResp = await BlogServices.getArticleList(id);
-    setArticleList(articleListResp.data);
-  }, [id]);
-
-  useEffect(() => {
-    if (id) {
-      setTitle('某个');
-      getArticleList();
-    } else {
-      setTitle('所有');
-    }
-  }, [getArticleList, id]);
-
+function TimeLineArticleList({ articleList }) {
   return (
     <section className="timeline-list-container">
-      <h2>{title}</h2>
       {articleList &&
         articleList.map(article => <ArticleItem key={article.id} article={article} />)}
     </section>
@@ -34,9 +15,9 @@ function TimeLineArticleList({ id }) {
 export default TimeLineArticleList;
 
 TimeLineArticleList.propTypes = {
-  id: PropTypes.string
+  articleList: PropTypes.array
 };
 
 TimeLineArticleList.defaultProps = {
-  id: null
+  articleList: []
 };

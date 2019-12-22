@@ -1,24 +1,29 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import BlogServices from '../../services/BlogServices';
 import BigNav from '../components/BigNav';
 import TimeLineArticleList from '../components/TimeLineArticleList';
 import CategoryList from '../components/CategoryList';
+import BlogServices from '../../services/BlogServices';
 import './index.less';
 
-export default function Index({ id, leafId, categories, subCategories }) {
+export default function Index({ articleList, id, categories, subCategories }) {
   return (
-    <div className="index-container">
-      {categories && <BigNav category={categories} />}
-      <TimeLineArticleList id={leafId} articles={[]} />
-      {subCategories && <CategoryList id={id} category={subCategories} />}
+    <div className="doc">
+      <main className="index-container">
+        {categories && <BigNav category={categories} />}
+        <TimeLineArticleList articles={articleList} />
+        {subCategories && <CategoryList id={id} category={subCategories} />}
+      </main>
     </div>
   );
 }
 
 Index.getInitialProps = async context => {
-  const { id, leafId } = context.query;
-  if (id) return;
+  const { id, articleList } = context.query;
+  console.log(articleList);
+  if (id) {
+    return;
+  }
   const categoryResp = await BlogServices.getAllCategories();
   const subC =
     (categoryResp &&
@@ -29,7 +34,7 @@ Index.getInitialProps = async context => {
     {};
   return {
     id: id || '',
-    leafId: leafId || '',
+    articleList: articleList || [],
     categories: categoryResp.data || [],
     subCategories: subC.subCategory || []
   };
@@ -37,7 +42,12 @@ Index.getInitialProps = async context => {
 
 Index.propTypes = {
   id: PropTypes.string,
-  leafId: PropTypes.string,
+  articleList: PropTypes.array,
   categories: PropTypes.array.isRequired,
   subCategories: PropTypes.array.isRequired
+};
+
+Index.defaultProps = {
+  id: '',
+  articleList: []
 };

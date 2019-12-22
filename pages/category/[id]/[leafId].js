@@ -1,6 +1,3 @@
-/*
- * Copyright (c) 2013-2019. 浙江博圣生物技术股份有限公司 www.biosan.cn. All Rights Reserved.
- */
 import React from 'react';
 import PropTypes from 'prop-types';
 import Category from '../index';
@@ -14,6 +11,7 @@ export default function LeafId(props) {
 LeafId.getInitialProps = async context => {
   const { id, leafId } = context.query;
   const categoryResp = await BlogServices.getAllCategories();
+  const articleListResp = await BlogServices.getArticleList(leafId);
   const subC =
     (categoryResp &&
       categoryResp.data &&
@@ -22,8 +20,8 @@ LeafId.getInitialProps = async context => {
       })) ||
     {};
   return {
-    id: id,
-    leafId: leafId,
+    id,
+    articleList: articleListResp.data || [],
     categories: categoryResp.data || [],
     subCategories: subC.subCategory || []
   };
@@ -31,7 +29,7 @@ LeafId.getInitialProps = async context => {
 
 LeafId.propTypes = {
   id: PropTypes.string.isRequired,
-  leafId: PropTypes.string.isRequired,
+  articleList: PropTypes.array.isRequired,
   categories: PropTypes.array.isRequired,
   subCategories: PropTypes.array.isRequired
 };

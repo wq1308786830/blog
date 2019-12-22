@@ -1,21 +1,30 @@
 :root {
   --color-font: #404040;
-  --color-background: #fdfdfd;
   --view-minmax: calc((100vw - 500px) / (1920 - 500));
 }
+
 html {
-  font-size: 10px;
+  font: 10px Georgia, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', 'Helvetica Neue', Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol'!important;
+  background: #d0f2e8 url(/static/imgs/bg.png) !important;
+  -webkit-overflow-scrolling: touch;
+  -webkit-tap-highlight-color: #f3f5f6;
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  height: 100%;
 }
+
 body {
   margin: 0;
   padding: 0;
   height: 100%;
   font-size: 1.4rem;
-  font-family: sans-serif;
+  background: transparent !important;
+
   #root {
     height: 100%;
   }
 }
+
 .App {
   height: 100%;
 }
@@ -48,6 +57,39 @@ body {
 }
 
 @keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+.index-container {
+  margin: 0 auto;
+  display: flex;
+  max-width: 1200px;
+  justify-content: space-around;
+}
+.doc {
+  min-height: 100%;
+  background: transparent url(/static/imgs/header-bg4.jpg) repeat-y -20px 0;
+}
+.time {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: transparent url(/static/imgs/date_bg_small.png) no-repeat center center;
+  line-height: 1.2;
+  position: absolute;
+  left: -36px;
+  text-align: center;
+  text-transform: uppercase;
+  width: 70px;
+  height: 70px;
+  text-shadow: 1px 1px 0 #ffffff;
+  background-size: 100% 100%;
+  span {
+    display: inline-block;
+  }
 }
