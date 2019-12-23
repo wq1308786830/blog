@@ -11,7 +11,7 @@ function login(formData) {
 
 function getArticles(option, pageIndex) {
   const params = { ...option, pageIndex };
-  return Request.GET(`/admin/getArticles`, params);
+  return Request.GET('/admin/getArticles', params);
 }
 
 function publishArticle(body) {

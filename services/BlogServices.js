@@ -5,7 +5,7 @@ function getCategories(fatherId) {
 }
 
 function getAllCategories() {
-  return request.GET('/category/getAllCategories');
+  return request.GET('/category/getAllCategories', null, true);
 }
 
 function getArticleList(key) {

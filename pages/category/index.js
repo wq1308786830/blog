@@ -1,24 +1,54 @@
 import React from 'react';
-import BigNav from './components/BigNav';
-import TimeLineArticleList from './components/TimeLineArticleList';
-import CategoryList from './components/CategoryList';
-import fetch from 'isomorphic-unfetch';
-import Layout from "../../components/Layout";
+import PropTypes from 'prop-types';
+import BigNav from '../components/BigNav';
+import TimeLineArticleList from '../components/TimeLineArticleList';
+import CategoryList from '../components/CategoryList';
+import BlogServices from '../../services/BlogServices';
+import './index.less';
 
-export default function Index({categories}) {
+export default function Index({ articleList, id, categories, subCategories }) {
+  console.log(articleList);
   return (
-    <Layout>
-      <BigNav category={categories} />
-      <TimeLineArticleList />
-      <CategoryList category={categories} />
-    </Layout>
+    <div className="doc">
+      <main className="index-container">
+        {categories && <BigNav category={categories} />}
+        <TimeLineArticleList articles={articleList} />
+        {subCategories && <CategoryList id={id} category={subCategories} />}
+      </main>
+    </div>
   );
 }
 
-Index.getInitialProps = async function() {
-  const resp = await fetch('http://localhost:5002/category/getAllCategories');
-  const data = await resp.json();
-  return {
-    categories: data.data
+Index.getInitialProps = async context => {
+  const { id, articleList } = context.query;
+  console.log(articleList);
+  if (id) {
+    return;
   }
+  const categoryResp = await BlogServices.getAllCategories();
+  const subC =
+    (categoryResp &&
+      categoryResp.data &&
+      categoryResp.data.find(sub => {
+        return `${sub.id}` === id;
+      })) ||
+    {};
+  return {
+    id: id || '',
+    articleList: articleList || [],
+    categories: categoryResp.data || [],
+    subCategories: subC.subCategory || []
+  };
+};
+
+Index.propTypes = {
+  id: PropTypes.string,
+  articleList: PropTypes.array,
+  categories: PropTypes.array.isRequired,
+  subCategories: PropTypes.array.isRequired
+};
+
+Index.defaultProps = {
+  id: '',
+  articleList: []
 };
