@@ -21,20 +21,20 @@ export default function Index({ articleList, id, categories, subCategories }) {
 Index.getInitialProps = async context => {
   const { id, articleList } = context.query;
   if (id) {
-    return;
+    return {};
   }
   const categoryResp = await BlogServices.getAllCategories();
+  const { data: categories } = categoryResp;
   const subC =
-    (categoryResp &&
-      categoryResp.data &&
-      categoryResp.data.find(sub => {
+    (categories &&
+      categories.find(sub => {
         return `${sub.id}` === id;
       })) ||
     {};
   return {
     id: id || '',
     articleList: articleList || [],
-    categories: categoryResp.data || [],
+    categories: categories || [],
     subCategories: subC.subCategory || []
   };
 };

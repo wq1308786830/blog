@@ -1,33 +1,34 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Category from '../index';
-import BlogServices from '../../../services/BlogServices';
-import '../index.less';
+import Category from '../../index';
+import BlogServices from '../../../../services/BlogServices';
+import '../../index.less';
 
-export default function LeafId(props) {
+export default function Index(props) {
   return <Category {...props} />;
 }
 
-LeafId.getInitialProps = async context => {
+Index.getInitialProps = async context => {
   const { id, leafId } = context.query;
   const categoryResp = await BlogServices.getAllCategories();
   const articleListResp = await BlogServices.getArticleList(leafId);
+  const { data: categories } = categoryResp;
+  const { data: articleList } = articleListResp;
   const subC =
-    (categoryResp &&
-      categoryResp.data &&
-      categoryResp.data.find(sub => {
+    (categories &&
+      categories.find(sub => {
         return `${sub.id}` === id;
       })) ||
     {};
   return {
     id,
-    articleList: articleListResp.data || [],
-    categories: categoryResp.data || [],
+    articleList: articleList || [],
+    categories: categories || [],
     subCategories: subC.subCategory || []
   };
 };
 
-LeafId.propTypes = {
+Index.propTypes = {
   id: PropTypes.string.isRequired,
   articleList: PropTypes.array.isRequired,
   categories: PropTypes.array.isRequired,
