@@ -2,9 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Head from 'next/head';
 import ReactMarkdown from 'react-markdown';
-import BlogServices from '../../services/BlogServices';
-import BigNav from '../components/BigNav';
-import CategoryList from '../components/CategoryList';
+import BlogServices from '../../../../../services/BlogServices';
+import BigNav from '../../../../components/BigNav';
+import CategoryList from '../../../../components/CategoryList';
 import './article.less';
 
 const Article = ({ detail, categories, subCategories }) => {
@@ -46,8 +46,8 @@ const Article = ({ detail, categories, subCategories }) => {
 };
 
 Article.getInitialProps = async context => {
-  const { id } = context.query;
-  const res = await BlogServices.getArticleDetail(id);
+  const { id, aId } = context.query;
+  const res = await BlogServices.getArticleDetail(aId);
   const categoryResp = await BlogServices.getAllCategories();
   const subC =
     (categoryResp &&

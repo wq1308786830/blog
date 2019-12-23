@@ -7,11 +7,12 @@ function TimeLineArticleList({ articles }) {
   return (
     <section className="timeline-list-container">
       {articles &&
-      articles.map(article => {
-        if (article) {
-          return <ArticleItem key={article.id} article={article} />
-        }
-      })}
+        articles.map(article => {
+          if (article) {
+            return <ArticleItem key={article.id} article={article} />;
+          }
+          return null;
+        })}
     </section>
   );
 }
