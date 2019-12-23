@@ -1,22 +1,24 @@
 import React from 'react';
-import { Collapse, Icon } from 'antd';
-import PropTypes from 'prop-types';
 import Link from 'next/link';
+import PropTypes from 'prop-types';
+import { Collapse, Icon } from 'antd';
+import './CategoryList.less';
 
 function CategoryList(props) {
-  const { category } = props;
+  const { id, category } = props;
 
   const customPanelStyle = {
-    background: '#f7f7f7',
+    minWidth: '20rem',
     borderRadius: 4,
-    marginBottom: 24,
     border: 0,
+    color: '#2E9286',
     overflow: 'hidden'
   };
 
   return (
     <>
       <Collapse
+        className="categories-container"
         bordered={false}
         defaultActiveKey={['1']}
         expandIcon={({ isActive }) => <Icon type="caret-right" rotate={isActive ? 90 : 0} />}
@@ -26,7 +28,7 @@ function CategoryList(props) {
             <Collapse.Panel header={c.name} key={c.id} style={customPanelStyle}>
               {c.subCategory &&
                 c.subCategory.map(s => (
-                  <Link key={s.id} href={`/articles/${s.id}`}>
+                  <Link key={s.id} href="/category/[id]/[leafId]" as={`/category/${id}/${s.id}`}>
                     <a>{s.name}</a>
                   </Link>
                 ))}
@@ -37,8 +39,9 @@ function CategoryList(props) {
   );
 }
 
+export default CategoryList;
+
 CategoryList.propTypes = {
+  id: PropTypes.string,
   category: PropTypes.array.isRequired
 };
-
-export default CategoryList;
