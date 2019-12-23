@@ -3,7 +3,7 @@ import React from 'react';
 import ArticleItem from './ArticleItem';
 import './TimeLine.less';
 
-function TimeLineArticleList({ articles }) {
+function TimeLineArticleList({ articles = [] }) {
   return (
     <section className="timeline-list-container">
       {articles.length ? (
