@@ -3,11 +3,15 @@ import React from 'react';
 import ArticleItem from './ArticleItem';
 import './TimeLine.less';
 
-function TimeLineArticleList({ articleList }) {
+function TimeLineArticleList({ articles }) {
   return (
     <section className="timeline-list-container">
-      {articleList &&
-        articleList.map(article => <ArticleItem key={article.id} article={article} />)}
+      {articles &&
+      articles.map(article => {
+        if (article) {
+          return <ArticleItem key={article.id} article={article} />
+        }
+      })}
     </section>
   );
 }
@@ -15,9 +19,5 @@ function TimeLineArticleList({ articleList }) {
 export default TimeLineArticleList;
 
 TimeLineArticleList.propTypes = {
-  articleList: PropTypes.array
-};
-
-TimeLineArticleList.defaultProps = {
-  articleList: []
+  articles: PropTypes.array.isRequired
 };

@@ -4,6 +4,7 @@ import Link from 'next/link';
 import './ArticleItem.less';
 
 function ArticleItem({ article }) {
+  if (!article) return null;
   const { id, title, description, date_publish: date } = article;
   return (
     <div className="article-item-wrap">
