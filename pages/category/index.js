@@ -7,7 +7,6 @@ import BlogServices from '../../services/BlogServices';
 import './index.less';
 
 export default function Index({ articleList, id, categories, subCategories }) {
-  console.log(articleList);
   return (
     <div className="doc">
       <main className="index-container">
@@ -21,7 +20,6 @@ export default function Index({ articleList, id, categories, subCategories }) {
 
 Index.getInitialProps = async context => {
   const { id, articleList } = context.query;
-  console.log(articleList);
   if (id) {
     return;
   }

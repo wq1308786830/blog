@@ -11,44 +11,21 @@ html {
   -webkit-text-size-adjust: 100%;
   -ms-text-size-adjust: 100%;
   height: 100%;
+  min-height: 100%;
 }
 
 body {
   margin: 0;
   padding: 0;
   height: 100%;
+  min-height: 100%;
   font-size: 1.4rem;
   background: transparent !important;
-
-  #root {
+  #__next {
     height: 100%;
+    min-height: 100%;
   }
 }
-
-.App {
-  height: 100%;
-}
-
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 8rem;
-}
-
-.App-header {
-  background-color: #222;
-  height: 15rem;
-  padding: 2rem;
-  color: white;
-}
-
-.App-title {
-  font-size: 1.5em;
-}
-
-.App-intro {
-  font-size: large;
-}
-
 .loading {
   height: 100%;
   display: flex;
@@ -65,14 +42,15 @@ body {
   }
 }
 .index-container {
-  height: inherit;
+  height: 100%;
+  min-height: 100%;
   margin: 0 auto;
   display: flex;
   max-width: 1200px;
   justify-content: space-around;
 }
 .doc {
-  height: 100vh ;
+  height: 100%;
   min-height: 100%;
   background: transparent url(/static/imgs/header-bg4.jpg) repeat-y -20px 0;
 }
