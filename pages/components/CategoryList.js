@@ -55,7 +55,6 @@ function CategoryList(props) {
                 c.subCategory.map(s => (
                   <Link
                     key={s.id}
-                    className={s.id === leafId ? 'active' : ''}
                     href="/category/[id]/[leafId]"
                     as={`/category/${id}/${s.id}`}
                   >
