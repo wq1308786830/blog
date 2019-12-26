@@ -34,7 +34,7 @@ const Article = ({ detail, categories, subCategories }) => {
               {textType === 'html' ? (
                 <div dangerouslySetInnerHTML={createHtml(content)} />
               ) : (
-                <ReactMarkdown source={content} />
+                <ReactMarkdown className="markdown-content" source={content} />
               )}
             </div>
           </article>
