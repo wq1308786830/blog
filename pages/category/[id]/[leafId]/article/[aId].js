@@ -3,9 +3,11 @@ import PropTypes from 'prop-types';
 import Head from 'next/head';
 import ReactMarkdown from 'react-markdown';
 import BlogServices from '../../../../../services/BlogServices';
-import BigNav from '../../../../components/BigNav';
 import CategoryList from '../../../../components/CategoryList';
-import './article.less';
+import BigNav from '../../../../components/BigNav';
+
+import base from '../../../../../components/base.less';
+import css from './article.less';
 
 const Article = ({ detail, categories, subCategories }) => {
   const { title, content, text_type: textType, date_publish: datePublish } = detail;
@@ -21,20 +23,20 @@ const Article = ({ detail, categories, subCategories }) => {
         {detail.keywords &&
           detail.keywords.map(keyword => <meta name="keywords" content={keyword} />)}
       </Head>
-      <main className="doc">
-        <main className="main index-container">
+      <main className={base.doc}>
+        <main className={`${css.main} ${base.indexContainer}`}>
           <section>{categories && <BigNav category={categories} />}</section>
-          <article className="content">
-            <time className="time">
+          <article className={css.content}>
+            <time className={`${base.time} ${css.time}`}>
               <strong>{datePublish && datePublish.substring(5, 10)}</strong>
               <span>{datePublish && datePublish.split('-')[0]}</span>
             </time>
             <h1>{title}</h1>
-            <div className="article-content">
+            <div className={css.articleContent}>
               {textType === 'html' ? (
                 <div dangerouslySetInnerHTML={createHtml(content)} />
               ) : (
-                <ReactMarkdown className="markdown-content" source={content} />
+                <ReactMarkdown className={css.markdown-content} source={content} />
               )}
             </div>
           </article>

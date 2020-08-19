@@ -29,7 +29,7 @@ async function request(url, options, isShowLoading) {
   const { prefix } = config;
 
   if (isShowLoading) {
-    tools.loading(true);
+    tools.loading(true, `请求接口:${prefix + url}\n参数:${JSON.stringify(options)}`);
   }
   let res;
   try {
@@ -47,7 +47,7 @@ async function request(url, options, isShowLoading) {
   }
 
   if (isShowLoading) {
-    tools.loading(false);
+    tools.loading(false, prefix + url);
   }
   return res;
 }

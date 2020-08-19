@@ -2,21 +2,22 @@ import React from 'react';
 import Link from 'next/link';
 import Router from 'next/router';
 import PropTypes from 'prop-types';
-import './BigNav.less';
+
+import css from './BigNav.less';
 
 function BigNav(props) {
   const { category } = props;
   return (
-    <section className="bignav-container">
+    <section className={css.bignavContainer}>
       <div>
         <img
           onClick={() => Router.push('/')}
-          className="avatar"
+          className={css.avatar}
           alt="avatar"
           src="https://oss.biosan.cn/weichat/mine/WechatIMG1.jpeg"
         />
       </div>
-      <nav className="nav">
+      <nav className={css.nav}>
         {category &&
           category.map(i => (
             <Link key={i.id} href="/category/[id]" as={`/category/${i.id}`}>

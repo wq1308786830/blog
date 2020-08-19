@@ -1,17 +1,17 @@
-.my-home {
+.myHome {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   color: #404040;
-  .my-face {
+  .myFace {
     height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
     background-color: rgba(0, 0, 0, 0);
   }
-  .face-content {
+  .faceContent {
     display: grid;
     grid: auto-flow / minmax(20%, 300px) minmax(max-content, 1fr) minmax(
       20%,
@@ -19,12 +19,12 @@
     );
     grid-template-rows: 100px minmax(max-content, 300px) 100px;
     grid-template-areas: '. . c' 'a b c' 'a . .';
-    .face-left {
+    .faceLeft {
       grid-area: a;
       width: 100%;
       height: 100%;
     }
-    .face-center {
+    .faceCenter {
       padding: 0 50px;
       grid-area: b;
       align-self: center;
@@ -40,19 +40,19 @@
         font-size: 28px;
       }
     }
-    .face-right {
+    .faceRight {
       grid-area: c;
       width: 100%;
       height: 100%;
     }
-    .face-img {
+    .faceImg {
       width: inherit;
       box-shadow: 2px 2px 20px 2px rgba(0, 0, 0, 0.3);
     }
   }
-  .knowledge-map {
+  .knowledgeMap {
     width: 100%;
-    .map-container {
+    .mapContainer {
       width: 100vw;
       max-width: 100%;
       height: 100vh;
@@ -69,9 +69,9 @@
 }
 
 @media screen and (orientation:landscape) {
-  .my-face {
-    .knowledge-map {
-      .map-container {
+  .myFace {
+    .knowledgeMap {
+      .mapContainer {
         img {
           height: 90%;
           width: auto;
@@ -82,9 +82,9 @@
 }
 /* iPhone X and Xs Max */
 @media only screen and (min-device-width: 375px) and (min-device-height: 812px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait) {
-  .my-face {
-    .knowledge-map {
-      .map-container {
+  .myFace {
+    .knowledgeMap {
+      .mapContainer {
         img {
           height: auto;
         }

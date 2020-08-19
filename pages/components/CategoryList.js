@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { Collapse, Icon } from 'antd';
-import './CategoryList.less';
+
+import css from './CategoryList.less';
 
 function CategoryList(props) {
   const { id, leafId } = useRouter().query;
@@ -40,7 +41,7 @@ function CategoryList(props) {
   return (
     <>
       <Collapse
-        className="categories-container"
+        className={css.categoriesContainer}
         bordered={false}
         onChange={onActiveChange}
         activeKey={activeKey}

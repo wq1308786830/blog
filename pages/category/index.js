@@ -4,12 +4,13 @@ import BigNav from '../components/BigNav';
 import TimeLineArticleList from '../components/TimeLineArticleList';
 import CategoryList from '../components/CategoryList';
 import BlogServices from '../../services/BlogServices';
-import './index.less';
+
+import base from '../../components/base.less';
 
 export default function Index({ articleList, id, categories, subCategories }) {
   return (
-    <div className="doc">
-      <main className="index-container">
+    <div className={base.doc}>
+      <main className={base.indexContainer}>
         {categories && <BigNav category={categories} />}
         <TimeLineArticleList articles={articleList} />
         {subCategories && <CategoryList id={id} category={subCategories} />}

@@ -2,7 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import './ArticleItem.less';
+
+import base from '../../components/base.less';
+import css from './ArticleItem.less';
 
 function ArticleItem({ article }) {
   const { id, leafId } = useRouter().query;
@@ -11,12 +13,12 @@ function ArticleItem({ article }) {
   }
   const { id: articleId, title, description, date_publish: date } = article;
   return (
-    <div className="article-item-wrap">
-      <time className="time">
+    <div className={css.articleItemWrap}>
+      <time className={base.time}>
         <strong>{date && date.substring(5, 10)}</strong>
         <span>{date && date.split('-')[0]}</span>
       </time>
-      <div className="desc">
+      <div className={css.desc}>
         <Link
           key={id}
           href="/category/[id]/[leafId]/article/[aId]"

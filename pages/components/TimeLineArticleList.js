@@ -1,11 +1,11 @@
-import PropTypes from 'prop-types';
 import React from 'react';
+import PropTypes from 'prop-types';
 import ArticleItem from './ArticleItem';
-import './TimeLine.less';
+import css from './TimeLine.less';
 
 function TimeLineArticleList({ articles = [] }) {
   return (
-    <section className="timeline-list-container">
+    <section className={css.timelineListContainer}>
       {articles.length ? (
         articles.map(article => {
           if (article) {
