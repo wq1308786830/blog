@@ -55,5 +55,10 @@
       "git add"
     ]
   },
-  "browserslist": [">0.3%", "not ie 11", "not dead", "not op_mini all"]
+  "browserslist": [
+    ">0.3%",
+    "not ie 11",
+    "not dead",
+    "not op_mini all"
+  ]
 }
