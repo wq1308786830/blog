@@ -7,15 +7,15 @@
     "prod": "rimraf .next && next build && next start -p 5003",
     "build": "next build",
     "start": "next start -p 5003",
+    "build-html": "next build && next export",
     "clean": "rimraf .next",
     "lint": "eslint ./pages && echo 'Lint complete.'",
     "lint-fix": "eslint --fix ./pages ./components ./services ./store && echo 'Lint fix complete.'"
   },
   "dependencies": {
-    "antd": "^3.21.2",
     "isomorphic-unfetch": "^3.0.0",
     "md5": "^2.2.1",
-    "next": "^9.5.2",
+    "next": "^10.0.1",
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
@@ -24,6 +24,7 @@
   "devDependencies": {
     "@babel/plugin-proposal-class-properties": "^7.5.5",
     "@babel/plugin-proposal-decorators": "^7.4.4",
+    "@zeit/next-css": "^1.0.1",
     "@zeit/next-less": "^1.0.1",
     "babel-eslint": "^10.0.2",
     "babel-plugin-import": "^1.12.0",

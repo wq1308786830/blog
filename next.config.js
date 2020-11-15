@@ -1,15 +1,15 @@
 /* eslint-disable */
 const withLess = require('@zeit/next-less');
-
+const withCss = require('@zeit/next-css');
 
 module.exports = withLess({
-  cssModules: true,  // todo
+  cssModules: true, // todo
   cssLoaderOptions: {
     importLoaders: 1,
-    localIdentName: "[local]___[hash:base64:5]",
+    localIdentName: '[local]___[hash:base64:5]'
   },
   lessLoaderOptions: {
-    javascriptEnabled: true,
+    javascriptEnabled: true
   },
   webpack: (config, { isServer }) => {
     if (isServer) {
