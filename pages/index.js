@@ -1,5 +1,5 @@
 import React from "react";
-import css from "./Home.less";
+import css from "./Home.module.less";
 
 const FaceLeftPic = "/static/imgs/home/NDk2MDg0NjE1.jpeg";
 const RussellPic = "/static/imgs/home/Bertrand_Russell.jpg";
