@@ -4,9 +4,8 @@ const util = require('util');
 const exec = util.promisify(child.exec);
 
 async function doGenerate() {
-  const cmdClear = 'yarn clear';
-  const cmdBuild = 'yarn build';
-  const cmdStart = 'yarn start';
+  const cmdClear = 'yarn clean';
+  const cmdBuild = 'yarn production';
   try {
     let str = '';
     await exec(cmdClear);
@@ -16,14 +15,6 @@ async function doGenerate() {
       str = 'build success with warning';
     } else {
       str = 'build success';
-    }
-
-    const exportResult = await exec(cmdStart);
-    if (exportResult.stderr) {
-      process.stdout.write(`\nstderr: \n${exportResult.stderr}\n`);
-      str = 'export success with warning';
-    } else {
-      str = 'export success';
     }
 
     return Promise.resolve(str);
