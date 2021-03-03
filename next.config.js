@@ -1,37 +1,16 @@
-/* eslint-disable */
-const withLess = require('@zeit/next-less');
-const withCss = require('@zeit/next-css');
-
-module.exports = withLess({
-  cssModules: true, // todo
-  cssLoaderOptions: {
-    importLoaders: 1,
-    localIdentName: '[local]___[hash:base64:5]'
+module.exports = {
+  generateEtags: true,
+  assetPrefix: '',
+  env: {
+    ENV_NAME: process.env.ENV_NAME,
   },
-  lessLoaderOptions: {
-    javascriptEnabled: true
-  },
-  webpack: (config, { isServer }) => {
-    if (isServer) {
-      const antStyles = /antd\/.*?\/style.*?/;
-      const origExternals = [...config.externals];
-      config.externals = [
-        (context, request, callback) => {
-          if (request.match(antStyles)) return callback();
-          if (typeof origExternals[0] === 'function') {
-            origExternals[0](context, request, callback);
-          } else {
-            callback();
-          }
-        },
-        ...(typeof origExternals[0] === 'function' ? [] : origExternals)
-      ];
+  pageExtensions: ['mdx', 'jsx', 'js', 'ts', 'tsx'],
+  webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
+    // console.log(webpack);
+    // Note: we provide webpack above so you should not `require` it
+    // Perform customizations to webpack config
 
-      config.module.rules.unshift({
-        test: antStyles,
-        use: 'null-loader'
-      });
-    }
+    // Important: return the modified config
     return config;
-  }
-});
+  },
+};

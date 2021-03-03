@@ -2,13 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Category from '../../index';
 import BlogServices from '../../../../services/BlogServices';
-import '../../index.less';
+import '../../index.module.scss';
 
 export default function Index(props) {
   return <Category {...props} />;
 }
 
-Index.getInitialProps = async context => {
+Index.getServersideProps = async context => {
   const { id, leafId } = context.query;
   const categoryResp = await BlogServices.getAllCategories();
   const articleListResp = await BlogServices.getArticleList(leafId);

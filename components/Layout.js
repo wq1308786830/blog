@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import './base.less';
+import './base.module.scss';
 
 export default function Layout({ children }) {
   return <>{children}</>;

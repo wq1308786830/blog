@@ -2,9 +2,11 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { Collapse, Icon } from 'antd';
+import { Collapse } from 'antd';
+import { CaretRightOutlined } from '@ant-design/icons';
 
-import css from './CategoryList.less';
+
+import css from './CategoryList.module.scss';
 
 function CategoryList(props) {
   const { id, leafId } = useRouter().query;
@@ -47,7 +49,7 @@ function CategoryList(props) {
         activeKey={activeKey}
         defaultActiveKey={activeKey}
         expandIconPosition="right"
-        expandIcon={({ isActive }) => <Icon type="caret-right" rotate={isActive ? 90 : 0} />}
+        expandIcon={({ isActive }) => <CaretRightOutlined rotate={isActive ? 90 : 0} />}
       >
         {category &&
           category.map(c => (

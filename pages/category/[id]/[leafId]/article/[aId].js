@@ -6,8 +6,8 @@ import BlogServices from '../../../../../services/BlogServices';
 import CategoryList from '../../../../components/CategoryList';
 import BigNav from '../../../../components/BigNav';
 
-import base from '../../../../../components/base.less';
-import css from './article.less';
+import base from '@/components/base.module.scss';
+import css from './article.module.scss';
 
 const Article = ({ detail, categories, subCategories }) => {
   const { title, content, text_type: textType, date_publish: datePublish } = detail;
@@ -47,7 +47,7 @@ const Article = ({ detail, categories, subCategories }) => {
   );
 };
 
-Article.getInitialProps = async context => {
+Article.getServersideProps = async context => {
   const { id, aId } = context.query;
   const res = await BlogServices.getArticleDetail(aId);
   const categoryResp = await BlogServices.getAllCategories();

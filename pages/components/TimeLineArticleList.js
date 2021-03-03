@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ArticleItem from './ArticleItem';
-import css from './TimeLine.less';
+import css from './TimeLine.module.scss';
 
 function TimeLineArticleList({ articles = [] }) {
   return (

@@ -12,14 +12,16 @@
     "lint-fix": "eslint --fix ./pages ./components ./services ./store && echo 'Lint fix complete.'"
   },
   "dependencies": {
-    "antd": "^3.21.2",
+    "antd": "^4.13.0",
     "isomorphic-unfetch": "^3.0.0",
     "md5": "^2.2.1",
-    "next": "10.0.5",
+    "next": "^10.0.7",
     "prop-types": "^15.7.2",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
-    "react-markdown": "^4.2.2"
+    "react-markdown": "^4.2.2",
+    "sass": "^1.32.8",
+    "webpack": "4"
   },
   "devDependencies": {
     "@babel/plugin-proposal-class-properties": "^7.5.5",

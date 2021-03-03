@@ -3,7 +3,7 @@ import Link from 'next/link';
 import Router from 'next/router';
 import PropTypes from 'prop-types';
 
-import css from './BigNav.less';
+import css from './BigNav.module.scss';
 
 function BigNav(props) {
   const { category } = props;

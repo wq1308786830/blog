@@ -7,7 +7,7 @@ export default function CategorySub(props) {
   return <Category {...props} />;
 }
 
-CategorySub.getInitialProps = async context => {
+CategorySub.getServersideProps = async context => {
   const { id, leafId } = context.query;
   if (leafId) {
     return {};

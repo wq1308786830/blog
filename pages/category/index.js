@@ -5,7 +5,7 @@ import TimeLineArticleList from '../components/TimeLineArticleList';
 import CategoryList from '../components/CategoryList';
 import BlogServices from '../../services/BlogServices';
 
-import base from '../../components/base.less';
+import base from '@/components/base.module.scss';
 
 export default function Index({ articleList, id, categories, subCategories }) {
   return (
@@ -19,8 +19,9 @@ export default function Index({ articleList, id, categories, subCategories }) {
   );
 }
 
-Index.getInitialProps = async context => {
+Index.getServersideProps = async context => {
   const { id, articleList } = context.query;
+  console.log('===========', context);
   if (id) {
     return {};
   }
@@ -43,8 +44,8 @@ Index.getInitialProps = async context => {
 Index.propTypes = {
   id: PropTypes.string,
   articleList: PropTypes.array,
-  categories: PropTypes.array.isRequired,
-  subCategories: PropTypes.array.isRequired
+  categories: PropTypes.array,
+  subCategories: PropTypes.array
 };
 
 Index.defaultProps = {

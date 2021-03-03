@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
-import base from '../../components/base.less';
-import css from './ArticleItem.less';
+import base from '@/components/base.module.scss';
+import css from './ArticleItem.module.scss';
 
 function ArticleItem({ article }) {
   const { id, leafId } = useRouter().query;
