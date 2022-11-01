@@ -4,7 +4,7 @@ import { getArticleList } from '@/services/blog';
 import { PageProps } from '@/utils/data.d';
 import css from '@/styles/article.module.scss';
 
-function Page(props: PageProps) {
+function Page(props: PageProps<{ leafId: string }>) {
   const { params } = props;
   const resp: any = use(getArticleList(params.leafId));
   const { data: articleList } = resp;

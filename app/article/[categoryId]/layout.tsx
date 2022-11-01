@@ -4,7 +4,7 @@ import LeftNav from './LeftNav';
 import { PageProps } from '@/utils/data.d';
 import css from '@/styles/article.module.scss';
 
-export default function Layout(props: PageProps) {
+export default function Layout(props: PageProps<{ categoryId: string }>) {
   const { children, params } = props;
   const resp: any = use(getAllCategories());
   const { data: navs } = resp;
@@ -14,10 +14,9 @@ export default function Layout(props: PageProps) {
   }
 
   const sub = navs.find((nav) => nav.id === +params.categoryId);
-  console.log('=====params', sub);
   return (
     <section className={css.body}>
-      <LeftNav sub={sub} />
+      <LeftNav sub={sub} categoryId={+params.categoryId} />
       <div>{children}</div>
     </section>
   );

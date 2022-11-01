@@ -5,14 +5,15 @@ import css from '@/styles/article.module.scss';
 
 interface CategoryTreeProps {
   category: Category;
+  categoryId: number;
 }
 function CategoryTree(props: CategoryTreeProps) {
-  const { category } = props;
+  const { category, categoryId } = props;
 
   const renderSubs = (sub: Category) => {
     if (!Array.isArray(sub?.subCategory)) {
       return (
-        <Link key={sub.id} href={`/article/${category.id}/${sub.id}`} className={css.link}>
+        <Link key={sub.id} href={`/article/${categoryId}/${sub.id}`} className={css.link}>
           {sub.name}
         </Link>
       );

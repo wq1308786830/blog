@@ -1,5 +1,5 @@
 import React from 'react';
-import css from './Home.module.scss';
+import css from '@/styles/Home.module.scss';
 
 const FaceLeftPic = '/imgs/home/NDk2MDg0NjE1.jpeg';
 const RussellPic = '/imgs/home/Bertrand_Russell.jpg';

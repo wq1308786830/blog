@@ -1,7 +1,9 @@
 import React from 'react';
 import '@/styles/dist.css';
+import { PageProps } from "@/utils/data.d";
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout(props: PageProps<any>) {
+  const { children } = props;
   return (
     <html lang="zh-CN">
       <head>

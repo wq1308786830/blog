@@ -1,7 +1,7 @@
-export type PageProps = {
-  params?: any;
+export interface PageProps<T> {
+  params?: T | any;
   children?: React.ReactNode;
-};
+}
 
 export interface Category {
   father_id: number;
