@@ -8,7 +8,8 @@ export default function Index(props) {
   return <Category {...props} />;
 }
 
-Index.getServersideProps = async context => {
+export const getServerSideProps = async context => {
+  console.log(11111111)
   const { id, leafId } = context.query;
   const categoryResp = await BlogServices.getAllCategories();
   const articleListResp = await BlogServices.getArticleList(leafId);
@@ -21,10 +22,12 @@ Index.getServersideProps = async context => {
       })) ||
     {};
   return {
-    id,
-    articleList: articleList || [],
-    categories: categories || [],
-    subCategories: subC.subCategory || []
+    props: {
+      id,
+      articleList: articleList || [],
+      categories: categories || [],
+      subCategories: subC.subCategory || []
+    }
   };
 };
 

@@ -3,3 +3,5 @@ node_modules/*
 public/*
 build/*
 config/*
+next.config.js
+ecosystem.config.js

@@ -1,0 +1,75 @@
+@import "variables";
+.navsWrapper {
+  position: fixed;
+  left: 0;
+  right: 0;
+  z-index: 9;
+  gap: 24px;
+  height: 64px;
+  display: flex;
+  align-content: center;
+  justify-content: flex-start;
+  background-color: #fff;
+
+  .navItem {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 21px 16px 1px;
+    gap: 16px;
+    height: 64px;
+    font-size: 14px;
+    box-sizing: border-box;
+    &:hover {
+      font-weight: 500;
+      color: $primary;
+      cursor: pointer;
+    }
+    &.active {
+      color: $primary;
+    }
+
+    .activeBar {
+      position: absolute;
+      bottom: 0;
+      width: 24px;
+      height: 4px;
+      background: $primary;
+      border-radius: 2px 2px 0px 0px;
+    }
+  }
+}
+
+.body {
+  display: flex;
+
+}
+
+.content {
+  padding-top: 64px;
+}
+
+.leftNavWrapper {
+  width: 200px;
+  padding: 40px 24px 64px;
+
+}
+.categoryTreeWrapper {
+  .dl {
+    position: relative;
+    padding: 16px 0;
+    .dt {
+      padding: 0 16px;
+    }
+    .dd {
+      margin-left: 16px;
+      padding: 0 16px;
+    }
+  }
+
+  .link {
+    color: $primary;
+  }
+}
