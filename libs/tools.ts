@@ -1,21 +1,22 @@
-import { message } from 'antd';
-
 /**
  * 展示loading
  * @param isShow 是否展示
  * @param afterClose 关闭后的执行函数
  * @param content loading下的文案
  */
-function loading(isShow = true, content = '正在加载...', afterClose = undefined) {
+export function loading(isShow = true, content = '正在加载...', afterClose: Function = () => {}) {
   if (typeof window === 'object') {
     if (isShow) {
-      message.loading(content, 0, afterClose);
+      // message.loading(content, 0, afterClose);
     } else {
-      message.destroy();
-      afterClose && afterClose();
+      // message.destroy();
+      // eslint-disable-next-line no-lonely-if
+      if (typeof afterClose === 'function') {
+        afterClose();
+      }
     }
   } else {
-    console.log(content);
+    // console.log(content);
   }
 }
 
@@ -24,10 +25,12 @@ function loading(isShow = true, content = '正在加载...', afterClose = undefi
  * @param afterClose 关闭后的执行函数
  * @param content toast文案
  */
-function toast(content, afterClose = undefined) {
+export function toast(content: any, afterClose = () => {}) {
   if (typeof window === 'object') {
-    message.info(content, 2, afterClose);
-    afterClose && afterClose();
+    // message.info(content, 2, afterClose);
+    if (typeof afterClose === 'function') {
+      afterClose();
+    }
   } else {
     console.log(content);
   }
@@ -38,17 +41,13 @@ function toast(content, afterClose = undefined) {
  * @param {Object} obj 请求参数
  * @return {string}
  */
-function parseObj2SearchParams(obj) {
+export function parseObj2SearchParams(obj: any) {
   let searchParams = '';
   if (obj !== null && obj !== undefined) {
     searchParams = Object.keys(obj)
-      .map(key => {
-        return `${encodeURIComponent(key)}=${encodeURIComponent(obj[key])}`;
-      })
+      .map((key) => `${encodeURIComponent(key)}=${encodeURIComponent(obj[key])}`)
       .join('&');
   }
 
   return searchParams;
 }
-
-export default { loading, toast, parseObj2SearchParams };

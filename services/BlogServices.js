@@ -1,4 +1,4 @@
-import request from '../utils/request';
+import request from '../libs/request';
 
 function getCategories(fatherId) {
   return request.GET('/category/getCategories', { fatherId });
@@ -30,5 +30,5 @@ export default {
   getArticleList,
   getArticleDetail,
   getArticleRecommendLinks,
-  deleteCategory
+  deleteCategory,
 };

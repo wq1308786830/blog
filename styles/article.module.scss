@@ -48,13 +48,17 @@
 }
 
 .content {
-  padding-top: 64px;
+  padding: 64px 0 0 200px;
 }
 
 .leftNavWrapper {
+  position: absolute;
+  top: 64px;
+  left: 0;
+  bottom: 0;
   width: 200px;
-  padding: 40px 24px 64px;
-
+  padding: 0 24px 64px;
+  overflow-y: scroll;
 }
 .categoryTreeWrapper {
   .dl {

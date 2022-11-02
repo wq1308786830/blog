@@ -1,15 +1,15 @@
 import fetch from 'isomorphic-unfetch';
-import tools from './tools';
-import config from '../config';
+import { loading, toast, parseObj2SearchParams } from './tools';
+import { prefix } from '@/config/index';
 
-function checkStatus(response) {
+function checkStatus(response: any) {
   if (response.status < 200 || response.status >= 300) {
-    const error = new Error(response.statusText);
+    const error: any = new Error(response.statusText);
     error.response = response;
     error.errMessage = '网络错误~';
     throw error;
   } else if (response.data && response.data.message === 'GENERAL') {
-    const error = new Error(response.statusText);
+    const error: any = new Error(response.statusText);
     error.response = response;
     error.errMessage = '哎呀，系统开小差啦！';
     throw error;
@@ -25,29 +25,28 @@ function checkStatus(response) {
  * @param  {boolean} [isShowLoading] 是否展示loading
  * @return {Promise}          返回数据，Promise或者undefined
  */
-async function request(url, options, isShowLoading) {
-  const { prefix } = config;
-
+async function request(url: string, options: any, isShowLoading: boolean) {
   if (isShowLoading) {
-    tools.loading(true, `请求接口:${prefix + url}\n参数:${JSON.stringify(options)}`);
+    loading(true, `请求接口:${prefix + url}\n参数:${JSON.stringify(options)}`);
   }
   let res;
   try {
     const response = await fetch(prefix + url, options);
     checkStatus(response);
     res = await response.json();
-  } catch (e) {
-    tools.loading(false, undefined, () => {
+  } catch (e: any) {
+    // @ts-ignore
+    loading(false, undefined, () => {
       if (e.errMessage) {
-        return tools.toast(e.errMessage);
+        return toast(e.errMessage);
       }
-      return tools.toast('网络错误～');
+      return toast('网络错误～');
     });
     throw e;
   }
 
   if (isShowLoading) {
-    tools.loading(false, prefix + url);
+    loading(false, prefix + url);
   }
   return res;
 }
@@ -59,9 +58,8 @@ async function request(url, options, isShowLoading) {
  * @param message 后端返回字段`message`
  * @returns {boolean}
  */
-const isNeedFreshCode = (url, result, message) => {
-  return !/login/.test(url) && (result === 'fail' && message === 'token失效');
-};
+const isNeedFreshCode = (url: string, result: any, message: any) =>
+  !/login/.test(url) && result === 'fail' && message === 'token失效';
 
 /**
  * 用户登录
@@ -83,7 +81,7 @@ function login() {
  * @param showLoading 是否展示loading
  * @returns {Promise<void>} 请求返回结果
  */
-const requestWithLogin = async (url, options, showLoading) => {
+const requestWithLogin = async (url: string, options: any, showLoading: boolean) => {
   const token = '11111';
 
   let isLogin = false;
@@ -98,8 +96,8 @@ const requestWithLogin = async (url, options, showLoading) => {
     headers: {
       Authorization: token,
       Accept: 'application/json',
-      'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
-    }
+      'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
+    },
   };
 
   let resp;
@@ -110,7 +108,7 @@ const requestWithLogin = async (url, options, showLoading) => {
       if (isLogin) {
         resp = await request(url, fetchOptions, showLoading);
       } else {
-        tools.toast('登录失败');
+        toast('登录失败');
       }
     }
   }
@@ -126,52 +124,45 @@ const requestWithLogin = async (url, options, showLoading) => {
  * @returns {Promise<void>} 返回结果
  * @constructor
  */
-const GET = (url, params = null, showLoading = false) => {
-  let searchParams = tools.parseObj2SearchParams(params);
+export const GET = (url: string, params: any = null, showLoading = false) => {
+  let searchParams = parseObj2SearchParams(params);
   searchParams = searchParams === '' ? searchParams : `?${searchParams}`;
 
   const options = {
-    method: 'GET'
+    method: 'GET',
   };
 
   return requestWithLogin(`${url}${searchParams}`, options, showLoading);
 };
 
-const POST = (url, params = null, showLoading = false) => {
-  const searchParams = tools.parseObj2SearchParams(params);
+export const POST = (url: string, params: any = null, showLoading = false) => {
+  const searchParams = parseObj2SearchParams(params);
 
   const options = {
     method: 'POST',
-    body: searchParams
+    body: searchParams,
   };
 
   return requestWithLogin(url, options, showLoading);
 };
 
-const PUT = (url, params = null, showLoading = false) => {
-  const searchParams = tools.parseObj2SearchParams(params);
+export const PUT = (url: string, params: any = null, showLoading = false) => {
+  const searchParams = parseObj2SearchParams(params);
 
   const options = {
     method: 'PUT',
-    body: searchParams
+    body: searchParams,
   };
 
   return requestWithLogin(url, options, showLoading);
 };
 
-const DELETE = (url, params = null, showLoading = false) => {
-  const searchParams = tools.parseObj2SearchParams(params);
+export const DELETE = (url: string, params: any = null, showLoading = false) => {
+  const searchParams = parseObj2SearchParams(params);
 
   const options = {
     method: 'DELETE',
-    body: searchParams
+    body: searchParams,
   };
   return requestWithLogin(url, options, showLoading);
-};
-
-export default {
-  GET,
-  POST,
-  PUT,
-  DELETE
 };

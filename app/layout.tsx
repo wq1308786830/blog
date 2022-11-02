@@ -1,6 +1,6 @@
 import React from 'react';
 import '@/styles/dist.css';
-import { PageProps } from "@/utils/data.d";
+import type { PageProps } from '@/libs/data.d';
 
 export default function RootLayout(props: PageProps<any>) {
   const { children } = props;

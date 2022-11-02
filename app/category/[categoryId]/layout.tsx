@@ -1,7 +1,7 @@
 import React, { use } from 'react';
-import { getAllCategories } from '@/services/blog';
+import { getAllCategories } from '@/libs/blog';
 import LeftNav from './LeftNav';
-import { PageProps } from '@/utils/data.d';
+import type { PageProps } from '@/libs/data.d';
 import css from '@/styles/article.module.scss';
 
 export default function Layout(props: PageProps<{ categoryId: string }>) {
