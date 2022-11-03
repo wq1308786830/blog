@@ -1,5 +1,6 @@
 import React, { use } from 'react';
 import Image from 'next/image';
+import ReactMarkdown from 'react-markdown';
 import type { PageProps } from '@/libs/data.d';
 import { getArticleDetail } from '@/libs/blog';
 import ArticleDetail from '@/ui/ArticleDetail';
@@ -11,7 +12,7 @@ function Page(props: PageProps<{ articleId: string }>) {
 
   const resp = use(getArticleDetail(articleId));
   if (!resp.data) {
-    return <Image src="https://api.dujin.org/bing/1920.php" width={1920} height={1080} alt="" />;
+    return null;
   }
 
   const { title, content, date_publish: datePublish, text_type: textType } = resp.data;

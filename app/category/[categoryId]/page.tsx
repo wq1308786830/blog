@@ -1,5 +1,5 @@
 import React, { use } from 'react';
-import css from '@/styles/article.module.scss';
+import Image from 'next/image';
 import { getArticleList } from '@/libs/blog';
 import ArticleList from '@/ui/ArticleList';
 import type { PageProps } from '@/libs/data.d';
@@ -11,15 +11,11 @@ function Page(props: PageProps<{ categoryId: string }>) {
   const resp: any = use(getArticleList(categoryId));
   const { data: articleList } = resp;
 
-  if (!Array.isArray(articleList)) {
+  if (!Array.isArray(articleList) || !articleList.length) {
     return null;
   }
 
-  return (
-    <div className={css.main}>
-      <ArticleList categoryId={categoryId} list={articleList} />
-    </div>
-  );
+  return <ArticleList categoryId={categoryId} list={articleList} />;
 }
 
 export default Page;

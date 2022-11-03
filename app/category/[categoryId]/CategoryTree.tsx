@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import type { Category } from '@/libs/data';
+import type { Category } from '@/libs/data.d';
 import css from '@/styles/article.module.scss';
 
 interface CategoryTreeProps {
@@ -13,7 +13,7 @@ function CategoryTree(props: CategoryTreeProps) {
   const renderSubs = (sub: Category) => {
     if (!Array.isArray(sub?.subCategory)) {
       return (
-        <Link key={sub.id} href={`/category/${categoryId}`} className={css.link}>
+        <Link key={sub.id} href={`/category/${categoryId}/${sub.id}`} className={css.link}>
           {sub.name}
         </Link>
       );

@@ -17,7 +17,7 @@ export default function Layout(props: PageProps<{ categoryId: string }>) {
   return (
     <section className={css.body}>
       <LeftNav sub={sub} categoryId={+params.categoryId} />
-      <div>{children}</div>
+      {children}
     </section>
   );
 }
