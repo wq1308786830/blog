@@ -67,7 +67,7 @@
   bottom: 0;
   width: 200px;
   padding: 24px 24px 64px;
-  overflow-y: scroll;
+  overflow-y: auto;
 
   background-color: rgba(255,255,255,0.6);
   backdrop-filter: blur(6px);
@@ -99,7 +99,7 @@
   padding: 32px;
   background-color: rgba(255,255,255, 0.7);
   backdrop-filter: blur(6px);
-  overflow-y: scroll;
+  overflow-y: auto;
 
   .articleLink {
     height: 100%;
@@ -134,7 +134,7 @@
   padding: 32px;
   background-color: rgba(255,255,255, 0.7);
   backdrop-filter: blur(6px);
-  overflow-y: scroll;
+  overflow-y: auto;
 
   .content {
     min-height: 100%;

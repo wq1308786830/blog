@@ -6,6 +6,5 @@ export const Config = {
   development: 'http://localhost:5002',
 };
 
-// env = 'production';
-
 export const prefix = Config[env];
+// export const prefix = Config.test;
