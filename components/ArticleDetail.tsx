@@ -24,7 +24,7 @@ function ArticleDetail(props: ArticleDetailProps) {
         </div>
 
         {textType === 'html' ? (
-          <div dangerouslySetInnerHTML={createHtml(content)} />
+          <div className="leading-relaxed text-gray-600" dangerouslySetInnerHTML={createHtml(content)} />
         ) : (
           <ReactMarkdown className={markdownCss.markdown}>{content}</ReactMarkdown>
         )}
