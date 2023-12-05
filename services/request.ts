@@ -1,6 +1,6 @@
 import fetch from 'isomorphic-unfetch';
 import { loading, toast, parseObj2SearchParams } from './tools';
-import { prefix } from '@/config/index';
+import { prefix } from '@/services/config';
 
 function checkStatus(response: any) {
   if (response.status < 200 || response.status >= 300) {

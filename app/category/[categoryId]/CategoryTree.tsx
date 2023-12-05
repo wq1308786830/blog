@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import type { Category } from '@/libs/data.d';
+import type { Category } from '@/services/data.d';
 import css from '@/styles/article.module.scss';
 
 interface CategoryTreeProps {

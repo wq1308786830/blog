@@ -3,7 +3,7 @@
 import React from 'react';
 import clsx from 'clsx';
 import { usePathname, useRouter } from 'next/navigation';
-import type { Category } from '@/libs/data.d';
+import type { Category } from '@/services/data.d';
 import css from '@/styles/article.module.scss';
 
 interface TopNavProps {

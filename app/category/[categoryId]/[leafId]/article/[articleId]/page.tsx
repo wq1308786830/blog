@@ -1,9 +1,7 @@
 import React, { use } from 'react';
-import Image from 'next/image';
-import ReactMarkdown from 'react-markdown';
-import type { PageProps } from '@/libs/data.d';
-import { getArticleDetail } from '@/libs/blog';
-import ArticleDetail from '@/ui/ArticleDetail';
+import type { PageProps } from '@/services/data.d';
+import { getArticleDetail } from '@/services/blog';
+import ArticleDetail from '@/components/ArticleDetail';
 
 function Page(props: PageProps<{ articleId: string }>) {
   const {

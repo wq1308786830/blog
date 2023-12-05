@@ -1,4 +1,4 @@
-import { PageProps } from '@/libs/data.d';
+import { PageProps } from '@/services/data.d';
 
 function Template(props: PageProps<any>) {
   const { children } = props;

@@ -1,8 +1,8 @@
 import React, { use } from 'react';
-import { getAllCategories } from '@/libs/blog';
-import LeftNav from './LeftNav';
-import type { PageProps } from '@/libs/data.d';
+import { getAllCategories } from '@/services/blog';
+import type { PageProps } from '@/services/data.d';
 import css from '@/styles/article.module.scss';
+import LeftNav from './LeftNav';
 
 export default function Layout(props: PageProps<{ categoryId: string }>) {
   const { children, params } = props;

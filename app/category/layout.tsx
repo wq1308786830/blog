@@ -1,8 +1,8 @@
 import React, { use } from 'react';
-import TopNav from './TopNav';
-import { getAllCategories } from '@/libs/blog';
-import type { PageProps } from '@/libs/data.d';
+import { getAllCategories } from '@/services/blog';
+import type { PageProps } from '@/services/data.d';
 import css from '@/styles/article.module.scss';
+import TopNav from './TopNav';
 
 export default function Layout(props: PageProps<any>) {
   const { children } = props;

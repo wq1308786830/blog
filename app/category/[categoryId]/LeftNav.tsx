@@ -1,9 +1,9 @@
 'use client';
 
 import React from 'react';
-import CategoryTree from './CategoryTree';
-import type { Category } from '@/libs/data';
+import type { Category } from '@/services/data';
 import css from '@/styles/article.module.scss';
+import CategoryTree from './CategoryTree';
 
 interface LeftNavProps {
   sub: Category;

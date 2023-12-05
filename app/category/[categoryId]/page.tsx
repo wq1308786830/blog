@@ -1,8 +1,7 @@
 import React, { use } from 'react';
-import Image from 'next/image';
-import { getArticleList } from '@/libs/blog';
-import ArticleList from '@/ui/ArticleList';
-import type { PageProps } from '@/libs/data.d';
+import { getArticleList } from '@/services/blog';
+import ArticleList from '@/components/ArticleList';
+import type { PageProps } from '@/services/data.d';
 
 function Page(props: PageProps<{ categoryId: string }>) {
   const {

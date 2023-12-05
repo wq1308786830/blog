@@ -1,6 +1,6 @@
 import React, { use } from 'react';
-import { getArticleList } from '@/libs/blog';
-import ArticleList from '@/ui/ArticleList';
+import { getArticleList } from '@/services/blog';
+import ArticleList from '@/components/ArticleList';
 
 function Page() {
   const resp: any = use(getArticleList(''));

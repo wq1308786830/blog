@@ -1,4 +1,5 @@
 import React from 'react';
+import Image from 'next/image';
 import css from '@/styles/Home.module.scss';
 
 const FaceLeftPic = '/imgs/home/NDk2MDg0NjE1.jpeg';
@@ -11,7 +12,7 @@ function Page() {
       <section className={css.myFace}>
         <div className={css.faceContent}>
           <div className={css.faceLeft}>
-            <img
+            <Image
               className={css.faceImg}
               src={FaceLeftPic}
               alt="人类首张黑洞照片"
@@ -24,7 +25,7 @@ function Page() {
             <h2>喜欢思考热爱知识，有一颗不安分的心！</h2>
           </div>
           <div className={css.faceRight}>
-            <img
+            <Image
               className={css.faceImg}
               src={RussellPic}
               alt="伯特兰.罗素油画"
@@ -37,10 +38,10 @@ function Page() {
       </section>
       <section className={css.knowledgeMap}>
         <div className={css.mapContainer}>
-          <img src={FrontendPic} alt="前端知识网络" />
+          <Image src={FrontendPic} alt="前端知识网络" />
         </div>
         <div className={css.mapContainer}>
-          <img src={ProgramPic} alt="后端知识网络" />
+          <Image src={ProgramPic} alt="后端知识网络" />
         </div>
       </section>
       <footer>
