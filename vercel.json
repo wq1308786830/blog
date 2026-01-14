@@ -1,0 +1,16 @@
+{
+  "rewrites": [
+    {
+      "source": "/article/(.*)",
+      "destination": "/article"
+    },
+    {
+      "source": "/category/(.*)",
+      "destination": "/category"
+    },
+    {
+      "source": "/weChat/(.*)",
+      "destination": "/weChat"
+    }
+  ]
+}

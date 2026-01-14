@@ -11,6 +11,7 @@
   "dependencies": {
     "clsx": "^2.0.0",
     "dayjs": "^1.11.10",
+    "http-proxy-middleware": "^3.0.5",
     "isomorphic-unfetch": "^3.1.0",
     "md5": "^2.3.0",
     "next": "14.0.3",
