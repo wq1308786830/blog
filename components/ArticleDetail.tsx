@@ -42,6 +42,7 @@ function CodeComponent({ inline = true, className, children }: any) {
       wrapLongLines
       showLineNumbers
     >
+      {lang}
       {String(children).replace(/\n$/, '')}
     </SyntaxHighlighter>
   );
@@ -54,8 +55,6 @@ const markdownComponents = {
 function ArticleDetail(props: ArticleDetailProps) {
   const { title, content, datePublish, textType } = props;
   
-  console.log(content)
-
   const createHtml = (c: string) => ({ __html: c });
 
   return (
