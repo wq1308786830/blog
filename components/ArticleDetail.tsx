@@ -16,13 +16,12 @@ interface ArticleDetailProps {
 }
 
 interface CodeComponentProps {
-  node?: any;
   inline?: boolean;
   className?: string;
   children?: React.ReactNode;
 }
 
-const CodeComponent = ({ inline, className, children }: CodeComponentProps) => {
+function CodeComponent({ inline = false, className = '', children }: CodeComponentProps) {
   const match = /language-(\w+)/.exec(className || '');
   const lang = match ? match[1] : '';
 
@@ -51,7 +50,7 @@ const CodeComponent = ({ inline, className, children }: CodeComponentProps) => {
       {String(children).replace(/\n$/, '')}
     </SyntaxHighlighter>
   );
-};
+}
 
 const markdownComponents = {
   code: CodeComponent,
