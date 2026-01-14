@@ -2,15 +2,15 @@
   "rewrites": [
     {
       "source": "/article/(.*)",
-      "destination": "/article"
+      "destination": "/api/proxy"
     },
     {
       "source": "/category/(.*)",
-      "destination": "/category"
+      "destination": "/api/proxy"
     },
     {
       "source": "/weChat/(.*)",
-      "destination": "/weChat"
+      "destination": "/api/proxy"
     }
   ]
 }

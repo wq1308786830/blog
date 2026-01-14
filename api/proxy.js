@@ -20,9 +20,9 @@ module.exports = (req, res) => {
     target,
     changeOrigin: true, // 修改请求头中的Host为目标URL的origin，通常需要开启[5](@ref)
     pathRewrite: {
-      '^/article/': '/article/', // 重写路径：移除路径中的 '/backend' 前缀
-      '^/category/': '/category/', // 重写路径：移除路径中的 '/backend' 前缀
-      '^/weChat/': '/weChat/', // 重写路径：移除路径中的 '/backend' 前缀
+      '^/article/': '/article', // 重写路径：移除路径中的 '/backend' 前缀
+      '^/category/': '/category', // 重写路径：移除路径中的 '/backend' 前缀
+      '^/weChat/': '/weChat', // 重写路径：移除路径中的 '/backend' 前缀
     },
     // 可根据需要添加其他http-proxy选项[5](@ref)
   })(req, res);
