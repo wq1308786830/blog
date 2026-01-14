@@ -53,7 +53,7 @@ function CodeComponent({ inline = false, className = '', children }: CodeCompone
 }
 
 CodeComponent.defaultProps = {
-  inline: true,
+  inline: false,
   className: '',
   children: undefined,
 };
