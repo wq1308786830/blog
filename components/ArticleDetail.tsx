@@ -15,13 +15,7 @@ interface ArticleDetailProps {
   textType: string;
 }
 
-interface CodeComponentProps {
-  inline?: boolean;
-  className?: string;
-  children?: React.ReactNode;
-}
-
-function CodeComponent({ inline, className, children }: CodeComponentProps) {
+function CodeComponent({ inline, className, children }: any) {
   const match = /language-(\w+)/.exec(className || '');
   const lang = match ? match[1] : '';
 
@@ -52,12 +46,6 @@ function CodeComponent({ inline, className, children }: CodeComponentProps) {
     </SyntaxHighlighter>
   );
 }
-
-CodeComponent.defaultProps = {
-  inline: undefined,
-  className: '',
-  children: undefined,
-};
 
 const markdownComponents = {
   code: CodeComponent,
