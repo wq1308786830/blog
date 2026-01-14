@@ -1,8 +1,8 @@
 export const env = process.env.NODE_ENV;
 
 export const Config = {
-  production: 'https://blogru.vercel.app',
-  test: 'https://blogru.vercel.app',
+  production: 'https://blog-proxy-nine.vercel.app',
+  test: 'https://blog-proxy-nine.vercel.app',
   development: 'http://localhost:5002',
 };
 
