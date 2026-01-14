@@ -46,6 +46,7 @@ function CodeComponent({ inline = false, className = '', children }: CodeCompone
         boxShadow: '0 20px 60px rgba(0, 0, 0, 0.35)',
       }}
       wrapLongLines
+      showLineNumbers
     >
       {String(children).replace(/\n$/, '')}
     </SyntaxHighlighter>
@@ -53,7 +54,7 @@ function CodeComponent({ inline = false, className = '', children }: CodeCompone
 }
 
 CodeComponent.defaultProps = {
-  inline: false,
+  inline: undefined,
   className: '',
   children: undefined,
 };
