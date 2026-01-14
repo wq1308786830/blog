@@ -15,7 +15,7 @@ interface ArticleDetailProps {
   textType: string;
 }
 
-function CodeComponent({ inline, className, children }: any) {
+function CodeComponent({ inline = true, className, children }: any) {
   const match = /language-(\w+)/.exec(className || '');
   const lang = match ? match[1] : '';
 
