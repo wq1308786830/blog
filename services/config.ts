@@ -1,8 +1,8 @@
 export const env = process.env.NODE_ENV;
 
 export const Config = {
-  production: 'http://gin.web-framework-wcof.1681718655914897.cn-hangzhou.fc.devsapp.net',
-  test: 'http://gin.web-framework-wcof.1681718655914897.cn-hangzhou.fc.devsapp.net',
+  production: 'http://34.92.107.2:5002',
+  test: 'http://34.92.107.2:5002',
   development: 'http://localhost:5002',
 };
 
