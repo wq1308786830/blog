@@ -83,6 +83,8 @@
     border-radius: 8px;
     background: rgba(255, 255, 255, 0.05);
     border: 1px solid var(--border);
+    white-space: pre-wrap;
+    word-break: break-word;
   }
 
   pre {
@@ -94,6 +96,8 @@
     border: 1px solid var(--border);
     border-radius: 14px;
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+    white-space: pre-wrap;
+    word-break: break-word;
   }
 
   pre code {
@@ -102,6 +106,50 @@
     background: transparent;
     border: none;
     line-height: 1.7;
+    white-space: pre-wrap;
+  }
+
+  /* Basic token colors for syntax highlighting (works with common rehype/prism classes) */
+  code[class*='language-'],
+  pre[class*='language-'] {
+    color: var(--text);
+  }
+
+  .token.comment,
+  .token.prolog,
+  .token.doctype,
+  .token.cdata {
+    color: #7a879a;
+    font-style: italic;
+  }
+
+  .token.keyword,
+  .token.selector,
+  .token.atrule {
+    color: #f3b27a;
+  }
+
+  .token.string,
+  .token.char,
+  .token.builtin {
+    color: #5de4c7;
+  }
+
+  .token.function,
+  .token.class-name {
+    color: #8ab4ff;
+  }
+
+  .token.number,
+  .token.boolean,
+  .token.constant {
+    color: #f59fb1;
+  }
+
+  .token.operator,
+  .token.punctuation,
+  .token.symbol {
+    color: #9aa5b5;
   }
 
   table {
