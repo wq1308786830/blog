@@ -5,7 +5,8 @@ const nextConfig = {
     sassOptions: {
         includePaths: [path.join(__dirname, 'styles')],
     },
-    images: {
+  pageExtensions: ['js', 'jsx', 'ts', 'tsx'], // Ensure no unnecessary patterns
+  images: {
         remotePatterns: [
             {
                 protocol: 'https',
