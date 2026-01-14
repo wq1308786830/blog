@@ -2,27 +2,59 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Crimson+Pro:wght@400;500;600&display=swap');
+
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+  --page-bg: #0c0f1c;
+  --page-gradient: radial-gradient(circle at 20% 20%, rgba(93, 228, 199, 0.08), transparent 26%),
+    radial-gradient(circle at 80% 0%, rgba(243, 178, 122, 0.12), transparent 30%),
+    radial-gradient(circle at 90% 80%, rgba(111, 132, 255, 0.1), transparent 28%),
+    linear-gradient(135deg, #0c0f1c 0%, #0f1b2e 50%, #0b0f1a 100%);
+  --card: rgba(255, 255, 255, 0.04);
+  --card-strong: rgba(255, 255, 255, 0.08);
+  --border: rgba(255, 255, 255, 0.12);
+  --text: #e8ecf1;
+  --muted: #a6b0c2;
+  --primary: #5de4c7;
+  --accent: #f3b27a;
+  --shadow: 0 24px 80px rgba(0, 0, 0, 0.35);
 }
 
-/* 媒体查询是否是夜间 */
-/*@media (prefers-color-scheme: dark) {*/
-/*  :root {*/
-/*    --foreground-rgb: 255, 255, 255;*/
-/*    --background-start-rgb: 0, 0, 0;*/
-/*    --background-end-rgb: 0, 0, 0;*/
-/*  }*/
-/*}*/
+* {
+  box-sizing: border-box;
+}
 
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  margin: 0;
+  color: var(--text);
+  background: var(--page-gradient), var(--page-bg);
+  font-family: 'Space Grotesk', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+  transition: color 0.2s ease, opacity 0.2s ease;
+}
+
+a:hover {
+  color: var(--primary);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+  font-family: 'Crimson Pro', 'Times New Roman', serif;
+  letter-spacing: 0.02em;
+}
+
+p {
+  margin: 0;
+  line-height: 1.7;
+  color: var(--muted);
 }
