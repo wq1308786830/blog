@@ -21,7 +21,7 @@ interface CodeComponentProps {
   children?: React.ReactNode;
 }
 
-function CodeComponent({ inline = false, className = '', children }: CodeComponentProps) {
+function CodeComponent({ inline, className, children }: CodeComponentProps) {
   const match = /language-(\w+)/.exec(className || '');
   const lang = match ? match[1] : '';
 
