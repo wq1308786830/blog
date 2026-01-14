@@ -52,6 +52,12 @@ function CodeComponent({ inline = false, className = '', children }: CodeCompone
   );
 }
 
+CodeComponent.defaultProps = {
+  inline: false,
+  className: '',
+  children: undefined,
+};
+
 const markdownComponents = {
   code: CodeComponent,
 };
