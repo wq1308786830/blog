@@ -1,5 +1,9 @@
+'use client';
+
 import React from 'react';
 import ReactMarkdown from 'react-markdown';
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+import { oneDark } from 'react-syntax-highlighter/dist/cjs/styles/prism';
 import dayjs from 'dayjs';
 import css from '@/styles/article.module.scss';
 import markdownCss from '@/styles/markdown.module.scss';
@@ -10,10 +14,49 @@ interface ArticleDetailProps {
   datePublish: number;
   textType: string;
 }
+
 function ArticleDetail(props: ArticleDetailProps) {
   const { title, content, datePublish, textType } = props;
 
   const createHtml = (c: string) => ({ __html: c });
+
+  const markdownComponents = {
+    code({ node, inline, className, children, ...props }: any) {
+      const match = /language-(\w+)/.exec(className || '');
+      const lang = match ? match[1] : '';
+
+      if (inline) {
+        return (
+          <code className={markdownCss.inlineCode} {...props}>
+            {children}
+          </code>
+        );
+      }
+
+      return (
+        <SyntaxHighlighter
+          style={oneDark}
+          language={lang || 'text'}
+          PreTag="div"
+          className={markdownCss.codeBlock}
+          customStyle={{
+            margin: '16px 0',
+            padding: '14px',
+            borderRadius: '14px',
+            fontSize: '14px',
+            lineHeight: '1.7',
+            backgroundColor: 'rgba(255, 255, 255, 0.04)',
+            border: '1px solid rgba(255, 255, 255, 0.12)',
+            boxShadow: '0 20px 60px rgba(0, 0, 0, 0.35)',
+          }}
+          wrapLongLines
+          {...props}
+        >
+          {String(children).replace(/\n$/, '')}
+        </SyntaxHighlighter>
+      );
+    },
+  };
 
   return (
     <main className={css.articleDetail}>
@@ -26,7 +69,9 @@ function ArticleDetail(props: ArticleDetailProps) {
         {textType === 'html' ? (
           <div className="leading-relaxed text-gray-600" dangerouslySetInnerHTML={createHtml(content)} />
         ) : (
-          <ReactMarkdown className={markdownCss.markdown}>{content}</ReactMarkdown>
+          <ReactMarkdown className={markdownCss.markdown} components={markdownComponents}>
+            {content}
+          </ReactMarkdown>
         )}
       </div>
     </main>

@@ -87,17 +87,37 @@
     word-break: break-word;
   }
 
+  .inlineCode {
+    font-family: 'JetBrains Mono', Consolas, Monaco, 'Andale Mono', monospace;
+    font-size: 13px;
+    padding: 2px 6px;
+    border-radius: 6px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #5de4c7;
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+
   pre {
     width: 100%;
     overflow: auto;
     margin: 16px 0;
-    padding: 14px;
-    background: rgba(255, 255, 255, 0.04);
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+    padding: 0;
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
     white-space: pre-wrap;
     word-break: break-word;
+  }
+
+  .codeBlock {
+    background: rgba(255, 255, 255, 0.04) !important;
+    border: 1px solid var(--border) !important;
+    border-radius: 14px !important;
+    padding: 14px !important;
+    margin: 16px 0 !important;
   }
 
   pre code {
@@ -109,48 +129,7 @@
     white-space: pre-wrap;
   }
 
-  /* Basic token colors for syntax highlighting (works with common rehype/prism classes) */
-  code[class*='language-'],
-  pre[class*='language-'] {
-    color: var(--text);
-  }
-
-  .token.comment,
-  .token.prolog,
-  .token.doctype,
-  .token.cdata {
-    color: #7a879a;
-    font-style: italic;
-  }
-
-  .token.keyword,
-  .token.selector,
-  .token.atrule {
-    color: #f3b27a;
-  }
-
-  .token.string,
-  .token.char,
-  .token.builtin {
-    color: #5de4c7;
-  }
-
-  .token.function,
-  .token.class-name {
-    color: #8ab4ff;
-  }
-
-  .token.number,
-  .token.boolean,
-  .token.constant {
-    color: #f59fb1;
-  }
-
-  .token.operator,
-  .token.punctuation,
-  .token.symbol {
-    color: #9aa5b5;
-  }
+  /* Removed token color rules - now handled by react-syntax-highlighter's oneDark theme */
 
   table {
     width: 100%;
