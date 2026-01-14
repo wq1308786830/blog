@@ -53,6 +53,8 @@ const markdownComponents = {
 
 function ArticleDetail(props: ArticleDetailProps) {
   const { title, content, datePublish, textType } = props;
+  
+  console.log(content)
 
   const createHtml = (c: string) => ({ __html: c });
 
