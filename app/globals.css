@@ -3,26 +3,27 @@
 @tailwind utilities;
 
 @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Crimson+Pro:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap');
 
 :root {
   --page-bg: #0c0f1c;
-  --page-gradient: radial-gradient(circle at 20% 20%, rgba(93, 228, 199, 0.08), transparent 26%),
-    radial-gradient(circle at 80% 0%, rgba(243, 178, 122, 0.12), transparent 30%),
-    radial-gradient(circle at 90% 80%, rgba(111, 132, 255, 0.1), transparent 28%),
-    radial-gradient(circle at 10% 90%, rgba(93, 228, 199, 0.06), transparent 25%),
+  --page-gradient: radial-gradient(circle at 20% 20%, rgba(93, 228, 199, 0.1), transparent 26%),
+    radial-gradient(circle at 80% 0%, rgba(243, 178, 122, 0.14), transparent 30%),
+    radial-gradient(circle at 90% 80%, rgba(111, 132, 255, 0.12), transparent 28%),
+    radial-gradient(circle at 10% 90%, rgba(93, 228, 199, 0.08), transparent 25%),
     linear-gradient(135deg, #0c0f1c 0%, #0f1b2e 50%, #0b0f1a 100%);
-  --card: rgba(255, 255, 255, 0.04);
-  --card-strong: rgba(255, 255, 255, 0.08);
-  --border: rgba(255, 255, 255, 0.12);
+  --card: rgba(255, 255, 255, 0.05);
+  --card-strong: rgba(255, 255, 255, 0.1);
+  --border: rgba(255, 255, 255, 0.14);
   --text: #e8ecf1;
   --muted: #a6b0c2;
   --primary: #5de4c7;
   --primary-hover: #7ceed4;
   --accent: #f3b27a;
   --accent-hover: #f5c492;
-  --shadow-sm: 0 8px 24px rgba(0, 0, 0, 0.25);
-  --shadow: 0 24px 80px rgba(0, 0, 0, 0.35);
-  --shadow-lg: 0 32px 100px rgba(0, 0, 0, 0.4);
+  --shadow-sm: 0 12px 32px rgba(0, 0, 0, 0.3);
+  --shadow: 0 28px 96px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 40px 120px rgba(0, 0, 0, 0.45);
 }
 
 * {
@@ -36,6 +37,7 @@ body {
   font-family: 'Space Grotesk', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   position: relative;
+  min-height: 100vh;
 
   &::before {
     content: '';
@@ -45,21 +47,48 @@ body {
     right: 0;
     bottom: 0;
     background:
-      radial-gradient(circle at 15% 50%, rgba(93, 228, 199, 0.02) 0%, transparent 40%),
-      radial-gradient(circle at 85% 30%, rgba(243, 178, 122, 0.02) 0%, transparent 40%);
+      radial-gradient(circle at 15% 50%, rgba(93, 228, 199, 0.03) 0%, transparent 45%),
+      radial-gradient(circle at 85% 30%, rgba(243, 178, 122, 0.03) 0%, transparent 45%);
     pointer-events: none;
     z-index: 0;
+    animation: backgroundPulse 20s ease-in-out infinite;
+  }
+}
+
+@keyframes backgroundPulse {
+  0%, 100% {
+    opacity: 0.8;
+  }
+  50% {
+    opacity: 1;
   }
 }
 
 a {
   color: inherit;
   text-decoration: none;
-  transition: color 0.2s ease, opacity 0.2s ease;
-}
+  transition: color 0.3s ease, opacity 0.3s ease;
+  position: relative;
 
-a:hover {
-  color: var(--primary);
+  &::before {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--primary);
+    transition: width 0.3s ease;
+    opacity: 0.6;
+  }
+
+  &:hover {
+    color: var(--primary);
+
+    &::before {
+      width: 100%;
+    }
+  }
 }
 
 h1,
@@ -71,27 +100,35 @@ h6 {
   margin: 0;
   font-family: 'Crimson Pro', 'Times New Roman', serif;
   letter-spacing: 0.02em;
+  color: var(--text);
+  transition: color 0.3s ease;
 }
 
 p {
   margin: 0;
-  line-height: 1.7;
+  line-height: 1.75;
   color: var(--muted);
+  transition: color 0.3s ease;
+}
+
+/* 添加全局悬停效果 */
+*:hover {
+  -webkit-font-smoothing: antialiased;
 }
 
 /* Themed scrollbar styles: colors are defined as CSS variables
    and adapt to user's color scheme (light/dark). Works on WebKit
    browsers and Firefox. */
 :root {
-  --scrollbar-bg: rgba(255, 255, 255, 0.04);
-  --scrollbar-thumb: rgba(255, 255, 255, 0.22);
-  --scrollbar-thumb-hover: rgba(255, 255, 255, 0.36);
+  --scrollbar-bg: rgba(255, 255, 255, 0.06);
+  --scrollbar-thumb: rgba(255, 255, 255, 0.25);
+  --scrollbar-thumb-hover: rgba(93, 228, 199, 0.5);
 }
 
 /* WebKit browsers (Chrome, Edge, Safari) */
 *::-webkit-scrollbar {
-  width: 12px;
-  height: 12px;
+  width: 10px;
+  height: 10px;
 }
 
 *::-webkit-scrollbar-track {
@@ -103,18 +140,62 @@ p {
   background: var(--scrollbar-thumb);
   border-radius: 999px;
   border: 2px solid var(--scrollbar-bg);
-  transition: background-color 150ms ease, transform 120ms ease;
+  transition: all 0.3s ease;
   box-shadow: inset 0 0 0 1px transparent;
 }
 
 *::-webkit-scrollbar-thumb:hover {
   background: var(--scrollbar-thumb-hover);
-  transform: translateX(0);
+  transform: scale(1.05);
+  border-color: var(--scrollbar-bg);
 }
 
 /* Firefox */
 * {
   scrollbar-width: thin;
   scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-bg);
+}
+
+/* 全局动画类 */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* 全局选择样式 */
+::selection {
+  background: rgba(93, 228, 199, 0.3);
+  color: var(--text);
+}
+
+::-moz-selection {
+  background: rgba(93, 228, 199, 0.3);
+  color: var(--text);
 }
 
