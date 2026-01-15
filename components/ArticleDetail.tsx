@@ -15,7 +15,7 @@ interface ArticleDetailProps {
   textType: string;
 }
 
-function CodeComponent({ inline = true, className, children, node }: any) {
+function CodeComponent({ inline, className, children, node }: any) { 
   const classAttr =
     className || (node && node.properties && node.properties.className ? node.properties.className.join(' ') : '');
   const match = /language-([^\s]+)/.exec(classAttr || '');
@@ -44,7 +44,6 @@ function CodeComponent({ inline = true, className, children, node }: any) {
       wrapLongLines
       showLineNumbers
     >
-      {JSON.stringify(node.properties)}
       {String(children).replace(/\n$/, '')}
     </SyntaxHighlighter>
   );
