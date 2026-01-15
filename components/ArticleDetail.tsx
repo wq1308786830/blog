@@ -15,8 +15,10 @@ interface ArticleDetailProps {
   textType: string;
 }
 
-function CodeComponent({ inline = true, className, children }: any) {
-  const match = /language-(\w+)/.exec(className || '');
+function CodeComponent({ inline = true, className, children, node }: any) {
+  const classAttr =
+    className || (node && node.properties && node.properties.className ? node.properties.className.join(' ') : '');
+  const match = /language-([^\s]+)/.exec(classAttr || '');
   const lang = match ? match[1] : '';
 
   if (inline || !lang) {
@@ -42,7 +44,6 @@ function CodeComponent({ inline = true, className, children }: any) {
       wrapLongLines
       showLineNumbers
     >
-      {lang}
       {String(children).replace(/\n$/, '')}
     </SyntaxHighlighter>
   );
