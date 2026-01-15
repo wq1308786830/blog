@@ -44,6 +44,7 @@ function CodeComponent({ inline = true, className, children, node }: any) {
       wrapLongLines
       showLineNumbers
     >
+      {JSON.stringify(node.properties)}
       {String(children).replace(/\n$/, '')}
     </SyntaxHighlighter>
   );
