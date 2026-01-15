@@ -2,28 +2,23 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Crimson+Pro:wght@400;500;600&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Crimson+Text:wght@400;600;700&display=swap');
 
 :root {
-  --page-bg: #0c0f1c;
-  --page-gradient: radial-gradient(circle at 20% 20%, rgba(93, 228, 199, 0.1), transparent 26%),
-    radial-gradient(circle at 80% 0%, rgba(243, 178, 122, 0.14), transparent 30%),
-    radial-gradient(circle at 90% 80%, rgba(111, 132, 255, 0.12), transparent 28%),
-    radial-gradient(circle at 10% 90%, rgba(93, 228, 199, 0.08), transparent 25%),
-    linear-gradient(135deg, #0c0f1c 0%, #0f1b2e 50%, #0b0f1a 100%);
-  --card: rgba(255, 255, 255, 0.05);
-  --card-strong: rgba(255, 255, 255, 0.1);
-  --border: rgba(255, 255, 255, 0.14);
-  --text: #e8ecf1;
-  --muted: #a6b0c2;
-  --primary: #5de4c7;
-  --primary-hover: #7ceed4;
-  --accent: #f3b27a;
-  --accent-hover: #f5c492;
-  --shadow-sm: 0 12px 32px rgba(0, 0, 0, 0.3);
-  --shadow: 0 28px 96px rgba(0, 0, 0, 0.4);
-  --shadow-lg: 0 40px 120px rgba(0, 0, 0, 0.45);
+  --page-bg: #fafbfc;
+  --page-gradient: linear-gradient(135deg, #fafbfc 0%, #f5f7fa 100%);
+  --card: rgba(255, 255, 255, 0.8);
+  --card-strong: rgba(255, 255, 255, 0.95);
+  --border: rgba(0, 0, 0, 0.06);
+  --text: #1a1f36;
+  --muted: #6b7280;
+  --primary: #2563eb;
+  --primary-hover: #1d4ed8;
+  --accent: #f59e0b;
+  --accent-hover: #d97706;
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
 }
 
 * {
@@ -33,61 +28,22 @@
 body {
   margin: 0;
   color: var(--text);
-  background: var(--page-gradient), var(--page-bg);
-  font-family: 'Space Grotesk', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+  background: var(--page-gradient);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   -webkit-font-smoothing: antialiased;
   position: relative;
   min-height: 100vh;
-
-  &::before {
-    content: '';
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background:
-      radial-gradient(circle at 15% 50%, rgba(93, 228, 199, 0.03) 0%, transparent 45%),
-      radial-gradient(circle at 85% 30%, rgba(243, 178, 122, 0.03) 0%, transparent 45%);
-    pointer-events: none;
-    z-index: 0;
-    animation: backgroundPulse 20s ease-in-out infinite;
-  }
-}
-
-@keyframes backgroundPulse {
-  0%, 100% {
-    opacity: 0.8;
-  }
-  50% {
-    opacity: 1;
-  }
+  line-height: 1.6;
 }
 
 a {
-  color: inherit;
+  color: var(--primary);
   text-decoration: none;
-  transition: color 0.3s ease, opacity 0.3s ease;
-  position: relative;
-
-  &::before {
-    content: '';
-    position: absolute;
-    bottom: -2px;
-    left: 0;
-    width: 0;
-    height: 2px;
-    background: var(--primary);
-    transition: width 0.3s ease;
-    opacity: 0.6;
-  }
+  transition: all 0.2s ease;
+  font-weight: 500;
 
   &:hover {
-    color: var(--primary);
-
-    &::before {
-      width: 100%;
-    }
+    color: var(--primary-hover);
   }
 }
 
@@ -98,104 +54,59 @@ h4,
 h5,
 h6 {
   margin: 0;
-  font-family: 'Crimson Pro', 'Times New Roman', serif;
-  letter-spacing: 0.02em;
+  font-family: 'Crimson Text', Georgia, serif;
   color: var(--text);
-  transition: color 0.3s ease;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+h1 {
+  font-size: 2.5rem;
+}
+
+h2 {
+  font-size: 2rem;
+}
+
+h3 {
+  font-size: 1.5rem;
 }
 
 p {
-  margin: 0;
-  line-height: 1.75;
+  margin: 0 0 1rem 0;
+  line-height: 1.7;
   color: var(--muted);
-  transition: color 0.3s ease;
 }
 
-/* 添加全局悬停效果 */
 *:hover {
   -webkit-font-smoothing: antialiased;
 }
 
-/* Themed scrollbar styles: colors are defined as CSS variables
-   and adapt to user's color scheme (light/dark). Works on WebKit
-   browsers and Firefox. */
-:root {
-  --scrollbar-bg: rgba(255, 255, 255, 0.06);
-  --scrollbar-thumb: rgba(255, 255, 255, 0.25);
-  --scrollbar-thumb-hover: rgba(93, 228, 199, 0.5);
-}
-
-/* WebKit browsers (Chrome, Edge, Safari) */
-*::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
-}
-
-*::-webkit-scrollbar-track {
-  background: var(--scrollbar-bg);
-  border-radius: 999px;
-}
-
-*::-webkit-scrollbar-thumb {
-  background: var(--scrollbar-thumb);
-  border-radius: 999px;
-  border: 2px solid var(--scrollbar-bg);
-  transition: all 0.3s ease;
-  box-shadow: inset 0 0 0 1px transparent;
-}
-
-*::-webkit-scrollbar-thumb:hover {
-  background: var(--scrollbar-thumb-hover);
-  transform: scale(1.05);
-  border-color: var(--scrollbar-bg);
-}
-
-/* Firefox */
-* {
-  scrollbar-width: thin;
-  scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-bg);
-}
-
-/* 全局动画类 */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-@keyframes slideInUp {
-  from {
-    opacity: 0;
-    transform: translateY(40px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes scaleIn {
-  from {
-    opacity: 0;
-    transform: scale(0.9);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
-/* 全局选择样式 */
 ::selection {
-  background: rgba(93, 228, 199, 0.3);
+  background: rgba(37, 99, 235, 0.2);
   color: var(--text);
 }
 
 ::-moz-selection {
-  background: rgba(93, 228, 199, 0.3);
+  background: rgba(37, 99, 235, 0.2);
   color: var(--text);
+}
+
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 4px;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background: var(--muted);
 }
 
