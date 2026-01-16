@@ -5,7 +5,7 @@ import ReactMarkdown from 'react-markdown';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { oneDark } from 'react-syntax-highlighter/dist/cjs/styles/prism';
 import dayjs from 'dayjs';
-import markdownCss from '@/styles/markdown.module.scss';
+import '@/app/markdown.css';
 
 interface ArticleDetailProps {
   title: string;
@@ -14,14 +14,14 @@ interface ArticleDetailProps {
   textType: string;
 }
 
-function CodeComponent({ inline, className, children, node }: any) { 
+function CodeComponent({ inline, className, children, node }: any) {
   const classAttr =
     className || (node && node.properties && node.properties.className ? node.properties.className.join(' ') : '');
   const match = /language-([^\s]+)/.exec(classAttr || '');
   const lang = match ? match[1] : '';
 
   if (inline || !lang) {
-    return <code className={markdownCss.inlineCode}>{children}</code>;
+    return <code className="inlineCode">{children}</code>;
   }
 
   return (
@@ -29,7 +29,7 @@ function CodeComponent({ inline, className, children, node }: any) {
       style={oneDark}
       language={lang || 'text'}
       PreTag="div"
-      className={markdownCss.codeBlock}
+      className="codeBlock"
       customStyle={{
         margin: '16px 0',
         padding: '14px',
@@ -79,7 +79,7 @@ function ArticleDetail(props: ArticleDetailProps) {
             {textType === 'html' ? (
             <div className="leading-relaxed text-gray-300 font-mono" dangerouslySetInnerHTML={createHtml(content)} />
             ) : (
-            <ReactMarkdown className={markdownCss.markdown} components={markdownComponents}>
+            <ReactMarkdown className="markdown" components={markdownComponents}>
                 {content}
             </ReactMarkdown>
             )}
