@@ -37,16 +37,16 @@ body {
   position: relative;
   min-height: 100vh;
   overflow-x: hidden;
+}
 
-  /* Vignette */
-  &::after {
-    content: '';
-    position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
-    pointer-events: none;
-    background: radial-gradient(circle at center, transparent 40%, #000000 140%);
-    z-index: 0;
-  }
+/* Vignette */
+body::after {
+  content: '';
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  pointer-events: none;
+  background: radial-gradient(circle at center, transparent 40%, #000000 140%);
+  z-index: 0;
 }
 
 /* CRT Scanlines */
@@ -82,11 +82,11 @@ a {
   text-decoration: none;
   transition: all 0.2s ease;
   position: relative;
-  
-  &:hover {
-    color: var(--primary-hover);
-    text-shadow: 0 0 8px var(--primary-hover);
-  }
+}
+
+a:hover {
+  color: var(--primary-hover);
+  text-shadow: 0 0 8px var(--primary-hover);
 }
 
 p {
