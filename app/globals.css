@@ -2,28 +2,21 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Crimson+Pro:wght@400;500;600&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;500;700;900&display=swap');
 
 :root {
-  --page-bg: #0c0f1c;
-  --page-gradient: radial-gradient(circle at 20% 20%, rgba(93, 228, 199, 0.1), transparent 26%),
-    radial-gradient(circle at 80% 0%, rgba(243, 178, 122, 0.14), transparent 30%),
-    radial-gradient(circle at 90% 80%, rgba(111, 132, 255, 0.12), transparent 28%),
-    radial-gradient(circle at 10% 90%, rgba(93, 228, 199, 0.08), transparent 25%),
-    linear-gradient(135deg, #0c0f1c 0%, #0f1b2e 50%, #0b0f1a 100%);
-  --card: rgba(255, 255, 255, 0.05);
-  --card-strong: rgba(255, 255, 255, 0.1);
-  --border: rgba(255, 255, 255, 0.14);
-  --text: #e8ecf1;
-  --muted: #a6b0c2;
-  --primary: #5de4c7;
-  --primary-hover: #7ceed4;
-  --accent: #f3b27a;
-  --accent-hover: #f5c492;
-  --shadow-sm: 0 12px 32px rgba(0, 0, 0, 0.3);
-  --shadow: 0 28px 96px rgba(0, 0, 0, 0.4);
-  --shadow-lg: 0 40px 120px rgba(0, 0, 0, 0.45);
+  --page-bg: #050505;
+  --grid-color: rgba(0, 243, 255, 0.1);
+  --card: rgba(0, 243, 255, 0.05);
+  --card-strong: rgba(0, 243, 255, 0.1);
+  --border: rgba(0, 243, 255, 0.3);
+  --text: #e0faff;
+  --muted: #8899a6;
+  --primary: #00f3ff;
+  --primary-hover: #00ff41;
+  --accent: #bc13fe;
+  --accent-hover: #f0f;
+  --shadow-glow: 0 0 10px rgba(0, 243, 255, 0.5), 0 0 20px rgba(0, 243, 255, 0.3);
 }
 
 * {
@@ -33,169 +26,110 @@
 body {
   margin: 0;
   color: var(--text);
-  background: var(--page-gradient), var(--page-bg);
-  font-family: 'Space Grotesk', 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+  background-color: var(--page-bg);
+  background-image: 
+    linear-gradient(var(--grid-color) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-color) 1px, transparent 1px);
+  background-size: 40px 40px;
+  background-position: center top;
+  font-family: 'Share Tech Mono', 'Courier New', monospace;
   -webkit-font-smoothing: antialiased;
   position: relative;
   min-height: 100vh;
+  overflow-x: hidden;
 
-  &::before {
+  /* Vignette */
+  &::after {
     content: '';
     position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background:
-      radial-gradient(circle at 15% 50%, rgba(93, 228, 199, 0.03) 0%, transparent 45%),
-      radial-gradient(circle at 85% 30%, rgba(243, 178, 122, 0.03) 0%, transparent 45%);
+    top: 0; left: 0; right: 0; bottom: 0;
     pointer-events: none;
+    background: radial-gradient(circle at center, transparent 40%, #000000 140%);
     z-index: 0;
-    animation: backgroundPulse 20s ease-in-out infinite;
   }
 }
 
-@keyframes backgroundPulse {
-  0%, 100% {
-    opacity: 0.8;
-  }
-  50% {
-    opacity: 1;
-  }
+/* CRT Scanlines */
+body::before {
+  content: " ";
+  display: block;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+  z-index: 9999;
+  background-size: 100% 2px, 3px 100%;
+  pointer-events: none;
+}
+
+main {
+  position: relative;
+  z-index: 1;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Orbitron', sans-serif;
+  text-transform: uppercase;
+  color: var(--primary);
+  text-shadow: 0 0 5px rgba(0, 243, 255, 0.7);
+  letter-spacing: 0.1em;
 }
 
 a {
-  color: inherit;
+  color: var(--primary);
   text-decoration: none;
-  transition: color 0.3s ease, opacity 0.3s ease;
+  transition: all 0.2s ease;
   position: relative;
-
-  &::before {
-    content: '';
-    position: absolute;
-    bottom: -2px;
-    left: 0;
-    width: 0;
-    height: 2px;
-    background: var(--primary);
-    transition: width 0.3s ease;
-    opacity: 0.6;
-  }
-
+  
   &:hover {
-    color: var(--primary);
-
-    &::before {
-      width: 100%;
-    }
+    color: var(--primary-hover);
+    text-shadow: 0 0 8px var(--primary-hover);
   }
-}
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  margin: 0;
-  font-family: 'Crimson Pro', 'Times New Roman', serif;
-  letter-spacing: 0.02em;
-  color: var(--text);
-  transition: color 0.3s ease;
 }
 
 p {
-  margin: 0;
-  line-height: 1.75;
   color: var(--muted);
-  transition: color 0.3s ease;
+  line-height: 1.6;
+  font-size: 1.1rem;
 }
 
-/* 添加全局悬停效果 */
-*:hover {
-  -webkit-font-smoothing: antialiased;
-}
-
-/* Themed scrollbar styles: colors are defined as CSS variables
-   and adapt to user's color scheme (light/dark). Works on WebKit
-   browsers and Firefox. */
-:root {
-  --scrollbar-bg: rgba(255, 255, 255, 0.06);
-  --scrollbar-thumb: rgba(255, 255, 255, 0.25);
-  --scrollbar-thumb-hover: rgba(93, 228, 199, 0.5);
-}
-
-/* WebKit browsers (Chrome, Edge, Safari) */
-*::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
-}
-
-*::-webkit-scrollbar-track {
-  background: var(--scrollbar-bg);
-  border-radius: 999px;
-}
-
-*::-webkit-scrollbar-thumb {
-  background: var(--scrollbar-thumb);
-  border-radius: 999px;
-  border: 2px solid var(--scrollbar-bg);
-  transition: all 0.3s ease;
-  box-shadow: inset 0 0 0 1px transparent;
-}
-
-*::-webkit-scrollbar-thumb:hover {
-  background: var(--scrollbar-thumb-hover);
-  transform: scale(1.05);
-  border-color: var(--scrollbar-bg);
-}
-
-/* Firefox */
-* {
-  scrollbar-width: thin;
-  scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-bg);
-}
-
-/* 全局动画类 */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-@keyframes slideInUp {
-  from {
-    opacity: 0;
-    transform: translateY(40px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes scaleIn {
-  from {
-    opacity: 0;
-    transform: scale(0.9);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
-/* 全局选择样式 */
 ::selection {
-  background: rgba(93, 228, 199, 0.3);
-  color: var(--text);
+  background: var(--primary);
+  color: #000;
 }
 
-::-moz-selection {
-  background: rgba(93, 228, 199, 0.3);
-  color: var(--text);
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #000; 
+  border-left: 1px solid var(--border);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--primary); 
+  border-radius: 0;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-hover); 
+  box-shadow: 0 0 10px var(--primary-hover);
+}
+
+@layer utilities {
+  .text-shadow {
+    text-shadow: 0 0 5px currentColor;
+  }
+  .text-shadow-lg {
+    text-shadow: 0 0 10px currentColor, 0 0 20px currentColor;
+  }
+  .box-glow {
+    box-shadow: 0 0 15px rgba(0, 243, 255, 0.2), inset 0 0 15px rgba(0, 243, 255, 0.1);
+  }
+  .cyber-border {
+    border: 1px solid var(--primary);
+    position: relative;
+  }
 }
 

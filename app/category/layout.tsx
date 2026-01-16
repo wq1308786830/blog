@@ -1,7 +1,6 @@
 import React, { use } from 'react';
 import { getAllCategories } from '@/services/blog';
 import type { PageProps } from '@/services/data.d';
-import css from '@/styles/article.module.scss';
 import TopNav from './TopNav';
 
 export default function Layout(props: PageProps<any>) {
@@ -10,9 +9,9 @@ export default function Layout(props: PageProps<any>) {
   const { data: navs } = resp;
 
   return (
-    <main className={css.main}>
+    <main className="min-h-screen relative z-10 pt-24 pb-10 px-4 md:px-8 max-w-7xl mx-auto">
       <TopNav navs={navs} />
-      <div className={css.content}>{children}</div>
+      <div className="w-full mt-8">{children}</div>
     </main>
   );
 }

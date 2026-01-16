@@ -59,20 +59,32 @@ function ArticleDetail(props: ArticleDetailProps) {
   const createHtml = (c: string) => ({ __html: c });
 
   return (
-    <main className={css.articleDetail}>
-      <div className={css.content}>
-        <h1 className={css.h1}>{title}</h1>
-        <div className={css.publishInfo}>
-          发布时间：<i className={css.time}>{dayjs(datePublish).format('YYYY-MM-DD HH:mm:ss')}</i>
+    <main className="w-full max-w-5xl mx-auto px-4 py-8">
+      <div className="relative z-10">
+        <div className="mb-10 text-center">
+            <h1 className="text-3xl md:text-5xl font-display font-bold uppercase text-[var(--primary)] tracking-widest leading-tight mb-4 text-shadow-lg">
+                {title}
+            </h1>
+            <div className="flex justify-center items-center gap-4 text-xs font-mono text-[var(--muted)] uppercase tracking-widest">
+                <span className="px-2 py-1 bg-[var(--card)] border border-[var(--border)]">
+                    LOG_DATE: {dayjs(datePublish).format('YYYY-MM-DD HH:mm:ss')}
+                </span>
+                <span className="w-2 h-2 rounded-full bg-[var(--primary)] animate-pulse"></span>
+                <span className="px-2 py-1 bg-[var(--card)] border border-[var(--border)]">
+                    TYPE: {textType || 'MARKDOWN_DOC'}
+                </span>
+            </div>
         </div>
 
-        {textType === 'html' ? (
-          <div className="leading-relaxed text-gray-600" dangerouslySetInnerHTML={createHtml(content)} />
-        ) : (
-          <ReactMarkdown className={markdownCss.markdown} components={markdownComponents}>
-            {content}
-          </ReactMarkdown>
-        )}
+        <div className="cyber-border p-6 md:p-10 bg-black/50 backdrop-blur-sm">
+            {textType === 'html' ? (
+            <div className="leading-relaxed text-gray-300 font-mono" dangerouslySetInnerHTML={createHtml(content)} />
+            ) : (
+            <ReactMarkdown className={markdownCss.markdown} components={markdownComponents}>
+                {content}
+            </ReactMarkdown>
+            )}
+        </div>
       </div>
     </main>
   );

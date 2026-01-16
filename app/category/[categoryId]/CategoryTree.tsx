@@ -1,7 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
 import type { Category } from '@/services/data.d';
-import css from '@/styles/article.module.scss';
 
 interface CategoryTreeProps {
   category: Category;
@@ -13,24 +12,30 @@ function CategoryTree(props: CategoryTreeProps) {
   const renderSubs = (sub: Category) => {
     if (!Array.isArray(sub?.subCategory)) {
       return (
-        <Link key={sub.id} href={`/category/${categoryId}/${sub.id}`} className={css.link}>
-          {sub.name}
+        <Link 
+            key={sub.id} 
+            href={`/category/${categoryId}/${sub.id}`} 
+            className="block py-2 px-3 text-sm text-[var(--muted)] hover:text-[var(--primary)] hover:bg-[rgba(0,243,255,0.05)] transition-colors border-l border-transparent hover:border-[var(--primary)] font-mono"
+        >
+          {'>'} {sub.name}
         </Link>
       );
     }
 
     return (
-      <dl className={css.dl}>
-        <dt className={css.dt}>{sub.name}</dt>
+      <dl className="pl-3 border-l border-[rgba(255,255,255,0.05)] ml-1 my-1">
+        <dt className="py-2 px-2 text-sm font-bold text-[var(--text)] uppercase tracking-wide bg-black/40 mb-1">
+            [{sub.name}]
+        </dt>
         {sub.subCategory.map((s) => (
-          <dd key={s.id} className={css.dd}>
+          <dd key={s.id} className="ml-0">
             {renderSubs(s)}
           </dd>
         ))}
       </dl>
     );
   };
-  return <div className={css.categoryTreeWrapper}>{renderSubs(category)}</div>;
+  return <div>{renderSubs(category)}</div>;
 }
 
 export default CategoryTree;

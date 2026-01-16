@@ -2,7 +2,6 @@
 
 import React from 'react';
 import type { Category } from '@/services/data';
-import css from '@/styles/article.module.scss';
 import CategoryTree from './CategoryTree';
 
 interface LeftNavProps {
@@ -17,7 +16,10 @@ function LeftNav(props: LeftNavProps) {
   }
 
   return (
-    <nav className={css.leftNavWrapper}>
+    <nav className="flex flex-col gap-2 p-4 border-r border-[var(--border)] bg-black/20 h-full backdrop-blur-sm">
+      <div className="text-xs font-mono text-[var(--muted)] mb-4 uppercase tracking-widest pl-2 border-l-2 border-[var(--primary)]">
+        DIRECTORY_LISTING
+      </div>
       {sub.subCategory.map((category) => (
         <CategoryTree key={category.id} category={category} categoryId={categoryId} />
       ))}
