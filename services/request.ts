@@ -1,168 +1,328 @@
 import fetch from 'isomorphic-unfetch';
-import { prefix } from '@/services/config';
+import {
+  HttpMethod,
+  BaseResponse,
+  RequestError,
+  ErrorType,
+  ExtendedRequestConfig,
+  RequestInterceptorFn,
+  ResponseInterceptorFn,
+  ErrorInterceptorFn,
+  ContentType,
+} from './types';
+import { getConfig } from './config';
+import { tokenManager } from './tokenManager';
 import { loading, toast, parseObj2SearchParams } from './tools';
 
-function checkStatus(response: any) {
+/**
+ * 获取配置
+ */
+const config = getConfig();
+
+/**
+ * 请求拦截器数组
+ */
+const requestInterceptors: RequestInterceptorFn[] = [];
+
+/**
+ * 响应拦截器数组
+ */
+const responseInterceptors: ResponseInterceptorFn[] = [];
+
+/**
+ * 错误拦截器数组
+ */
+const errorInterceptors: ErrorInterceptorFn[] = [];
+
+/**
+ * 添加请求拦截器
+ */
+export const addRequestInterceptor = (interceptor: RequestInterceptorFn) => {
+  requestInterceptors.push(interceptor);
+};
+
+/**
+ * 添加响应拦截器
+ */
+export const addResponseInterceptor = (interceptor: ResponseInterceptorFn) => {
+  responseInterceptors.push(interceptor);
+};
+
+/**
+ * 添加错误拦截器
+ */
+export const addErrorInterceptor = (interceptor: ErrorInterceptorFn) => {
+  errorInterceptors.push(interceptor);
+};
+
+/**
+ * 执行请求拦截器链
+ */
+const applyRequestInterceptors = async (
+  requestConfig: ExtendedRequestConfig
+): Promise<ExtendedRequestConfig> => {
+  let config = requestConfig;
+  for (const interceptor of requestInterceptors) {
+    config = await interceptor(config);
+  }
+  return config;
+};
+
+/**
+ * 执行响应拦截器链
+ */
+const applyResponseInterceptors = async <T = any>(
+  response: BaseResponse<T>,
+  requestConfig: ExtendedRequestConfig
+): Promise<BaseResponse<T>> => {
+  let data = response;
+  for (const interceptor of responseInterceptors) {
+    data = await interceptor(data, requestConfig);
+  }
+  return data;
+};
+
+/**
+ * 执行错误拦截器链
+ */
+const applyErrorInterceptors = async (
+  error: RequestError,
+  requestConfig: ExtendedRequestConfig
+): Promise<any> => {
+  for (const interceptor of errorInterceptors) {
+    const result = await interceptor(error, requestConfig);
+    if (result !== undefined) {
+      return result;
+    }
+  }
+  throw error;
+};
+
+/**
+ * 检查 HTTP 状态码和响应状态
+ */
+const checkStatus = (response: Response, data?: any): void => {
+  // 检查 HTTP 状态码
   if (response.status < 200 || response.status >= 300) {
-    const error: any = new Error(response.statusText);
-    error.response = response;
-    error.errMessage = '网络错误~';
-    throw error;
-  } else if (response.data && response.data.message === 'GENERAL') {
-    const error: any = new Error(response.statusText);
-    error.response = response;
-    error.errMessage = '哎呀，系统开小差啦！';
-    throw error;
+    const errorType =
+      response.status === 401 || response.status === 403
+        ? ErrorType.AUTH
+        : response.status >= 500
+        ? ErrorType.SERVER
+        : ErrorType.NETWORK;
+
+    throw new RequestError(
+      config.error.networkErrorMessage,
+      errorType,
+      response.status,
+      response
+    );
   }
-  return response;
-}
+
+  // 检查业务响应状态
+  if (data && data.message === 'GENERAL') {
+    throw new RequestError(config.error.generalErrorMessage, ErrorType.GENERAL);
+  }
+};
 
 /**
- * 请求后端返回Promise
- *
- * @param  {string} url       请求api
- * @param  {object} [options] fetch需要的options配置
- * @param  {boolean} [isShowLoading] 是否展示loading
- * @return {Promise}          返回数据，Promise或者undefined
+ * 检查是否需要刷新 Token
  */
-async function request(url: string, options: any, isShowLoading: boolean) {
-  if (isShowLoading) {
-    loading(true, `请求接口:${prefix + url}\n参数:${JSON.stringify(options)}`);
-  }
-  let res;
-  try {
-    const response = await fetch(prefix + url, options);
-    checkStatus(response);
-    res = await response.json();
-  } catch (e: any) {
-    // @ts-ignore
-    loading(false, undefined, () => {
-      if (e.errMessage) {
-        return toast(e.errMessage);
-      }
-      return toast('网络错误～');
-    });
-    throw e;
-  }
-
-  if (isShowLoading) {
-    loading(false, prefix + url);
-  }
-  return res;
-}
+const isNeedRefreshToken = (url: string, response: BaseResponse): boolean => {
+  return (
+    !url.includes('login') &&
+    response.result === 'fail' &&
+    response.message === 'token失效' &&
+    config.token.autoRefresh
+  );
+};
 
 /**
- * 调用非login接口且失败原因是`token失效`的需要重刷token
- * @param url 请求url
- * @param result 后端返回字段`result`
- * @param message 后端返回字段`message`
- * @returns {boolean}
+ * 构建完整的 URL
  */
-const isNeedFreshCode = (url: string, result: any, message: any) =>
-  !/login/.test(url) && result === 'fail' && message === 'token失效';
+const buildUrl = (url: string, baseURL?: string): string => {
+  if (url.startsWith('http://') || url.startsWith('https://')) {
+    return url;
+  }
+  return `${baseURL || config.request.baseURL}${url}`;
+};
 
 /**
- * 用户登录
- * @returns {boolean} 是否登陆成功
+ * 构建请求头
  */
-function login() {
-  try {
-    localStorage.setItem('token', '1111111');
-    return true;
-  } catch (e) {
-    return false;
-  }
-}
-
-/**
- * 每个请求都会携带登录的token
- * @param url 请求url
- * @param options fetch options
- * @param showLoading 是否展示loading
- * @returns {Promise<void>} 请求返回结果
- */
-const requestWithLogin = async (url: string, options: any, showLoading: boolean) => {
-  const token = '11111';
-
-  let isLogin = false;
-  if (token) {
-    isLogin = true;
-  } else {
-    isLogin = await login();
-  }
-
-  const fetchOptions = {
-    ...options,
-    headers: {
-      Authorization: token,
-      Accept: 'application/json',
-      'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
-    },
+const buildHeaders = (
+  requestConfig: ExtendedRequestConfig
+): Record<string, string> => {
+  const headers: Record<string, string> = {
+    ...config.request.headers,
+    ...requestConfig.headers,
   };
 
-  let resp;
-  if (isLogin) {
-    resp = await request(url, fetchOptions, showLoading);
-    if (resp && isNeedFreshCode(url, resp.result, resp.message)) {
-      isLogin = await login();
-      if (isLogin) {
-        resp = await request(url, fetchOptions, showLoading);
-      } else {
-        toast('登录失败');
-      }
+  // 设置 Content-Type（如果未设置）
+  if (!headers['Content-Type'] && requestConfig.body) {
+    if (requestConfig.body instanceof FormData) {
+      headers['Content-Type'] = ContentType.FORMDATA;
+    } else if (requestConfig.body instanceof URLSearchParams) {
+      headers['Content-Type'] = ContentType.URLENCODED;
+    } else {
+      headers['Content-Type'] = config.request.contentType || ContentType.URLENCODED;
     }
   }
 
-  return resp;
+  // 注入 Token（如果需要）
+  if (!requestConfig.skipAuth && config.request.withAuth) {
+    const token = tokenManager.getToken();
+    if (token) {
+      headers['Authorization'] = token;
+    }
+  }
+
+  return headers;
 };
 
 /**
- * fetch下method=GET，options配置必须没有body
- * @param url 请求的url
- * @param {Object} params 请求参数
- * @param showLoading 是否展示loading
- * @returns {Promise<void>} 返回结果
- * @constructor
+ * 发送 HTTP 请求的核心函数
  */
-export const GET = (url: string, params: any = null, showLoading = false) => {
-  let searchParams = parseObj2SearchParams(params);
-  searchParams = searchParams === '' ? searchParams : `?${searchParams}`;
-
-  const options = {
+const request = async <T = any>(
+  url: string,
+  options: ExtendedRequestConfig = {}
+): Promise<BaseResponse<T>> => {
+  // 合并默认配置
+  const mergedConfig: ExtendedRequestConfig = {
     method: 'GET',
+    timeout: config.request.timeout,
+    showLoading: config.request.showLoading,
+    showError: config.request.showError,
+    skipAuth: false,
+    ...options,
   };
 
-  return requestWithLogin(`${url}${searchParams}`, options, showLoading);
+  // 显示 Loading
+  if (mergedConfig.showLoading) {
+    loading(true, `请求接口:${buildUrl(url)}\n参数:${JSON.stringify(mergedConfig.body || {})}`);
+  }
+
+  try {
+    // 执行请求拦截器
+    const finalConfig = await applyRequestInterceptors(mergedConfig);
+
+    // 构建 URL 和请求头
+    const fullUrl = buildUrl(url, config.request.baseURL);
+    const headers = buildHeaders(finalConfig);
+
+    // 发起请求
+    const response = await fetch(fullUrl, {
+      method: finalConfig.method,
+      headers,
+      body: finalConfig.body,
+    });
+
+    // 解析响应
+    const data = await response.json();
+
+    // 检查状态
+    checkStatus(response, data);
+
+    // 检查是否需要刷新 Token
+    if (isNeedRefreshToken(url, data)) {
+      const refreshResult = await tokenManager.refreshToken();
+      if (refreshResult.success) {
+        // 重新发送请求
+        const newHeaders = buildHeaders(finalConfig);
+        const retryResponse = await fetch(fullUrl, {
+          method: finalConfig.method,
+          headers: newHeaders,
+          body: finalConfig.body,
+        });
+        const retryData = await retryResponse.json();
+        checkStatus(retryResponse, retryData);
+        return await applyResponseInterceptors(retryData, finalConfig);
+      } else {
+        throw new RequestError(
+          config.error.authErrorMessage,
+          ErrorType.AUTH,
+          response.status,
+          response
+        );
+      }
+    }
+
+    // 执行响应拦截器
+    const finalData = await applyResponseInterceptors(data, finalConfig);
+
+    return finalData;
+  } catch (error: any) {
+    // 转换为 RequestError
+    const requestError =
+      error instanceof RequestError
+        ? error
+        : new RequestError(
+            config.error.networkErrorMessage,
+            ErrorType.NETWORK,
+            undefined,
+            undefined
+          );
+
+    // 关闭 Loading 并显示错误
+    if (mergedConfig.showLoading) {
+      loading(false, undefined, () => {
+        if (mergedConfig.showError) {
+          toast(requestError.errMessage || config.error.networkErrorMessage);
+        }
+      });
+    } else if (mergedConfig.showError) {
+      toast(requestError.errMessage || config.error.networkErrorMessage);
+    }
+
+    // 执行错误拦截器
+    return applyErrorInterceptors(requestError, mergedConfig);
+  } finally {
+    // 确保 Loading 被关闭
+    if (mergedConfig.showLoading) {
+      loading(false, buildUrl(url));
+    }
+  }
 };
 
-export const POST = (url: string, params: any = null, showLoading = false) => {
-  const searchParams = parseObj2SearchParams(params);
+/**
+ * HTTP 方法工厂函数
+ */
+const createHttpMethod = (method: HttpMethod) => {
+  return async <T = any>(
+    url: string,
+    params?: any,
+    showLoading?: boolean
+  ): Promise<BaseResponse<T>> => {
+    let finalUrl = url;
+    let body: string | URLSearchParams | undefined;
 
-  const options = {
-    method: 'POST',
-    body: searchParams,
+    if (method === 'GET' && params) {
+      // GET 请求：参数拼接到 URL
+      const searchParams = parseObj2SearchParams(params);
+      finalUrl = searchParams ? `${url}?${searchParams}` : url;
+    } else if (method !== 'GET' && params) {
+      // POST/PUT/DELETE 请求：参数作为 body
+      body = parseObj2SearchParams(params);
+    }
+
+    return request<T>(finalUrl, {
+      method,
+      body,
+      showLoading,
+    });
   };
-
-  return requestWithLogin(url, options, showLoading);
 };
 
-export const PUT = (url: string, params: any = null, showLoading = false) => {
-  const searchParams = parseObj2SearchParams(params);
+/**
+ * 导出 HTTP 方法
+ */
+export const GET = createHttpMethod('GET');
+export const POST = createHttpMethod('POST');
+export const PUT = createHttpMethod('PUT');
+export const DELETE = createHttpMethod('DELETE');
+export const PATCH = createHttpMethod('PATCH');
 
-  const options = {
-    method: 'PUT',
-    body: searchParams,
-  };
-
-  return requestWithLogin(url, options, showLoading);
-};
-
-export const DELETE = (url: string, params: any = null, showLoading = false) => {
-  const searchParams = parseObj2SearchParams(params);
-
-  const options = {
-    method: 'DELETE',
-    body: searchParams,
-  };
-  return requestWithLogin(url, options, showLoading);
-};
+/**
+ * 导出核心请求函数（供特殊场景使用）
+ */
+export { request };

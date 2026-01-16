@@ -1,25 +1,71 @@
 import { GET, DELETE } from './request';
+import type {
+  BaseResponse,
+  Category,
+  ArticleListItem,
+  Article,
+  RecommendLink,
+  GetCategoriesParams,
+  GetArticleListParams,
+  GetArticleDetailParams,
+  DeleteCategoryParams,
+} from './types';
 
-export function getCategories(fatherId: any) {
-  return GET('/category/getCategories', { fatherId });
+/**
+ * 获取子分类
+ * @param params - 请求参数
+ * @returns 分类列表响应
+ */
+export function getCategories(params: GetCategoriesParams): Promise<BaseResponse<Category[]>> {
+  return GET<Category[]>('/category/getCategories', params);
 }
 
-export function getAllCategories() {
-  return GET('/category/getAllCategories', null, true);
+/**
+ * 获取所有分类（显示 loading）
+ * @returns 所有分类列表响应
+ */
+export function getAllCategories(): Promise<BaseResponse<Category[]>> {
+  return GET<Category[]>('/category/getAllCategories', null, true);
 }
 
-export function getArticleList(key: any) {
-  return GET('/article/getArticleList', { key });
+/**
+ * 获取文章列表
+ * @param params - 请求参数
+ * @returns 文章列表响应
+ */
+export function getArticleList(
+  params: GetArticleListParams
+): Promise<BaseResponse<ArticleListItem[]>> {
+  return GET<ArticleListItem[]>('/article/getArticleList', params);
 }
 
-export function getArticleDetail(articleId: any) {
-  return GET('/article/getArticleDetail', { articleId });
+/**
+ * 获取文章详情
+ * @param params - 请求参数
+ * @returns 文章详情响应
+ */
+export function getArticleDetail(
+  params: GetArticleDetailParams
+): Promise<BaseResponse<Article>> {
+  return GET<Article>('/article/getArticleDetail', params);
 }
 
-export function getArticleRecommendLinks(articleId: any) {
-  return GET('/article/getArticleRecommendLinks', { articleId });
+/**
+ * 获取文章推荐链接
+ * @param params - 请求参数
+ * @returns 推荐链接列表响应
+ */
+export function getArticleRecommendLinks(
+  params: GetArticleDetailParams
+): Promise<BaseResponse<RecommendLink[]>> {
+  return GET<RecommendLink[]>('/article/getArticleRecommendLinks', params);
 }
 
-export function deleteCategory(categoryId: any) {
-  return DELETE('/admin/deleteCategory', { categoryId });
+/**
+ * 删除分类
+ * @param params - 请求参数
+ * @returns 删除结果响应
+ */
+export function deleteCategory(params: DeleteCategoryParams): Promise<BaseResponse<any>> {
+  return DELETE('/admin/deleteCategory', params);
 }
