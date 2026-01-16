@@ -9,7 +9,7 @@ function Page(props: PageProps<{ articleId: string }>) {
     params: { articleId },
   } = props;
 
-  const resp = use(getArticleDetail(articleId));
+  const resp = use(getArticleDetail({  articleId }));
   if (!resp.data) {
     return <Image src="https://api.dujin.org/bing/1920.php" width={1920} height={1080} alt="" />;
   }

@@ -164,6 +164,8 @@ export interface Article {
   categoryId: number;
   createTime: string;
   updateTime: string;
+  date_publish: number;
+  text_type: string;
 }
 
 /**
