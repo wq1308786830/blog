@@ -5,7 +5,7 @@ import TopNav from './TopNav';
 
 export default function Layout(props: PageProps<any>) {
   const { children } = props;
-  const resp: any = use(getAllCategories());
+  const resp = use(getAllCategories());
   const { data: navs } = resp;
 
   return (

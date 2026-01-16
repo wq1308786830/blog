@@ -7,7 +7,7 @@ function Page(props: PageProps<{ leafId: string; categoryId: string }>) {
   const {
     params: { leafId, categoryId },
   } = props;
-  const resp: any = use(getArticleList(leafId));
+  const resp = use(getArticleList({ key: leafId }));
   const { data: articleList } = resp;
 
   if (!Array.isArray(articleList) || !articleList.length) {

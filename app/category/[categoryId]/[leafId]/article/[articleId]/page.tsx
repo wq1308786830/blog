@@ -8,7 +8,7 @@ function Page(props: PageProps<{ articleId: string }>) {
     params: { articleId },
   } = props;
 
-  const resp = use(getArticleDetail(articleId));
+  const resp = use(getArticleDetail({ articleId }));
   if (!resp.data) {
     return null;
   }

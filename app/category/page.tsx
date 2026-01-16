@@ -3,7 +3,7 @@ import { getArticleList } from '@/services/blog';
 import ArticleList from '@/components/ArticleList';
 
 function Page() {
-  const resp: any = use(getArticleList(''));
+  const resp = use(getArticleList({}));
   const { data: articleList } = resp;
 
   if (!Array.isArray(articleList) || !articleList.length) {

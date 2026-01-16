@@ -7,7 +7,7 @@ function Page(props: PageProps<{ categoryId: string }>) {
   const {
     params: { categoryId },
   } = props;
-  const resp: any = use(getArticleList(categoryId));
+  const resp = use(getArticleList({ key: categoryId }));
   const { data: articleList } = resp;
 
   if (!Array.isArray(articleList) || !articleList.length) {
