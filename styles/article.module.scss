@@ -3,7 +3,48 @@
 .main {
   position: relative;
   min-height: 100vh;
-  background: var(--page-gradient);
+  background: radial-gradient(circle at 15% 10%, rgba(93, 228, 199, 0.1), transparent 30%),
+    radial-gradient(circle at 85% 20%, rgba(243, 178, 122, 0.12), transparent 40%),
+    linear-gradient(145deg, #0c0f1c 0%, #0f1626 40%, #0b0f1a 100%);
+
+  &::before {
+    content: '';
+    position: fixed;
+    top: -50%;
+    right: -30%;
+    width: 80%;
+    height: 80%;
+    background: radial-gradient(ellipse, rgba(93, 228, 199, 0.06) 0%, transparent 60%);
+    filter: blur(100px);
+    pointer-events: none;
+    z-index: 0;
+    animation: floatGlow 12s ease-in-out infinite;
+  }
+
+  &::after {
+    content: '';
+    position: fixed;
+    bottom: -30%;
+    left: -20%;
+    width: 70%;
+    height: 70%;
+    background: radial-gradient(ellipse, rgba(243, 178, 122, 0.05) 0%, transparent 60%);
+    filter: blur(110px);
+    pointer-events: none;
+    z-index: 0;
+    animation: floatGlow 15s ease-in-out infinite reverse;
+  }
+}
+
+@keyframes floatGlow {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0.7;
+  }
+  50% {
+    transform: translate(30px, -30px) scale(1.08);
+    opacity: 1;
+  }
 }
 
 .navsWrapper {
@@ -15,71 +56,111 @@
   display: flex;
   align-items: center;
   gap: 20px;
-  height: 60px;
-  padding: 0 40px;
-  background: rgba(255, 255, 255, 0.9);
+  height: 80px;
+  padding: 0 48px;
+  background: rgba(255, 255, 255, 0.06);
   border-bottom: 1px solid var(--border);
-  backdrop-filter: blur(8px);
+  backdrop-filter: blur(20px);
   box-shadow: var(--shadow);
+  transition: box-shadow 0.4s ease, background 0.4s ease;
 
   .navItem {
     position: relative;
     display: flex;
     align-items: center;
-    gap: 8px;
-    padding: 8px 12px;
-    height: 60px;
-    font-size: 14px;
+    gap: 10px;
+    padding: 16px 14px;
+    height: 80px;
+    font-size: 15px;
+    letter-spacing: 0.02em;
     color: var(--muted);
-    transition: all 0.2s ease;
-    border-radius: 6px;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    border-radius: 14px;
 
     &:hover {
       color: var(--text);
       cursor: pointer;
-      background: rgba(0, 0, 0, 0.02);
+      background: rgba(255, 255, 255, 0.06);
+      transform: translateY(-2px);
     }
 
     &.active {
       color: var(--primary);
-      font-weight: 600;
+      font-weight: 700;
     }
 
     .activeBar {
       position: absolute;
-      bottom: 8px;
-      left: 12px;
-      right: 12px;
-      height: 2px;
-      border-radius: 2px;
-      background: var(--primary);
+      bottom: 14px;
+      left: 14px;
+      right: 14px;
+      height: 3px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--primary), #8fffe3);
+      box-shadow: 0 8px 20px rgba(93, 228, 199, 0.5);
+      animation: slideIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     }
   }
 }
 
+@keyframes slideIn {
+  from {
+    transform: scaleX(0);
+    opacity: 0;
+  }
+  to {
+    transform: scaleX(1);
+    opacity: 1;
+  }
+}
+
 .content {
-  padding: 100px 5vw 60px;
-  max-width: 1400px;
-  margin: 0 auto;
+  padding: 130px 8vw 80px;
+  position: relative;
+  z-index: 1;
 }
 
 .body {
   display: flex;
-  gap: 40px;
+  gap: 28px;
 }
 
 .leftNavWrapper {
   position: sticky;
-  top: 80px;
+  top: 100px;
   align-self: flex-start;
   width: 260px;
-  max-height: calc(100vh - 100px);
-  padding: 20px;
+  max-height: calc(100vh - 140px);
+  padding: 28px 24px;
   overflow-y: auto;
-  background: var(--card);
+  background: rgba(255, 255, 255, 0.06);
   border: 1px solid var(--border);
-  border-radius: 12px;
+  border-radius: 26px;
   box-shadow: var(--shadow);
+  backdrop-filter: blur(16px);
+  transition: all 0.4s ease;
+
+  &:hover {
+    box-shadow: 0 28px 80px rgba(0, 0, 0, 0.35);
+  }
+
+  &::-webkit-scrollbar {
+    width: 5px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: var(--border);
+    border-radius: 5px;
+    transition: background 0.3s ease;
+
+    &:hover {
+      background: rgba(93, 228, 199, 0.6);
+    }
+  }
 }
 
 .categoryTreeWrapper {
@@ -148,44 +229,121 @@
 .articleListWrapper {
   flex: 1;
   min-height: 70vh;
-  padding: 24px;
-  background: var(--card);
+  padding: 28px;
+  background: rgba(255, 255, 255, 0.04);
   border: 1px solid var(--border);
-  border-radius: 12px;
+  border-radius: 28px;
+  backdrop-filter: blur(12px);
   box-shadow: var(--shadow);
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--primary), var(--accent));
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 90% 10%, rgba(93, 228, 199, 0.05), transparent 40%);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+  }
+
+  &:hover::after {
+    opacity: 1;
+  }
 
   .articleLink {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 12px;
+    gap: 16px;
   }
 
   .articleRow {
-    display: flex;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: 1fr auto;
     align-items: center;
-    padding: 16px;
-    border-radius: 8px;
-    background: white;
+    gap: 14px;
+    padding: 18px 20px;
+    border-radius: 18px;
+    background: rgba(255, 255, 255, 0.06);
     border: 1px solid var(--border);
-    transition: all 0.2s ease;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+
+    &::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 4px;
+      background: linear-gradient(180deg, var(--primary), var(--accent));
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    &::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 50% 50%, rgba(93, 228, 199, 0.08), transparent 70%);
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
 
     &:hover {
-      transform: translateY(-2px);
-      box-shadow: var(--shadow);
-      border-color: var(--primary);
+      transform: translateY(-4px) translateX(6px);
+      border-color: rgba(93, 228, 199, 0.6);
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
+
+      &::before,
+      &::after {
+        opacity: 1;
+      }
+
+      a {
+        color: var(--primary);
+        transform: translateX(3px);
+      }
+
+      .time {
+        background: rgba(93, 228, 199, 0.25);
+        border-color: rgba(93, 228, 199, 0.5);
+        color: var(--primary);
+        transform: scale(1.05);
+      }
     }
 
     a {
       font-size: 16px;
       color: var(--text);
-      font-weight: 500;
+      font-weight: 600;
+      transition: color 0.3s ease, transform 0.3s ease;
+      position: relative;
+      z-index: 1;
     }
 
     .time {
-      font-size: 14px;
+      font-size: 13px;
       color: var(--muted);
       white-space: nowrap;
+      padding: 8px 14px;
+      background: rgba(93, 228, 199, 0.12);
+      border-radius: 10px;
+      border: 1px solid rgba(93, 228, 199, 0.25);
+      transition: all 0.3s ease;
+      font-weight: 500;
+      letter-spacing: 0.02em;
     }
   }
 }
@@ -193,38 +351,90 @@
 .articleDetail {
   width: 100%;
   min-height: 70vh;
-  padding: 24px;
-  background: var(--card);
+  padding: 28px;
+  background: rgba(255, 255, 255, 0.04);
   border: 1px solid var(--border);
-  border-radius: 12px;
+  border-radius: 28px;
+  backdrop-filter: blur(12px);
   box-shadow: var(--shadow);
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--primary), var(--accent));
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 90% 10%, rgba(93, 228, 199, 0.05), transparent 40%);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+  }
+
+  &:hover::after {
+    opacity: 1;
+  }
 
   .content {
-    padding: 32px;
-    border-radius: 8px;
-    background: white;
+    padding: 32px 36px 48px;
+    border-radius: 22px;
+    background: rgba(255, 255, 255, 0.06);
     border: 1px solid var(--border);
+    position: relative;
+
+    &::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 80% 20%, rgba(93, 228, 199, 0.05), transparent 50%);
+      pointer-events: none;
+    }
 
     .h1 {
-      font-size: 32px;
+      font-size: 36px;
       font-weight: 700;
-      margin-bottom: 16px;
+      margin-bottom: 24px;
       color: var(--text);
+      position: relative;
+      background: linear-gradient(135deg, var(--text) 0%, var(--primary) 60%, var(--accent) 100%);
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
       line-height: 1.3;
+      letter-spacing: -0.02em;
     }
 
     .publishInfo {
       font-size: 14px;
       color: var(--muted);
-      margin-bottom: 32px;
-      padding: 12px 16px;
-      background: rgba(37, 99, 235, 0.05);
-      border-radius: 8px;
+      margin-bottom: 36px;
+      letter-spacing: 0.02em;
+      padding: 14px 18px;
+      background: rgba(93, 228, 199, 0.12);
+      border: 1px solid rgba(93, 228, 199, 0.2);
+      border-radius: 14px;
       display: inline-block;
+      font-weight: 500;
+      backdrop-filter: blur(8px);
+      transition: all 0.3s ease;
+
+      &:hover {
+        background: rgba(93, 228, 199, 0.18);
+        border-color: rgba(93, 228, 199, 0.35);
+        transform: translateY(-2px);
+      }
 
       .time {
         color: var(--primary);
-        font-weight: 500;
+        font-weight: 600;
       }
     }
   }
@@ -233,7 +443,6 @@
 @media (max-width: 1024px) {
   .body {
     flex-direction: column;
-    gap: 20px;
   }
 
   .leftNavWrapper {
@@ -247,19 +456,15 @@
 @media (max-width: 640px) {
   .navsWrapper {
     padding: 0 16px;
-    gap: 12px;
+    gap: 10px;
   }
 
   .content {
-    padding: 80px 16px 40px;
+    padding: 110px 16px 48px;
   }
 
   .articleListWrapper,
   .articleDetail {
-    padding: 16px;
-  }
-
-  .articleDetail .content {
-    padding: 24px;
+    padding: 14px;
   }
 }
