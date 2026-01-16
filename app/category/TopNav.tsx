@@ -36,8 +36,8 @@ function TopNav(props: TopNavProps) {
             }}
             >
             {/* Corner Markers */}
-            <span className="absolute top-0 left-0 w-1 h-1 bg-[var(--primary)] opacity-0 group-hover:opacity-100 transition-opacity"></span>
-            <span className="absolute bottom-0 right-0 w-1 h-1 bg-[var(--primary)] opacity-0 group-hover:opacity-100 transition-opacity"></span>
+            <span className="absolute top-0 left-0 w-1 h-1 bg-[var(--primary)] opacity-0 group-hover:opacity-100 transition-opacity" />
+            <span className="absolute bottom-0 right-0 w-1 h-1 bg-[var(--primary)] opacity-0 group-hover:opacity-100 transition-opacity" />
             
             {nav.name}
             </button>

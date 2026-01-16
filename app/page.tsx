@@ -22,7 +22,7 @@ export default function Page() {
             <span>STATUS: CURIOSITY_ACTIVE</span>
           </div>
           <div className="w-10 h-10 border border-[var(--primary)] flex items-center justify-center animate-spin">
-            <div className="w-6 h-6 border-t-2 border-[var(--primary)] rounded-full"></div>
+            <div className="w-6 h-6 border-t-2 border-[var(--primary)] rounded-full" />
           </div>
         </div>
       </header>
@@ -31,7 +31,7 @@ export default function Page() {
       <section className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
         <div className="space-y-8 relative">
           <div className="absolute -left-4 top-0 bottom-0 w-[1px] bg-[var(--border)]">
-            <div className="absolute top-0 left-0 w-1 h-20 bg-[var(--primary)]"></div>
+            <div className="absolute top-0 left-0 w-1 h-20 bg-[var(--primary)]" />
           </div>
           
           <div className="space-y-4">
@@ -54,7 +54,7 @@ export default function Page() {
               <span className="relative z-10 flex items-center gap-2">
                 INITIATE_READ <span className="text-xl">&rarr;</span>
               </span>
-              <div className="absolute inset-0 bg-[var(--primary)] transform -translate-x-full group-hover:translate-x-0 transition-transform duration-300 ease-out z-0"></div>
+              <div className="absolute inset-0 bg-[var(--primary)] transform -translate-x-full group-hover:translate-x-0 transition-transform duration-300 ease-out z-0" />
             </Link>
             <a href="#maps" className="px-8 py-3 border border-[var(--muted)] text-[var(--muted)] uppercase tracking-widest hover:border-[var(--text)] hover:text-[var(--text)] transition-all">
               ACCESS_MAPS
@@ -64,7 +64,7 @@ export default function Page() {
 
         {/* Hero Visuals */}
         <div className="relative">
-          <div className="absolute -inset-4 bg-[var(--primary)] opacity-20 blur-2xl rounded-full animate-pulse"></div>
+          <div className="absolute -inset-4 bg-[var(--primary)] opacity-20 blur-2xl rounded-full animate-pulse" />
           <div className="grid grid-cols-2 gap-4 relative z-10">
             <div className="cyber-border p-1 bg-black/60 backdrop-blur-sm transform hover:scale-105 transition-transform duration-500">
               <div className="relative overflow-hidden group">
@@ -98,9 +98,9 @@ export default function Page() {
       {/* Maps Section */}
       <section id="maps" className="py-20 space-y-10 w-full">
         <div className="flex items-center gap-4 mb-8">
-          <div className="h-[1px] flex-1 bg-[var(--border)]"></div>
+          <div className="h-[1px] flex-1 bg-[var(--border)]" />
           <h3 className="text-2xl font-mono text-[var(--primary)]">&lt; KNOWLEDGE_DATABASE /&gt;</h3>
-          <div className="h-[1px] flex-1 bg-[var(--border)]"></div>
+          <div className="h-[1px] flex-1 bg-[var(--border)]" />
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -115,7 +115,7 @@ export default function Page() {
             </div>
             <div className="relative overflow-hidden border border-[var(--border)] h-48 opacity-60 group-hover:opacity-100 transition-opacity">
                <img src={FrontendPic} alt="Frontend Map" className="w-full h-full object-cover" />
-               <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent"></div>
+               <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent" />
             </div>
           </div>
 
@@ -130,7 +130,7 @@ export default function Page() {
             </div>
             <div className="relative overflow-hidden border border-[var(--border)] h-48 opacity-60 group-hover:opacity-100 transition-opacity">
                <img src={ProgramPic} alt="Backend Map" className="w-full h-full object-cover" />
-               <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent"></div>
+               <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent" />
             </div>
           </div>
         </div>

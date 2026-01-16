@@ -5,7 +5,6 @@ import ReactMarkdown from 'react-markdown';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { oneDark } from 'react-syntax-highlighter/dist/cjs/styles/prism';
 import dayjs from 'dayjs';
-import css from '@/styles/article.module.scss';
 import markdownCss from '@/styles/markdown.module.scss';
 
 interface ArticleDetailProps {
@@ -69,7 +68,7 @@ function ArticleDetail(props: ArticleDetailProps) {
                 <span className="px-2 py-1 bg-[var(--card)] border border-[var(--border)]">
                     LOG_DATE: {dayjs(datePublish).format('YYYY-MM-DD HH:mm:ss')}
                 </span>
-                <span className="w-2 h-2 rounded-full bg-[var(--primary)] animate-pulse"></span>
+                <span className="w-2 h-2 rounded-full bg-[var(--primary)] animate-pulse" />
                 <span className="px-2 py-1 bg-[var(--card)] border border-[var(--border)]">
                     TYPE: {textType || 'MARKDOWN_DOC'}
                 </span>
