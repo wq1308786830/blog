@@ -1,5 +1,8 @@
-import React from 'react';
+'use client';
+
+import React, { useState } from 'react';
 import Link from 'next/link';
+import TechImageModal from '@/components/TechImageModal';
 
 const FaceLeftPic = '/imgs/home/NDk2MDg0NjE1.jpeg';
 const RussellPic = '/imgs/home/Bertrand_Russell.jpg';
@@ -7,8 +10,31 @@ const ProgramPic = '/imgs/home/language_map.png';
 const FrontendPic = '/imgs/home/frontend_map.png';
 
 export default function Page() {
+  const [modalOpen, setModalOpen] = useState(false);
+  const [currentImage, setCurrentImage] = useState<{src: string, alt: string} | null>(null);
+
+  const openModal = (src: string, alt: string) => {
+    setCurrentImage({ src, alt });
+    setModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setModalOpen(false);
+    // Slight delay to clear image after animation if we had one, but instant is snappier for now
+    setCurrentImage(null);
+  };
+
   return (
     <main className="min-h-screen w-full flex flex-col p-4 md:p-10 max-w-7xl mx-auto gap-20">
+      
+      {currentImage && (
+        <TechImageModal 
+          isOpen={modalOpen} 
+          onClose={closeModal} 
+          src={currentImage.src} 
+          alt={currentImage.alt} 
+        />
+      )}
       
       {/* HUD Header */}
       <header className="flex justify-between items-center border-b border-[var(--border)] pb-4">
@@ -113,9 +139,17 @@ export default function Page() {
               <h4 className="text-xl text-[var(--text)] mb-2 group-hover:text-[var(--primary)] transition-colors">FRONTEND_ARCH</h4>
               <p className="text-sm text-[var(--muted)]">从交互到工程化 // 体系构建中...</p>
             </div>
-            <div className="relative overflow-hidden border border-[var(--border)] h-48 opacity-60 group-hover:opacity-100 transition-opacity">
+            <div 
+              className="relative overflow-hidden border border-[var(--border)] h-48 opacity-60 group-hover:opacity-100 transition-opacity cursor-pointer"
+              onClick={() => openModal(FrontendPic, "FRONTEND_ARCH")}
+            >
                <img src={FrontendPic} alt="Frontend Map" className="w-full h-full object-cover" />
-               <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent" />
+               <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent pointer-events-none" />
+               <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <span className="bg-black/70 border border-[var(--primary)] text-[var(--primary)] px-3 py-1 text-xs font-mono tracking-widest backdrop-blur-sm">
+                    [ EXPAND_VIEW ]
+                  </span>
+               </div>
             </div>
           </div>
 
@@ -128,9 +162,17 @@ export default function Page() {
               <h4 className="text-xl text-[var(--text)] mb-2 group-hover:text-[var(--accent)] transition-colors">BACKEND_ARCH</h4>
               <p className="text-sm text-[var(--muted)]">语言与架构串联 // 核心运算中...</p>
             </div>
-            <div className="relative overflow-hidden border border-[var(--border)] h-48 opacity-60 group-hover:opacity-100 transition-opacity">
+            <div 
+              className="relative overflow-hidden border border-[var(--border)] h-48 opacity-60 group-hover:opacity-100 transition-opacity cursor-pointer"
+              onClick={() => openModal(ProgramPic, "BACKEND_ARCH")}
+            >
                <img src={ProgramPic} alt="Backend Map" className="w-full h-full object-cover" />
-               <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent" />
+               <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent pointer-events-none" />
+               <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <span className="bg-black/70 border border-[var(--accent)] text-[var(--accent)] px-3 py-1 text-xs font-mono tracking-widest backdrop-blur-sm">
+                    [ EXPAND_VIEW ]
+                  </span>
+               </div>
             </div>
           </div>
         </div>
