@@ -75,7 +75,7 @@ export default function Page() {
               </div>
               <div className="mt-2 flex justify-between items-center px-1">
                 <span className="text-[10px] uppercase text-[var(--muted)]">OBSERVATION_MODE</span>
-                <span className="w-2 h-2 bg-[var(--primary)] rounded-full animate-blink"></span>
+                <span className="w-2 h-2 bg-[var(--primary)] rounded-full animate-blink" />
               </div>
             </div>
 
@@ -88,7 +88,7 @@ export default function Page() {
               </div>
               <div className="mt-2 flex justify-between items-center px-1">
                 <span className="text-[10px] uppercase text-[var(--muted)]">LOGIC_CORE</span>
-                <span className="w-2 h-2 bg-[var(--accent)] rounded-full animate-blink"></span>
+                <span className="w-2 h-2 bg-[var(--accent)] rounded-full animate-blink" />
               </div>
             </div>
           </div>

@@ -24,6 +24,7 @@ function TopNav(props: TopNavProps) {
        <div className="flex gap-4 overflow-x-auto w-full max-w-7xl mx-auto no-scrollbar">
         {navs.map((nav) => (
             <button
+            type="button"
             key={nav.id}
             className={clsx(
                 "relative flex items-center px-6 py-2 text-sm font-mono tracking-wider uppercase transition-all duration-300 border border-transparent hover:text-[var(--primary)] hover:border-[var(--primary)] group",
