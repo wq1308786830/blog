@@ -1,16 +1,21 @@
 import React, { use } from 'react';
-import type { PageProps } from '@/services/data.d';
 import { getArticleDetail } from '@/services/blog';
 import ArticleDetail from '@/components/ArticleDetail';
 
-function Page(props: PageProps<{ articleId: string }>) {
-  const {
-    params: { articleId },
-  } = props;
+interface ArticlePageProps {
+  params: {
+    categoryId: string;
+    leafId: string;
+    articleId: string;
+  };
+}
 
+function ArticlePage({ params }: ArticlePageProps) {
+  const { articleId } = params;
   const resp = use(getArticleDetail({ articleId }));
+
   if (!resp.data) {
-    return null;
+    return <div className="text-[var(--muted)]">Article not found</div>;
   }
 
   const { title, content, date_publish: datePublish, text_type: textType } = resp.data;
@@ -20,4 +25,4 @@ function Page(props: PageProps<{ articleId: string }>) {
   );
 }
 
-export default Page;
+export default ArticlePage;

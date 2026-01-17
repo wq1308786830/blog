@@ -1,20 +1,24 @@
 import React, { use } from 'react';
 import { getArticleList } from '@/services/blog';
 import ArticleList from '@/components/ArticleList';
-import type { PageProps } from '@/services/data.d';
 
-function Page(props: PageProps<{ categoryId: string }>) {
-  const {
-    params: { categoryId },
-  } = props;
+interface CategoryPageProps {
+  params: {
+    categoryId: string;
+    leafId?: string;
+  };
+}
+
+function CategoryPage({ params }: CategoryPageProps) {
+  const { categoryId } = params;
   const resp = use(getArticleList({ key: categoryId }));
   const { data: articleList } = resp;
 
   if (!Array.isArray(articleList) || !articleList.length) {
-    return null;
+    return <div className="text-[var(--muted)]">No articles found</div>;
   }
 
   return <ArticleList categoryId={categoryId} list={articleList} />;
 }
 
-export default Page;
+export default CategoryPage;
