@@ -9,6 +9,14 @@ interface CategoryTreeProps {
 }
 function CategoryTree(props: CategoryTreeProps) {
   const { category, categoryId, leafId = undefined } = props;
+  console.log(
+    'CategoryTree category.id:',
+    category.id,
+    'leafId:',
+    leafId,
+    'match:',
+    category.id === leafId,
+  );
 
   const renderSubs = (sub: Category) => {
     if (!Array.isArray(sub?.subCategory)) {
