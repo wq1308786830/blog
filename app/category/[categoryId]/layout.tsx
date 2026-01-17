@@ -1,9 +1,9 @@
 import React, { use } from 'react';
 import { getAllCategories } from '@/services/blog';
 import type { PageProps } from '@/services/data.d';
-import LeftNav from './LeftNav';
+import LeftNav from '@/components/Category/LeftNav';
 
-export default function Layout(props: PageProps<{ categoryId: string }>) {
+export default function Layout(props: PageProps<{ categoryId: string; leafId?: string }>) {
   const { children, params } = props;
   const resp: any = use(getAllCategories());
   const { data: navs } = resp;
@@ -16,11 +16,13 @@ export default function Layout(props: PageProps<{ categoryId: string }>) {
   return (
     <section className="flex flex-col md:flex-row gap-8 min-h-[70vh]">
       <aside className="w-full md:w-64 flex-shrink-0">
-        <LeftNav sub={sub} categoryId={+params.categoryId} />
+        <LeftNav
+          sub={sub}
+          categoryId={+params.categoryId}
+          leafId={params.leafId ? +params.leafId : undefined}
+        />
       </aside>
-      <div className="flex-1 min-w-0 cyber-border bg-black/40 p-6">
-        {children}
-      </div>
+      <div className="flex-1 min-w-0 cyber-border bg-black/40 p-6">{children}</div>
     </section>
   );
 }

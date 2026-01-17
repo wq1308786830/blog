@@ -7,9 +7,10 @@ import CategoryTree from './CategoryTree';
 interface LeftNavProps {
   sub: Category;
   categoryId: number;
+  leafId?: number;
 }
 function LeftNav(props: LeftNavProps) {
-  const { sub, categoryId } = props;
+  const { sub, categoryId, leafId = undefined } = props;
 
   if (!Array.isArray(sub?.subCategory)) {
     return null;
@@ -21,10 +22,19 @@ function LeftNav(props: LeftNavProps) {
         DIRECTORY_LISTING
       </div>
       {sub.subCategory.map((category) => (
-        <CategoryTree key={category.id} category={category} categoryId={categoryId} />
+        <CategoryTree
+          key={category.id}
+          category={category}
+          categoryId={categoryId}
+          leafId={leafId}
+        />
       ))}
     </nav>
   );
 }
+
+LeftNav.defaultProps = {
+  leafId: undefined,
+};
 
 export default LeftNav;
