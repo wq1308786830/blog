@@ -3,14 +3,15 @@ import { getArticleDetail } from '@/services/blog';
 import ArticleDetail from '@/components/ArticleDetail';
 
 interface ArticlePageProps {
-  params: {
+  params: Promise<{
     categoryId: string;
     leafId: string;
     articleId: string;
-  };
+  }>;
 }
 
-function ArticlePage({ params }: ArticlePageProps) {
+function ArticlePage(props: ArticlePageProps) {
+  const params = use(props.params);
   const { articleId } = params;
   const resp = use(getArticleDetail({ articleId }));
 

@@ -3,13 +3,14 @@ import { getArticleList } from '@/services/blog';
 import ArticleList from '@/components/ArticleList';
 
 interface LeafPageProps {
-  params: {
+  params: Promise<{
     categoryId: string;
     leafId: string;
-  };
+  }>;
 }
 
-function LeafPage({ params }: LeafPageProps) {
+function LeafPage(props: LeafPageProps) {
+  const params = use(props.params);
   const { categoryId, leafId } = params;
   const resp = use(getArticleList({ key: leafId }));
   const { data: articleList } = resp;

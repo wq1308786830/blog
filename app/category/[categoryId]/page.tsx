@@ -3,13 +3,14 @@ import { getArticleList } from '@/services/blog';
 import ArticleList from '@/components/ArticleList';
 
 interface CategoryPageProps {
-  params: {
+  params: Promise<{
     categoryId: string;
     leafId?: string;
-  };
+  }>;
 }
 
-function CategoryPage({ params }: CategoryPageProps) {
+function CategoryPage(props: CategoryPageProps) {
+  const params = use(props.params);
   const { categoryId } = params;
   const resp = use(getArticleList({ key: categoryId }));
   const { data: articleList } = resp;

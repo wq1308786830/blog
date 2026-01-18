@@ -4,14 +4,20 @@ import LeftNav from '@/components/Category/LeftNav';
 
 interface CategoryLayoutProps {
   children: React.ReactNode;
-  params: {
+  params: Promise<{
     categoryId: string;
     leafId?: string;
     articleId?: string;
-  };
+  }>;
 }
 
-export default function CategoryLayout({ children, params }: CategoryLayoutProps) {
+export default function CategoryLayout(props: CategoryLayoutProps) {
+  const params = use(props.params);
+
+  const {
+    children
+  } = props;
+
   const resp: any = use(getAllCategories());
   const { data: navs } = resp;
 
