@@ -1,5 +1,5 @@
 export interface PageProps<T> {
-  params?: T | any;
+  params?: Promise<T> | T | any;
   children?: React.ReactNode;
 }
 
