@@ -76,7 +76,7 @@ export interface Article {
   readonly createTime: string;
   readonly updateTime: string;
   readonly date_publish: number;
-  readonly text_type: 'markdown' | 'html';
+  readonly text_type: string; // 改为 string 以匹配 API 响应
 }
 
 /**

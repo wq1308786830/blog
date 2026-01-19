@@ -23,7 +23,7 @@ export const PerformanceMonitor = memo(() => {
     const metrics: PerformanceMetrics = {};
 
     // 监控 Web Vitals
-    const observeWebVitals = () => {
+    const observeWebVitals = (): (() => void) | undefined => {
       // First Contentful Paint (FCP)
       if ('PerformanceObserver' in window) {
         try {
@@ -107,8 +107,10 @@ export const PerformanceMonitor = memo(() => {
           };
         } catch (error) {
           console.warn('Performance monitoring failed:', error);
+          return undefined;
         }
       }
+      return undefined;
     };
 
     // 监控 Navigation Timing
@@ -124,7 +126,7 @@ export const PerformanceMonitor = memo(() => {
     };
 
     // 监控资源加载
-    const observeResourceTiming = () => {
+    const observeResourceTiming = (): (() => void) | undefined => {
       if ('PerformanceObserver' in window) {
         try {
           const resourceObserver = new PerformanceObserver((list) => {
@@ -143,8 +145,10 @@ export const PerformanceMonitor = memo(() => {
           };
         } catch (error) {
           console.warn('Resource timing monitoring failed:', error);
+          return undefined;
         }
       }
+      return undefined;
     };
 
     // 启动监控

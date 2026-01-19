@@ -172,11 +172,12 @@ export interface Article {
  * 文章列表项类型
  */
 export interface ArticleListItem {
-  id: number;
-  title: string;
-  summary: string;
-  categoryId: number;
-  createTime: string;
+  readonly id: number;
+  readonly title: string;
+  readonly summary?: string;
+  readonly categoryId: number;
+  readonly createTime: string;
+  readonly date_publish: number; // 确保包含这个字段
 }
 
 /**

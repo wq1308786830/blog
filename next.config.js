@@ -2,12 +2,10 @@ const path = require('path');
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // React 19 优化配置
+  // 实验性功能配置
   experimental: {
-    // 启用 React 19 的新特性
+    // 启用 React 19 Compiler
     reactCompiler: true,
-    // 优化服务端组件
-    serverComponentsExternalPackages: ['react-markdown', 'react-syntax-highlighter'],
   },
   
   // 样式配置
@@ -28,13 +26,13 @@ const nextConfig = {
         pathname: '/**',
       },
     ],
-    // React 19 图片优化
+    // 图片格式优化
     formats: ['image/webp', 'image/avif'],
   },
   
   // TypeScript 配置
   typescript: {
-    ignoreBuildErrors: false, // 改为 false 以确保类型安全
+    ignoreBuildErrors: false, // 确保类型安全
   },
   
   // 编译优化
@@ -49,6 +47,23 @@ const nextConfig = {
     maxInactiveAge: 25 * 1000,
     // 同时保留的页面数
     pagesBufferLength: 2,
+  },
+  
+  // Webpack 配置
+  webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
+    // 优化 bundle 大小
+    if (!dev && !isServer) {
+      config.optimization.splitChunks.cacheGroups = {
+        ...config.optimization.splitChunks.cacheGroups,
+        vendor: {
+          test: /[\\/]node_modules[\\/]/,
+          name: 'vendors',
+          chunks: 'all',
+        },
+      };
+    }
+    
+    return config;
   },
 };
 

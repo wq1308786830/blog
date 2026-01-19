@@ -133,24 +133,44 @@ const buildUrl = (url: string, baseURL?: string): string => {
  * 构建请求头
  */
 const buildHeaders = (requestConfig: ExtendedRequestConfig): HeadersInit => {
-  const headers: Record<string, string> = {
+  const headers: HeadersInit = {
     ...config.request.headers,
     ...requestConfig.headers,
   };
 
+  // 如果 headers 是 Headers 对象，转换为普通对象
+  if (headers instanceof Headers) {
+    const headersObj: Record<string, string> = {};
+    headers.forEach((value, key) => {
+      headersObj[key] = value;
+    });
+    return headersObj;
+  }
+
+  // 如果是数组，转换为对象
+  if (Array.isArray(headers)) {
+    const headersObj: Record<string, string> = {};
+    headers.forEach(([key, value]) => {
+      headersObj[key] = value;
+    });
+    return headersObj;
+  }
+
+  const headersObj = headers as Record<string, string>;
+
   // 设置 Content-Type
-  if (!headers['Content-Type'] && requestConfig.body) {
+  if (!headersObj['Content-Type'] && requestConfig.body) {
     if (requestConfig.body instanceof FormData) {
       // FormData 会自动设置 Content-Type，包含 boundary
-      delete headers['Content-Type'];
+      delete headersObj['Content-Type'];
     } else if (requestConfig.body instanceof URLSearchParams) {
-      headers['Content-Type'] = ContentType.URLENCODED;
+      headersObj['Content-Type'] = ContentType.URLENCODED;
     } else if (typeof requestConfig.body === 'string') {
       try {
         JSON.parse(requestConfig.body);
-        headers['Content-Type'] = ContentType.JSON;
+        headersObj['Content-Type'] = ContentType.JSON;
       } catch {
-        headers['Content-Type'] = ContentType.URLENCODED;
+        headersObj['Content-Type'] = ContentType.URLENCODED;
       }
     }
   }
@@ -159,11 +179,11 @@ const buildHeaders = (requestConfig: ExtendedRequestConfig): HeadersInit => {
   if (!requestConfig.skipAuth && config.request.withAuth) {
     const token = tokenManager.getToken();
     if (token) {
-      headers['Authorization'] = token;
+      headersObj['Authorization'] = token;
     }
   }
 
-  return headers;
+  return headersObj;
 };
 
 /**

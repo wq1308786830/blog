@@ -1,6 +1,6 @@
 import React, { use } from 'react';
 import { getArticleDetail } from '@/services/blog';
-import ArticleDetail from '@/components/ArticleDetail';
+import { ArticleDetail } from '@/components/ArticleDetail';
 
 interface ArticlePageProps {
   params: Promise<{
@@ -19,11 +19,7 @@ function ArticlePage(props: ArticlePageProps) {
     return <div className="text-[var(--muted)]">Article not found</div>;
   }
 
-  const { title, content, date_publish: datePublish, text_type: textType } = resp.data;
-
-  return (
-    <ArticleDetail title={title} datePublish={datePublish} textType={textType} content={content} />
-  );
+  return <ArticleDetail article={resp.data} />;
 }
 
 export default ArticlePage;

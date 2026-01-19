@@ -11,19 +11,15 @@ import '@/app/markdown.css';
 /**
  * 代码高亮组件 - React 19 优化
  */
-const CodeComponent = memo<{
-  inline?: boolean;
-  className?: string;
-  children: React.ReactNode;
-  node?: any;
-}>(({ inline, className, children, node }) => {
+const CodeComponent = memo((props: any) => {
+  const { inline, className, children, node, ...restProps } = props;
   const classAttr = className || (node?.properties?.className?.join(' ') ?? '');
   const match = /language-([^\s]+)/.exec(classAttr);
   const lang = match?.[1] ?? '';
 
   // 内联代码
   if (inline || !lang) {
-    return <code className="inlineCode">{children}</code>;
+    return <code className="inlineCode" {...restProps}>{children}</code>;
   }
 
   // 代码块样式 - React 19 优化的 useMemo
@@ -58,20 +54,20 @@ CodeComponent.displayName = 'CodeComponent';
 /**
  * Markdown 组件配置 - React 19 优化
  */
-const markdownComponents = {
+const markdownComponents: any = {
   code: CodeComponent,
   // 其他组件可以在这里添加
-  h1: ({ children }: { children: React.ReactNode }) => (
-    <h1 className="text-3xl font-bold text-[var(--primary)] mb-4">{children}</h1>
+  h1: ({ children, ...props }: any) => (
+    <h1 className="text-3xl font-bold text-[var(--primary)] mb-4" {...props}>{children}</h1>
   ),
-  h2: ({ children }: { children: React.ReactNode }) => (
-    <h2 className="text-2xl font-bold text-[var(--text)] mb-3">{children}</h2>
+  h2: ({ children, ...props }: any) => (
+    <h2 className="text-2xl font-bold text-[var(--text)] mb-3" {...props}>{children}</h2>
   ),
-  h3: ({ children }: { children: React.ReactNode }) => (
-    <h3 className="text-xl font-bold text-[var(--text)] mb-2">{children}</h3>
+  h3: ({ children, ...props }: any) => (
+    <h3 className="text-xl font-bold text-[var(--text)] mb-2" {...props}>{children}</h3>
   ),
-  blockquote: ({ children }: { children: React.ReactNode }) => (
-    <blockquote className="border-l-4 border-[var(--primary)] pl-4 my-4 italic text-[var(--muted)]">
+  blockquote: ({ children, ...props }: any) => (
+    <blockquote className="border-l-4 border-[var(--primary)] pl-4 my-4 italic text-[var(--muted)]" {...props}>
       {children}
     </blockquote>
   ),

@@ -3,25 +3,37 @@ import { getArticleList } from '@/services/blog';
 import { ArticleList } from '@/components/ArticleList';
 import type { PageProps } from '@/types';
 
-/**
- * 文章列表加载组件 - 使用 React 19 的 use() hook
- */
-function ArticleListContent() {
-  // React 19 的 use() hook 用于处理 Promise
-  const response = React.use(getArticleList({}));
-  const { data: articleList } = response;
+// 强制动态渲染
+export const dynamic = 'force-dynamic';
 
-  if (!Array.isArray(articleList) || articleList.length === 0) {
+/**
+ * 文章列表加载组件
+ */
+async function ArticleListContent() {
+  try {
+    const response = await getArticleList({});
+    const { data: articleList } = response;
+
+    if (!Array.isArray(articleList) || articleList.length === 0) {
+      return (
+        <div className="flex flex-col items-center justify-center py-20 text-center">
+          <div className="text-6xl mb-4">📝</div>
+          <h2 className="text-2xl font-mono text-[var(--primary)] mb-2">NO_DATA_FOUND</h2>
+          <p className="text-[var(--muted)]">暂无文章数据</p>
+        </div>
+      );
+    }
+
+    return <ArticleList list={articleList} />;
+  } catch (error) {
     return (
       <div className="flex flex-col items-center justify-center py-20 text-center">
-        <div className="text-6xl mb-4">📝</div>
-        <h2 className="text-2xl font-mono text-[var(--primary)] mb-2">NO_DATA_FOUND</h2>
-        <p className="text-[var(--muted)]">暂无文章数据</p>
+        <div className="text-6xl mb-4">⚠️</div>
+        <h2 className="text-2xl font-mono text-[var(--primary)] mb-2">LOAD_ERROR</h2>
+        <p className="text-[var(--muted)]">加载文章数据失败</p>
       </div>
     );
   }
-
-  return <ArticleList list={articleList} />;
 }
 
 /**
