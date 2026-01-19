@@ -1,6 +1,6 @@
 import React, { use } from 'react';
 import { getArticleList } from '@/services/blog';
-import ArticleList from '@/components/ArticleList';
+import { ArticleList } from '@/components/ArticleList';
 
 interface CategoryPageProps {
   params: Promise<{
