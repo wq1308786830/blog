@@ -4,15 +4,20 @@ const path = require('path');
 const nextConfig = {
   // 实验性功能配置
   experimental: {
-    // 启用 React 19 Compiler
-    reactCompiler: true,
-    // 启用 Turbo 模式（如果可用）
-    turbo: {
-      rules: {
-        '*.svg': {
-          loaders: ['@svgr/webpack'],
-          as: '*.js',
-        },
+  },
+  
+  // 启用 React 19 Compiler
+  reactCompiler: true,
+  
+  // 优化服务端组件
+  serverExternalPackages: ['react-markdown', 'react-syntax-highlighter'],
+
+  // 启用 Turbo 模式（如果可用）
+  turbo: {
+    rules: {
+      '*.svg': {
+        loaders: ['@svgr/webpack'],
+        as: '*.js',
       },
     },
   },
@@ -58,22 +63,22 @@ const nextConfig = {
     pagesBufferLength: 2,
   },
   
-  // Webpack 配置
-  webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
-    // 优化 bundle 大小
-    if (!dev && !isServer) {
-      config.optimization.splitChunks.cacheGroups = {
-        ...config.optimization.splitChunks.cacheGroups,
-        vendor: {
-          test: /[\\/]node_modules[\\/]/,
-          name: 'vendors',
-          chunks: 'all',
-        },
-      };
-    }
+  // // Webpack 配置
+  // webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
+  //   // 优化 bundle 大小
+  //   if (!dev && !isServer) {
+  //     config.optimization.splitChunks.cacheGroups = {
+  //       ...config.optimization.splitChunks.cacheGroups,
+  //       vendor: {
+  //         test: /[\\/]node_modules[\\/]/,
+  //         name: 'vendors',
+  //         chunks: 'all',
+  //       },
+  //     };
+  //   }
     
-    return config;
-  },
+    // return config;
+  // },
 };
 
 module.exports = nextConfig;
