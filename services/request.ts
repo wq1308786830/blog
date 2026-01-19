@@ -1,4 +1,8 @@
-import fetch from 'isomorphic-unfetch';
+/**
+ * React 19 & Next.js 16 优化的网络请求模块
+ * 使用原生 fetch API，移除 isomorphic-unfetch 依赖
+ */
+
 import {
   HttpMethod,
   BaseResponse,
@@ -20,43 +24,29 @@ import { loading, toast, parseObj2SearchParams } from './tools';
 const config = getConfig();
 
 /**
- * 请求拦截器数组
+ * 拦截器数组
  */
 const requestInterceptors: RequestInterceptorFn[] = [];
-
-/**
- * 响应拦截器数组
- */
 const responseInterceptors: ResponseInterceptorFn[] = [];
-
-/**
- * 错误拦截器数组
- */
 const errorInterceptors: ErrorInterceptorFn[] = [];
 
 /**
- * 添加请求拦截器
+ * 添加拦截器的方法
  */
-export const addRequestInterceptor = (interceptor: RequestInterceptorFn) => {
+export const addRequestInterceptor = (interceptor: RequestInterceptorFn): void => {
   requestInterceptors.push(interceptor);
 };
 
-/**
- * 添加响应拦截器
- */
-export const addResponseInterceptor = (interceptor: ResponseInterceptorFn) => {
+export const addResponseInterceptor = (interceptor: ResponseInterceptorFn): void => {
   responseInterceptors.push(interceptor);
 };
 
-/**
- * 添加错误拦截器
- */
-export const addErrorInterceptor = (interceptor: ErrorInterceptorFn) => {
+export const addErrorInterceptor = (interceptor: ErrorInterceptorFn): void => {
   errorInterceptors.push(interceptor);
 };
 
 /**
- * 执行请求拦截器链
+ * 执行拦截器链
  */
 const applyRequestInterceptors = async (
   requestConfig: ExtendedRequestConfig
@@ -68,9 +58,6 @@ const applyRequestInterceptors = async (
   return config;
 };
 
-/**
- * 执行响应拦截器链
- */
 const applyResponseInterceptors = async <T = any>(
   response: BaseResponse<T>,
   requestConfig: ExtendedRequestConfig
@@ -82,9 +69,6 @@ const applyResponseInterceptors = async <T = any>(
   return data;
 };
 
-/**
- * 执行错误拦截器链
- */
 const applyErrorInterceptors = async (
   error: RequestError,
   requestConfig: ExtendedRequestConfig
@@ -99,11 +83,10 @@ const applyErrorInterceptors = async (
 };
 
 /**
- * 检查 HTTP 状态码和响应状态
+ * 检查响应状态
  */
 const checkStatus = (response: Response, data?: any): void => {
-  // 检查 HTTP 状态码
-  if (response.status < 200 || response.status >= 300) {
+  if (!response.ok) {
     const errorType =
       response.status === 401 || response.status === 403
         ? ErrorType.AUTH
@@ -119,8 +102,7 @@ const checkStatus = (response: Response, data?: any): void => {
     );
   }
 
-  // 检查业务响应状态
-  if (data && data.message === 'GENERAL') {
+  if (data?.message === 'GENERAL') {
     throw new RequestError(config.error.generalErrorMessage, ErrorType.GENERAL);
   }
 };
@@ -150,26 +132,30 @@ const buildUrl = (url: string, baseURL?: string): string => {
 /**
  * 构建请求头
  */
-const buildHeaders = (
-  requestConfig: ExtendedRequestConfig
-): Record<string, string> => {
+const buildHeaders = (requestConfig: ExtendedRequestConfig): HeadersInit => {
   const headers: Record<string, string> = {
     ...config.request.headers,
     ...requestConfig.headers,
   };
 
-  // 设置 Content-Type（如果未设置）
+  // 设置 Content-Type
   if (!headers['Content-Type'] && requestConfig.body) {
     if (requestConfig.body instanceof FormData) {
-      headers['Content-Type'] = ContentType.FORMDATA;
+      // FormData 会自动设置 Content-Type，包含 boundary
+      delete headers['Content-Type'];
     } else if (requestConfig.body instanceof URLSearchParams) {
       headers['Content-Type'] = ContentType.URLENCODED;
-    } else {
-      headers['Content-Type'] = config.request.contentType || ContentType.URLENCODED;
+    } else if (typeof requestConfig.body === 'string') {
+      try {
+        JSON.parse(requestConfig.body);
+        headers['Content-Type'] = ContentType.JSON;
+      } catch {
+        headers['Content-Type'] = ContentType.URLENCODED;
+      }
     }
   }
 
-  // 注入 Token（如果需要）
+  // 注入 Token
   if (!requestConfig.skipAuth && config.request.withAuth) {
     const token = tokenManager.getToken();
     if (token) {
@@ -181,13 +167,39 @@ const buildHeaders = (
 };
 
 /**
- * 发送 HTTP 请求的核心函数
+ * 创建带超时的 fetch
+ */
+const fetchWithTimeout = async (
+  url: string,
+  options: RequestInit,
+  timeout: number = 10000
+): Promise<Response> => {
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), timeout);
+
+  try {
+    const response = await fetch(url, {
+      ...options,
+      signal: controller.signal,
+    });
+    clearTimeout(timeoutId);
+    return response;
+  } catch (error) {
+    clearTimeout(timeoutId);
+    if (error instanceof Error && error.name === 'AbortError') {
+      throw new RequestError('请求超时', ErrorType.TIMEOUT);
+    }
+    throw error;
+  }
+};
+
+/**
+ * 核心请求函数 - React 19 & Next.js 16 优化
  */
 const request = async <T = any>(
   url: string,
   options: ExtendedRequestConfig = {}
 ): Promise<BaseResponse<T>> => {
-  // 合并默认配置
   const mergedConfig: ExtendedRequestConfig = {
     method: 'GET',
     timeout: config.request.timeout,
@@ -199,26 +211,44 @@ const request = async <T = any>(
 
   // 显示 Loading
   if (mergedConfig.showLoading) {
-    loading(true, `请求接口:${buildUrl(url)}\n参数:${JSON.stringify(mergedConfig.body || {})}`);
+    loading(true, `请求接口:${buildUrl(url)}`);
   }
 
   try {
     // 执行请求拦截器
     const finalConfig = await applyRequestInterceptors(mergedConfig);
 
-    // 构建 URL 和请求头
+    // 构建请求参数
     const fullUrl = buildUrl(url, config.request.baseURL);
     const headers = buildHeaders(finalConfig);
 
-    // 发起请求
-    const response = await fetch(fullUrl, {
-      method: finalConfig.method,
-      headers,
-      body: finalConfig.body,
-    });
+    // 发起请求 - 使用原生 fetch
+    const response = await fetchWithTimeout(
+      fullUrl,
+      {
+        method: finalConfig.method,
+        headers,
+        body: finalConfig.body,
+        cache: 'no-store', // Next.js 16 缓存策略
+      },
+      finalConfig.timeout
+    );
 
     // 解析响应
-    const data = await response.json();
+    let data: BaseResponse<T>;
+    const contentType = response.headers.get('content-type');
+    
+    if (contentType?.includes('application/json')) {
+      data = await response.json();
+    } else {
+      // 处理非 JSON 响应
+      const text = await response.text();
+      data = {
+        data: text as T,
+        result: 'success',
+        message: 'OK',
+      };
+    }
 
     // 检查状态
     checkStatus(response, data);
@@ -229,11 +259,15 @@ const request = async <T = any>(
       if (refreshResult.success) {
         // 重新发送请求
         const newHeaders = buildHeaders(finalConfig);
-        const retryResponse = await fetch(fullUrl, {
-          method: finalConfig.method,
-          headers: newHeaders,
-          body: finalConfig.body,
-        });
+        const retryResponse = await fetchWithTimeout(
+          fullUrl,
+          {
+            method: finalConfig.method,
+            headers: newHeaders,
+            body: finalConfig.body,
+          },
+          finalConfig.timeout
+        );
         const retryData = await retryResponse.json();
         checkStatus(retryResponse, retryData);
         return await applyResponseInterceptors(retryData, finalConfig);
@@ -248,36 +282,29 @@ const request = async <T = any>(
     }
 
     // 执行响应拦截器
-    const finalData = await applyResponseInterceptors(data, finalConfig);
+    return await applyResponseInterceptors(data, finalConfig);
 
-    return finalData;
   } catch (error: any) {
     // 转换为 RequestError
     const requestError =
       error instanceof RequestError
         ? error
         : new RequestError(
-            config.error.networkErrorMessage,
+            error.message || config.error.networkErrorMessage,
             ErrorType.NETWORK,
             undefined,
             undefined
           );
 
-    // 关闭 Loading 并显示错误
-    if (mergedConfig.showLoading) {
-      loading(false, undefined, () => {
-        if (mergedConfig.showError) {
-          toast(requestError.errMessage || config.error.networkErrorMessage);
-        }
-      });
-    } else if (mergedConfig.showError) {
+    // 显示错误
+    if (mergedConfig.showError) {
       toast(requestError.errMessage || config.error.networkErrorMessage);
     }
 
     // 执行错误拦截器
     return applyErrorInterceptors(requestError, mergedConfig);
   } finally {
-    // 确保 Loading 被关闭
+    // 关闭 Loading
     if (mergedConfig.showLoading) {
       loading(false, buildUrl(url));
     }
@@ -285,7 +312,7 @@ const request = async <T = any>(
 };
 
 /**
- * HTTP 方法工厂函数
+ * HTTP 方法工厂函数 - React 19 优化
  */
 const createHttpMethod = (method: HttpMethod) => {
   return async <T = any>(
@@ -294,7 +321,7 @@ const createHttpMethod = (method: HttpMethod) => {
     showLoading?: boolean
   ): Promise<BaseResponse<T>> => {
     let finalUrl = url;
-    let body: string | URLSearchParams | undefined;
+    let body: string | URLSearchParams | FormData | undefined;
 
     if (method === 'GET' && params) {
       // GET 请求：参数拼接到 URL
@@ -302,7 +329,14 @@ const createHttpMethod = (method: HttpMethod) => {
       finalUrl = searchParams ? `${url}?${searchParams}` : url;
     } else if (method !== 'GET' && params) {
       // POST/PUT/DELETE 请求：参数作为 body
-      body = parseObj2SearchParams(params);
+      if (params instanceof FormData) {
+        body = params;
+      } else if (typeof params === 'object') {
+        // 优先使用 JSON 格式
+        body = JSON.stringify(params);
+      } else {
+        body = parseObj2SearchParams(params);
+      }
     }
 
     return request<T>(finalUrl, {
@@ -323,6 +357,19 @@ export const DELETE = createHttpMethod('DELETE');
 export const PATCH = createHttpMethod('PATCH');
 
 /**
- * 导出核心请求函数（供特殊场景使用）
+ * 导出核心请求函数
  */
 export { request };
+
+/**
+ * React 19 专用的 Suspense 兼容请求函数
+ */
+export const suspenseRequest = <T = any>(
+  url: string,
+  options?: ExtendedRequestConfig
+): Promise<BaseResponse<T>> => {
+  return request<T>(url, {
+    ...options,
+    showLoading: false, // Suspense 模式下不显示 loading
+  });
+};
