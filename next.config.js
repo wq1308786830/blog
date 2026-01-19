@@ -4,8 +4,15 @@ const path = require('path');
 const nextConfig = {
   // 实验性功能配置
   experimental: {
-    // 启用 React 19 Compiler
-    reactCompiler: true,
+    // 启用 Turbo 模式（如果可用）
+    turbo: {
+      rules: {
+        '*.svg': {
+          loaders: ['@svgr/webpack'],
+          as: '*.js',
+        },
+      },
+    },
   },
   
   // 样式配置
