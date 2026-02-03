@@ -43,8 +43,8 @@ export const TechImageModal = memo<TechImageModalProps>(({ isOpen, onClose, src,
     return null;
   }
 
-  // 使用 portal 确保模态框在最顶层
-  return createPortal(
+    // Modal content
+  const modalContent = (
     <div 
       className="fixed inset-0 z-[100] flex items-center justify-center"
       role="dialog"
@@ -132,9 +132,14 @@ export const TechImageModal = memo<TechImageModalProps>(({ isOpen, onClose, src,
           </div>
         </div>
       </div>
-    </div>,
-    document.body
+    </div>
   );
+
+  // Use portal in browser, direct render in test environment
+  if (typeof window !== 'undefined' && document.body) {
+    return createPortal(modalContent, document.body);
+  }
+  return modalContent;
 });
 
 TechImageModal.displayName = 'TechImageModal';

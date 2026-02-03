@@ -4,7 +4,7 @@ import { getConfig } from './config';
 /**
  * 获取配置
  */
-const config = getConfig();
+const getErrorConfig = () => getConfig().error;
 
 /**
  * 错误处理回调函数类型
@@ -51,24 +51,26 @@ export const getErrorMessage = (error: RequestError): string => {
     return error.errMessage;
   }
 
+  const config = getErrorConfig();
+
   // 根据错误类型返回对应的提示消息
   const errorMessages: Record<ErrorType, string> = {
-    [ErrorType.NETWORK]: config.error.networkErrorMessage,
-    [ErrorType.AUTH]: config.error.authErrorMessage,
-    [ErrorType.SERVER]: config.error.serverErrorMessage,
-    [ErrorType.BUSINESS]: error.message || config.error.generalErrorMessage,
-    [ErrorType.GENERAL]: config.error.generalErrorMessage,
+    [ErrorType.NETWORK]: config.networkErrorMessage,
+    [ErrorType.AUTH]: config.authErrorMessage,
+    [ErrorType.SERVER]: config.serverErrorMessage,
+    [ErrorType.BUSINESS]: error.message || config.generalErrorMessage,
+    [ErrorType.GENERAL]: config.generalErrorMessage,
     [ErrorType.TIMEOUT]: '请求超时，请稍后重试',
   };
 
-  return errorMessages[error.type] || config.error.generalErrorMessage;
+  return errorMessages[error.type] || config.generalErrorMessage;
 };
 
 /**
  * 记录错误日志
  */
 export const logError = (error: RequestError): void => {
-  if (!config.error.logErrors) {
+  if (!getErrorConfig().logErrors) {
     return;
   }
 

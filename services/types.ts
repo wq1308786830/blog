@@ -119,7 +119,6 @@ export class RequestError extends Error {
     this.type = type;
     this.code = code;
     this.response = response;
-    this.errMessage = message;
   }
 }
 

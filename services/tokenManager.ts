@@ -116,8 +116,8 @@ class TokenManager {
       return this.refreshingPromise;
     }
 
-    // 创建刷新请求的 Promise
-    this.refreshingPromise = (async () => {
+    // 创建一个锁，防止并发创建多个 Promise
+    const refreshOperation = (async () => {
       try {
         const result = await this.login();
         if (result.success && result.token) {
@@ -130,13 +130,19 @@ class TokenManager {
           success: false,
           error: error.message || 'Token refresh failed',
         };
-      } finally {
-        // 清空刷新 Promise
-        this.refreshingPromise = null;
       }
     })();
 
-    return this.refreshingPromise;
+    // 设置正在刷新的 Promise
+    this.refreshingPromise = refreshOperation;
+
+    try {
+      const result = await refreshOperation;
+      return result;
+    } finally {
+      // 清空刷新 Promise
+      this.refreshingPromise = null;
+    }
   }
 
   /**
