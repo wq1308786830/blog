@@ -23,17 +23,11 @@ vi.mock('next/image', () => ({
     React.createElement('img', { src, alt, ...props }),
 }));
 
-// Mock Next.js dynamic imports
+// Mock Next.js dynamic imports - return a simple passthrough component
 vi.mock('next/dynamic', () => ({
-  default: (...args: any[]) => {
-    const dynamicModule = vi.requireActual('next/dynamic');
-    const dynamicActualComp = dynamicModule.default;
-    const RequiredComponent = dynamicActualComp(args[0]);
-    RequiredComponent.render.preload
-      ? RequiredComponent.render.preload()
-      : RequiredComponent.preload
-        ? RequiredComponent.preload()
-        : Promise.resolve();
-    return RequiredComponent;
+  default: (importFn: () => Promise<{ default: React.ComponentType<any> }>) => {
+    const DynamicComponent = (props: any) => React.createElement('div', { 'data-testid': 'dynamic-mock', ...props });
+    DynamicComponent.displayName = 'DynamicComponent';
+    return DynamicComponent;
   },
 }));
