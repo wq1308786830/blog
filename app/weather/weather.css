@@ -1,0 +1,122 @@
+/**
+ * 天气页面专用样式
+ */
+
+.weather-page {
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  background: #0a0f14;
+  position: relative;
+}
+
+.weather-page-loading {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 18px;
+  color: #00f3ff;
+  text-shadow: 0 0 15px #00f3ff;
+}
+
+.weather-loading-container {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #0a0f14 0%, #1a0f00 50%, #000a12 100%);
+  overflow: hidden;
+}
+
+.weather-loading-content {
+  text-align: center;
+  z-index: 10;
+}
+
+.loading-spinner {
+  width: 60px;
+  height: 60px;
+  margin: 0 auto 30px;
+  border: 3px solid rgba(0, 243, 255, 0.2);
+  border-top-color: #00f3ff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  box-shadow: 0 0 20px rgba(0, 243, 255, 0.5);
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.loading-text {
+  font-size: 20px;
+  color: #00f3ff;
+  text-shadow: 0 0 15px #00f3ff;
+  margin-bottom: 10px;
+  letter-spacing: 2px;
+  animation: textPulse 2s ease-in-out infinite;
+}
+
+.loading-subtext {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.5);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+@keyframes textPulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.7;
+    transform: scale(0.98);
+  }
+}
+
+/* 背景粒子效果 */
+.weather-loading-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image:
+    radial-gradient(circle at 20% 50%, rgba(0, 243, 255, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(255, 170, 0, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 40% 20%, rgba(0, 255, 170, 0.1) 0%, transparent 50%);
+  animation: backgroundShift 10s ease-in-out infinite;
+}
+
+@keyframes backgroundShift {
+  0%, 100% {
+    opacity: 0.3;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.6;
+    transform: scale(1.1);
+  }
+}
+
+/* 移动端适配 */
+@media (max-width: 768px) {
+  .loading-spinner {
+    width: 50px;
+    height: 50px;
+  }
+
+  .loading-text {
+    font-size: 18px;
+  }
+
+  .loading-subtext {
+    font-size: 12px;
+  }
+}

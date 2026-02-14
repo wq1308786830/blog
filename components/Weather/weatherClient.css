@@ -1,0 +1,80 @@
+/**
+ * 天气客户端组件样式
+ */
+
+.weather-client-container {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.weather-loading {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 24px;
+  color: #00f3ff;
+  text-shadow: 0 0 20px #00f3ff;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+.weather-title {
+  position: absolute;
+  bottom: 30px;
+  left: 30px;
+  z-index: 100;
+  pointer-events: none;
+}
+
+.weather-title h1 {
+  font-size: 32px;
+  font-weight: bold;
+  color: #00f3ff;
+  text-shadow: 0 0 20px #00f3ff, 0 0 40px #0088ff;
+  margin: 0 0 10px 0;
+  letter-spacing: 3px;
+  animation: titleGlow 2s ease-in-out infinite alternate;
+}
+
+@keyframes titleGlow {
+  from {
+    text-shadow: 0 0 20px #00f3ff, 0 0 40px #0088ff;
+  }
+  to {
+    text-shadow: 0 0 30px #00f3ff, 0 0 60px #0088ff, 0 0 80px #00f3ff;
+  }
+}
+
+.weather-title p {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.6);
+  margin: 0;
+  letter-spacing: 2px;
+}
+
+/* 移动端适配 */
+@media (max-width: 768px) {
+  .weather-title {
+    bottom: 20px;
+    left: 20px;
+  }
+
+  .weather-title h1 {
+    font-size: 24px;
+  }
+
+  .weather-title p {
+    font-size: 12px;
+  }
+}

@@ -1,0 +1,143 @@
+/**
+ * 天气信息面板样式
+ * Cyberpunk 风格
+ */
+
+.weather-info-container {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 100;
+  pointer-events: none;
+}
+
+.weather-info-panel {
+  background: rgba(0, 0, 0, 0.7);
+  border: 2px solid var(--primary-color, #00f3ff);
+  border-radius: 8px;
+  padding: 20px;
+  min-width: 200px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 0 20px var(--primary-color, #00f3ff),
+    inset 0 0 20px rgba(0, 243, 255, 0.1);
+  animation: panelGlow 2s ease-in-out infinite alternate;
+}
+
+@keyframes panelGlow {
+  from {
+    box-shadow: 0 0 20px var(--primary-color, #00f3ff),
+      inset 0 0 20px rgba(0, 243, 255, 0.1);
+  }
+  to {
+    box-shadow: 0 0 30px var(--primary-color, #00f3ff),
+      inset 0 0 30px rgba(0, 243, 255, 0.2);
+  }
+}
+
+.weather-city {
+  font-size: 18px;
+  font-weight: bold;
+  color: var(--accent-color, #00f3ff);
+  margin-bottom: 15px;
+  text-shadow: 0 0 10px var(--primary-color, #00f3ff);
+  letter-spacing: 2px;
+}
+
+.weather-type {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.weather-type-label {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.weather-type-value {
+  font-size: 16px;
+  font-weight: bold;
+  color: var(--primary-color, #00f3ff);
+  text-shadow: 0 0 8px var(--primary-color, #00f3ff);
+}
+
+.weather-temp {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+.temp-value {
+  font-size: 48px;
+  font-weight: bold;
+  color: var(--accent-color, #00f3ff);
+  text-shadow: 0 0 15px var(--primary-color, #00f3ff);
+  line-height: 1;
+}
+
+.temp-unit {
+  font-size: 24px;
+  color: var(--secondary-color, #0088ff);
+  margin-left: 5px;
+}
+
+.weather-details {
+  display: flex;
+  justify-content: space-around;
+  margin: 20px 0;
+  padding: 10px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.detail-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+}
+
+.detail-label {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.detail-value {
+  font-size: 16px;
+  font-weight: bold;
+  color: var(--primary-color, #00f3ff);
+  text-shadow: 0 0 5px var(--primary-color, #00f3ff);
+}
+
+.weather-update-time {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.4);
+  text-align: center;
+  margin-top: 10px;
+}
+
+/* 移动端适配 */
+@media (max-width: 768px) {
+  .weather-info-container {
+    top: 10px;
+    right: 10px;
+    left: 10px;
+  }
+
+  .weather-info-panel {
+    padding: 15px;
+    min-width: auto;
+  }
+
+  .temp-value {
+    font-size: 36px;
+  }
+
+  .weather-city {
+    font-size: 16px;
+  }
+}
