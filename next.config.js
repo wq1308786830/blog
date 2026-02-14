@@ -10,16 +10,26 @@ const nextConfig = {
   reactCompiler: true,
 
   // 优化服务端组件
-  serverExternalPackages: ['react-markdown', 'three'],
-  
+  serverExternalPackages: ['react-markdown', 'react-syntax-highlighter', 'three'],
+
+  // 启用 Turbo 模式（如果可用）
+  turbo: {
+    rules: {
+      '*.svg': {
+        loaders: ['@svgr/webpack'],
+        as: '*.js',
+      },
+    },
+  },
+
   // 样式配置
   sassOptions: {
     includePaths: [path.join(__dirname, 'styles')],
   },
-  
+
   // 页面扩展名
   pageExtensions: ['js', 'jsx', 'ts', 'tsx'],
-  
+
   // 图片优化
   images: {
     remotePatterns: [
@@ -33,12 +43,12 @@ const nextConfig = {
     // 图片格式优化
     formats: ['image/webp', 'image/avif'],
   },
-  
+
   // TypeScript 配置
   typescript: {
     ignoreBuildErrors: false, // 确保类型安全
   },
-  
+
   // 编译优化
   compiler: {
     // 移除 console.log (生产环境)
