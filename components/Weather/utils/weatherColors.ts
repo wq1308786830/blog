@@ -22,10 +22,10 @@ export const WEATHER_COLOR_SCHEMES: Record<WeatherType, WeatherColors> = {
     accent: '#ffcc00',
   },
   [WeatherType.RAINY]: {
-    primary: '#00f3ff',
-    secondary: '#0088ff',
-    background: '#000a12',
-    accent: '#00d4ff',
+    primary: '#8899aa',
+    secondary: '#667788',
+    background: 'transparent',
+    accent: '#99aabb',
   },
   [WeatherType.SNOWY]: {
     primary: '#ffffff',

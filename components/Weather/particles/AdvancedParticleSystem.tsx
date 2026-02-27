@@ -50,7 +50,7 @@ const AdvancedParticleSystem: React.FC<AdvancedParticleSystemProps> = memo(
     count = 1000,
     color = '#ffffff',
     secondaryColor,
-    sizeRange = [0.5, 2],
+    sizeRange = [0.5, 2] as [number, number],
     spread = 10,
     speed = 1,
     animate,

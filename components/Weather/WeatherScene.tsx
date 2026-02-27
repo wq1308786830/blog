@@ -5,13 +5,15 @@
 
 'use client';
 
-import { memo, Suspense } from 'react';
-import { Canvas } from '@react-three/fiber';
+import { memo, Suspense, useEffect } from 'react';
+import { Canvas, useThree } from '@react-three/fiber';
 import { OrbitControls, PerspectiveCamera } from '@react-three/drei';
-import { WeatherType, WeatherData } from '../../services/weather/weatherTypes';
+import { EffectComposer, Bloom } from '@react-three/postprocessing';
+import * as THREE from 'three';
+import { WeatherType } from '../../services/weather/weatherTypes';
 import { getWeatherColors } from './utils/weatherColors';
 import { SunnyEffect } from './effects/SunnyEffect';
-import { RainyEffect } from './effects/RainyEffect';
+import { CyberRainEffect } from './effects/CyberRainEffect';
 import { SnowyEffect } from './effects/SnowyEffect';
 import { CloudyEffect } from './effects/CloudyEffect';
 import { FoggyEffect } from './effects/FoggyEffect';
@@ -32,7 +34,7 @@ const WeatherEffectRenderer: React.FC<{ weatherType: WeatherType; intensity: num
       case WeatherType.SUNNY:
         return <SunnyEffect intensity={intensity} />;
       case WeatherType.RAINY:
-        return <RainyEffect intensity={intensity} />;
+        return <CyberRainEffect intensity={intensity} backgroundImage="/imgs/rainy-background.webp" />;
       case WeatherType.SNOWY:
         return <SnowyEffect intensity={intensity} />;
       case WeatherType.CLOUDY:
@@ -52,10 +54,31 @@ const WeatherEffectRenderer: React.FC<{ weatherType: WeatherType; intensity: num
 WeatherEffectRenderer.displayName = 'WeatherEffectRenderer';
 
 /**
+ * 场景背景色设置组件
+ */
+const SceneBackground: React.FC<{ color: string; transparent?: boolean }> = ({ color, transparent }) => {
+  const { gl, scene } = useThree();
+
+  useEffect(() => {
+    if (transparent) {
+      gl.setClearColor(0x000000, 0);
+      scene.background = null;
+    } else {
+      const bgColor = new THREE.Color(color);
+      gl.setClearColor(bgColor);
+      scene.background = bgColor;
+    }
+  }, [color, gl, scene, transparent]);
+
+  return null;
+};
+
+/**
  * 天气场景主组件
  */
 const WeatherScene: React.FC<WeatherSceneProps> = memo(({ weatherType, intensity = 1 }) => {
   const colors = getWeatherColors(weatherType);
+  const isRainy = weatherType === WeatherType.RAINY;
 
   return (
     <Canvas
@@ -65,15 +88,15 @@ const WeatherScene: React.FC<WeatherSceneProps> = memo(({ weatherType, intensity
         left: 0,
         width: '100%',
         height: '100%',
-        background: colors.background,
       }}
       gl={{
         antialias: true,
-        alpha: false,
+        alpha: isRainy,
         powerPreference: 'high-performance',
       }}
       dpr={[1, 2]}
     >
+      <SceneBackground color={colors.background} transparent={isRainy} />
       <Suspense fallback={null}>
         {/* 摄像机 */}
         <PerspectiveCamera makeDefault position={[0, 0, 15]} fov={60} />
@@ -88,6 +111,16 @@ const WeatherScene: React.FC<WeatherSceneProps> = memo(({ weatherType, intensity
 
         {/* 天气效果 */}
         <WeatherEffectRenderer weatherType={weatherType} intensity={intensity} />
+
+        {/* 赛博朋克后期处理 */}
+        <EffectComposer>
+          <Bloom
+            intensity={2.0}
+            luminanceThreshold={0.3}
+            luminanceSmoothing={0.9}
+            height={300}
+          />
+        </EffectComposer>
       </Suspense>
     </Canvas>
   );

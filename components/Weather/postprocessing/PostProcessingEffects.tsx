@@ -33,8 +33,8 @@ export interface PostProcessingProps {
  */
 const SimpleBloom: React.FC<{ strength: number; radius: number }> = memo(({ strength, radius }) => {
   const { gl, scene, camera } = useThree();
-  const renderTargetRef = useRef<THREE.WebGLRenderTarget>();
-  const bloomTargetRef = useRef<THREE.WebGLRenderTarget>();
+  const renderTargetRef = useRef<THREE.WebGLRenderTarget | null>(null);
+  const bloomTargetRef = useRef<THREE.WebGLRenderTarget | null>(null);
 
   useEffect(() => {
     renderTargetRef.current = new THREE.WebGLRenderTarget(window.innerWidth, window.innerHeight);
@@ -176,7 +176,7 @@ const PostProcessingEffects: React.FC<PostProcessingProps> = memo(
     vignetteIntensity = 0.3,
   }) => {
     const { gl, scene, camera, size } = useThree();
-    const composerRef = useRef<any>();
+    const composerRef = useRef<any>(null);
 
     useEffect(() => {
       // 这里可以集成EffectComposer

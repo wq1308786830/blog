@@ -4,7 +4,7 @@
 
 'use client';
 
-import { useRef, useMemo, memo, useState } from 'react';
+import { useRef, useMemo, memo, useState, useEffect, useCallback } from 'react';
 import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 import { AdvancedParticleSystem } from '../particles/AdvancedParticleSystem';
@@ -24,7 +24,7 @@ export interface EnhancedRainyEffectProps {
 const Lightning: React.FC<{ intensity: number }> = memo(({ intensity }) => {
   const [visible, setVisible] = useState(false);
   const lightRef = useRef<THREE.PointLight>(null);
-  const timeoutRef = useRef<NodeJS.Timeout>();
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
     const flash = () => {
@@ -62,11 +62,9 @@ const Lightning: React.FC<{ intensity: number }> = memo(({ intensity }) => {
 
   return (
     <group>
-      <pointLight ref={lightRef} position={[0, 10, 0]} color="#ffffff" intensity={0} distance={100} />
+      <pointLight ref={lightRef} position={[0, 10, 0]} color="#ffffff" intensity={visible ? 10 : 0} distance={100} />
       {visible && (
-        <line geometry={lightningGeometry}>
-          <lineBasicMaterial color="#ffffff" linewidth={3} transparent opacity={0.9} />
-        </line>
+        <primitive object={new THREE.Line(lightningGeometry, new THREE.LineBasicMaterial({ color: '#ffffff', linewidth: 3, transparent: true, opacity: 0.9 }))} />
       )}
     </group>
   );
