@@ -1,0 +1,273 @@
+/**
+ * 战斗特效样式
+ */
+
+/* 特效容器 */
+.battle-effect-container {
+  position: absolute;
+  pointer-events: none;
+  z-index: 1000;
+  transform: translate(-50%, -50%);
+}
+
+/* 斩击特效 */
+.effect-slash {
+  width: 100px;
+  height: 100px;
+  position: relative;
+}
+
+.slash-svg {
+  width: 100%;
+  height: 100%;
+  filter: drop-shadow(0 0 10px #ff0066);
+}
+
+.slash-path {
+  stroke-dasharray: 200;
+  stroke-dashoffset: 200;
+  animation: slashDraw 0.3s ease-out forwards;
+}
+
+@keyframes slashDraw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* 冲击特效 */
+.effect-impact {
+  width: 120px;
+  height: 120px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.impact-ring {
+  position: absolute;
+  border-radius: 50%;
+  border: 3px solid;
+}
+
+.impact-ring.ring-1 {
+  width: 100%;
+  height: 100%;
+  border-color: #ff0066;
+  animation: impactPulse 0.4s ease-out;
+}
+
+.impact-ring.ring-2 {
+  width: 70%;
+  height: 70%;
+  border-color: #ff00ff;
+  animation: impactPulse 0.4s ease-out 0.1s;
+}
+
+.impact-ring.ring-3 {
+  width: 40%;
+  height: 40%;
+  border-color: #00f5ff;
+  animation: impactPulse 0.4s ease-out 0.2s;
+}
+
+.impact-center {
+  font-size: 40px;
+  z-index: 1;
+  filter: drop-shadow(0 0 20px #ff0000);
+}
+
+@keyframes impactPulse {
+  0% {
+    transform: scale(0);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1.5);
+    opacity: 0;
+  }
+}
+
+/* 箭雨特效 */
+.effect-arrows {
+  width: 150px;
+  height: 100px;
+  position: relative;
+}
+
+.arrow {
+  position: absolute;
+  font-size: 24px;
+  filter: drop-shadow(0 0 5px #00f5ff);
+}
+
+/* 爆炸特效 */
+.effect-explosion {
+  width: 150px;
+  height: 150px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.explosion-particle {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background: linear-gradient(135deg, #ff0066, #ff00ff);
+  border-radius: 50%;
+  box-shadow: 0 0 10px #ff0066;
+}
+
+.explosion-core {
+  width: 40px;
+  height: 40px;
+  background: radial-gradient(circle, #fff, #ff0066, transparent);
+  border-radius: 50%;
+}
+
+/* 魔法特效 */
+.effect-magic {
+  width: 150px;
+  height: 150px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.magic-rune {
+  font-size: 24px;
+  color: #00f5ff;
+  text-shadow: 0 0 10px #00f5ff, 0 0 20px #00f5ff;
+  position: absolute;
+}
+
+.magic-circle {
+  position: absolute;
+  width: 120px;
+  height: 120px;
+  border: 2px solid #00f5ff;
+  border-radius: 50%;
+  box-shadow: 0 0 20px rgba(0, 245, 255, 0.5), inset 0 0 20px rgba(0, 245, 255, 0.3);
+}
+
+/* 伤害数字 */
+.damage-number {
+  position: absolute;
+  font-size: 32px;
+  font-weight: bold;
+  text-shadow: 0 0 10px currentColor, 0 0 20px currentColor;
+  pointer-events: none;
+  z-index: 1001;
+}
+
+.damage-number.critical {
+  font-size: 48px;
+  animation: criticalShake 0.5s ease;
+}
+
+.damage-number.heal {
+  color: #00ff66;
+}
+
+.critical-text {
+  display: block;
+  font-size: 16px;
+  color: #ff0000;
+  text-align: center;
+  margin-top: -5px;
+}
+
+@keyframes criticalShake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px) rotate(-5deg); }
+  75% { transform: translateX(5px) rotate(5deg); }
+}
+
+/* 连击特效 */
+.combo-effect {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, rgba(255, 0, 102, 0.9), rgba(255, 0, 255, 0.9));
+  padding: 20px 40px;
+  border-radius: 16px;
+  box-shadow: 0 0 30px rgba(255, 0, 102, 0.5);
+  z-index: 1002;
+}
+
+.combo-count {
+  font-size: 64px;
+  font-weight: bold;
+  color: #fff;
+  text-shadow: 0 0 20px #fff;
+  line-height: 1;
+}
+
+.combo-text {
+  font-size: 18px;
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: 4px;
+  margin-top: 5px;
+}
+
+/* 战斗结束特效 */
+.battle-end-effect {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 60px;
+  border-radius: 20px;
+  z-index: 2000;
+}
+
+.battle-end-effect.victory {
+  background: linear-gradient(135deg, rgba(0, 255, 102, 0.9), rgba(0, 245, 255, 0.9));
+  box-shadow: 0 0 50px rgba(0, 255, 102, 0.5);
+}
+
+.battle-end-effect.defeat {
+  background: linear-gradient(135deg, rgba(255, 0, 0, 0.9), rgba(255, 0, 102, 0.9));
+  box-shadow: 0 0 50px rgba(255, 0, 0, 0.5);
+}
+
+.end-icon {
+  font-size: 80px;
+  margin-bottom: 20px;
+  filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.5));
+}
+
+.end-text {
+  font-size: 48px;
+  font-weight: bold;
+  color: #fff;
+  text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+  text-transform: uppercase;
+  letter-spacing: 8px;
+}
+
+/* 彩纸特效 */
+.confetti {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+
+.confetti-piece {
+  position: absolute;
+  font-size: 24px;
+}

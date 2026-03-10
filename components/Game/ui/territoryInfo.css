@@ -1,0 +1,191 @@
+/**
+ * 领地信息样式
+ */
+
+.territory-info-panel {
+  padding: 16px;
+  height: 100%;
+  overflow-y: auto;
+}
+
+.territory-info-panel.empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.empty-state {
+  text-align: center;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.empty-icon {
+  font-size: 48px;
+  display: block;
+  margin-bottom: 16px;
+}
+
+.empty-state p {
+  font-size: 14px;
+}
+
+.territory-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(0, 245, 255, 0.2);
+}
+
+.territory-name {
+  font-size: 20px;
+  font-weight: bold;
+  color: #fff;
+  text-shadow: 0 0 10px rgba(0, 245, 255, 0.5);
+}
+
+.territory-status {
+  padding: 4px 10px;
+  font-size: 11px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border-radius: 2px;
+}
+
+.territory-status.neutral {
+  background: rgba(128, 128, 128, 0.3);
+  color: #888;
+}
+
+.territory-status.owned {
+  background: rgba(0, 245, 255, 0.2);
+  color: #00f5ff;
+}
+
+.territory-status.occupied {
+  background: rgba(255, 0, 102, 0.2);
+  color: #ff0066;
+}
+
+.territory-description {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.6);
+  line-height: 1.6;
+  margin-bottom: 16px;
+}
+
+.territory-details {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.detail-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 12px;
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.detail-item.historical {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+}
+
+.detail-item.historical .detail-value {
+  font-size: 12px;
+  color: rgba(255, 215, 0, 0.8);
+}
+
+.detail-label {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.5);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.detail-value {
+  font-weight: bold;
+  color: #fff;
+}
+
+.territory-resources {
+  margin-bottom: 20px;
+}
+
+.territory-resources h3 {
+  font-size: 14px;
+  color: #00f5ff;
+  margin-bottom: 12px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.resource-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+.resource-grid .resource-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 10px 8px;
+  background: rgba(0, 245, 255, 0.05);
+  border: 1px solid rgba(0, 245, 255, 0.1);
+}
+
+.resource-grid .resource-icon {
+  font-size: 20px;
+}
+
+.resource-grid .resource-value {
+  font-size: 14px;
+  font-weight: bold;
+  color: #00f5ff;
+}
+
+.territory-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.conquer-button {
+  flex: 1;
+  background: rgba(0, 245, 255, 0.1);
+  border-color: #00f5ff;
+}
+
+.conquer-button:hover {
+  background: rgba(0, 245, 255, 0.2);
+  box-shadow: 0 0 20px rgba(0, 245, 255, 0.5);
+}
+
+.attack-button {
+  flex: 1;
+  background: rgba(255, 0, 102, 0.1);
+  border-color: #ff0066;
+  color: #ff0066;
+}
+
+.attack-button:hover {
+  background: rgba(255, 0, 102, 0.2);
+  box-shadow: 0 0 20px rgba(255, 0, 102, 0.5);
+}
+
+.owned-message {
+  flex: 1;
+  text-align: center;
+  padding: 12px;
+  background: rgba(0, 255, 102, 0.1);
+  border: 1px solid rgba(0, 255, 102, 0.3);
+  color: #00ff66;
+  font-weight: bold;
+}

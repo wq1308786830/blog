@@ -1,0 +1,401 @@
+/**
+ * 游戏页面样式
+ * 赛博朋克风格
+ */
+
+.game-page {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  background: linear-gradient(135deg, #0a0a0f 0%, #1a0f2e 50%, #0f0a1a 100%);
+  color: #00f5ff;
+  font-family: 'Orbitron', 'Noto Sans SC', sans-serif;
+}
+
+.game-layout {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+/* 游戏容器 */
+.game-container {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 游戏头部 */
+.game-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  background: linear-gradient(180deg, rgba(10, 10, 15, 0.95) 0%, rgba(10, 10, 15, 0.8) 100%);
+  border-bottom: 2px solid #00f5ff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  z-index: 1000;
+  backdrop-filter: blur(10px);
+}
+
+.game-title {
+  font-size: 24px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 4px;
+  background: linear-gradient(90deg, #00f5ff, #ff00ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: 0 0 20px rgba(0, 245, 255, 0.5);
+}
+
+/* 游戏主体 */
+.game-body {
+  flex: 1;
+  display: flex;
+  position: relative;
+  margin-top: 60px;
+  height: calc(100vh - 60px);
+}
+
+/* 左侧面板 */
+.game-left-panel {
+  position: fixed;
+  left: 0;
+  top: 60px;
+  bottom: 0;
+  width: 280px;
+  background: linear-gradient(90deg, rgba(10, 10, 15, 0.95) 0%, rgba(10, 10, 15, 0.7) 100%);
+  border-right: 1px solid rgba(0, 245, 255, 0.3);
+  z-index: 900;
+  overflow-y: auto;
+  padding: 20px;
+  backdrop-filter: blur(10px);
+}
+
+/* 右侧面板 */
+.game-right-panel {
+  position: fixed;
+  right: 0;
+  top: 60px;
+  bottom: 0;
+  width: 320px;
+  background: linear-gradient(-90deg, rgba(10, 10, 15, 0.95) 0%, rgba(10, 10, 15, 0.7) 100%);
+  border-left: 1px solid rgba(0, 245, 255, 0.3);
+  z-index: 900;
+  overflow-y: auto;
+  padding: 20px;
+  backdrop-filter: blur(10px);
+}
+
+/* 地图容器 */
+.game-map-container {
+  flex: 1;
+  position: relative;
+  margin-left: 280px;
+  margin-right: 320px;
+  height: 100%;
+  overflow: hidden;
+}
+
+/* 底部面板 */
+.game-bottom-panel {
+  position: fixed;
+  bottom: 0;
+  left: 280px;
+  right: 320px;
+  height: 120px;
+  background: linear-gradient(0deg, rgba(10, 10, 15, 0.95) 0%, rgba(10, 10, 15, 0.7) 100%);
+  border-top: 1px solid rgba(0, 245, 255, 0.3);
+  z-index: 900;
+  padding: 15px 20px;
+  backdrop-filter: blur(10px);
+}
+
+/* 赛博朋克按钮 */
+.cyber-button {
+  position: relative;
+  padding: 10px 24px;
+  background: transparent;
+  border: 1px solid #00f5ff;
+  color: #00f5ff;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  cursor: pointer;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
+}
+
+.cyber-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(0, 245, 255, 0.3), transparent);
+  transition: left 0.5s ease;
+}
+
+.cyber-button:hover::before {
+  left: 100%;
+}
+
+.cyber-button:hover {
+  background: rgba(0, 245, 255, 0.1);
+  box-shadow: 0 0 20px rgba(0, 245, 255, 0.5);
+  transform: translateY(-2px);
+}
+
+.cyber-button:active {
+  transform: translateY(0);
+}
+
+.cyber-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  border-color: #666;
+  color: #666;
+}
+
+/* 赛博朋克卡片 */
+.cyber-card {
+  background: rgba(10, 10, 15, 0.8);
+  border: 1px solid rgba(0, 245, 255, 0.3);
+  padding: 16px;
+  margin-bottom: 16px;
+  position: relative;
+  clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+}
+
+.cyber-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #00f5ff, transparent);
+}
+
+.cyber-card-title {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 12px;
+  color: #00f5ff;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+/* 资源显示 */
+.resource-display {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  background: rgba(0, 245, 255, 0.05);
+  border-left: 3px solid #00f5ff;
+  margin-bottom: 8px;
+}
+
+.resource-icon {
+  font-size: 20px;
+}
+
+.resource-value {
+  font-size: 18px;
+  font-weight: bold;
+  color: #fff;
+}
+
+.resource-label {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.6);
+  text-transform: uppercase;
+}
+
+/* 进度条 */
+.cyber-progress {
+  width: 100%;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.1);
+  position: relative;
+  overflow: hidden;
+}
+
+.cyber-progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, #00f5ff, #ff00ff);
+  transition: width 0.3s ease;
+  position: relative;
+}
+
+.cyber-progress-bar::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 20px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.5));
+  animation: progressShine 2s infinite;
+}
+
+@keyframes progressShine {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(20px); }
+}
+
+/* 霓虹文字效果 */
+.neon-text {
+  text-shadow:
+    0 0 5px #00f5ff,
+    0 0 10px #00f5ff,
+    0 0 20px #00f5ff,
+    0 0 40px #00f5ff;
+}
+
+.neon-text-pink {
+  text-shadow:
+    0 0 5px #ff00ff,
+    0 0 10px #ff00ff,
+    0 0 20px #ff00ff,
+    0 0 40px #ff00ff;
+}
+
+/* 扫描线效果 */
+.scanlines {
+  position: relative;
+}
+
+.scanlines::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 245, 255, 0.03) 2px,
+    rgba(0, 245, 255, 0.03) 4px
+  );
+  pointer-events: none;
+}
+
+/* 滚动条样式 */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.3);
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #00f5ff, #ff00ff);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, #00ffff, #ff00ff);
+}
+
+/* 加载动画 */
+.cyber-loader {
+  width: 60px;
+  height: 60px;
+  border: 3px solid rgba(0, 245, 255, 0.3);
+  border-top-color: #00f5ff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* 闪烁动画 */
+@keyframes blink {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0.3; }
+}
+
+.blink {
+  animation: blink 1s infinite;
+}
+
+/* 脉冲动画 */
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 0 5px rgba(0, 245, 255, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(0, 245, 255, 0.8);
+  }
+}
+
+.pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+/* 响应式设计 */
+@media (max-width: 1200px) {
+  .game-left-panel {
+    width: 240px;
+  }
+
+  .game-right-panel {
+    width: 280px;
+  }
+
+  .game-map-container {
+    margin-left: 240px;
+    margin-right: 280px;
+  }
+
+  .game-bottom-panel {
+    left: 240px;
+    right: 280px;
+  }
+}
+
+@media (max-width: 768px) {
+  .game-left-panel,
+  .game-right-panel {
+    position: fixed;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+  }
+
+  .game-left-panel.open,
+  .game-right-panel.open {
+    transform: translateX(0);
+  }
+
+  .game-map-container {
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  .game-bottom-panel {
+    left: 0;
+    right: 0;
+  }
+}

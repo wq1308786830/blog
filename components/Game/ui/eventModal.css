@@ -1,0 +1,392 @@
+/**
+ * 事件弹窗样式
+ */
+
+/* 遮罩层 */
+.event-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2500;
+  backdrop-filter: blur(5px);
+  padding: 20px;
+}
+
+/* 事件弹窗 */
+.event-modal {
+  width: 100%;
+  max-width: 600px;
+  max-height: 90vh;
+  background: linear-gradient(135deg, rgba(10, 10, 15, 0.95) 0%, rgba(20, 20, 30, 0.9) 100%);
+  border: 1px solid rgba(0, 245, 255, 0.3);
+  border-radius: 16px;
+  padding: 32px;
+  overflow-y: auto;
+  position: relative;
+  box-shadow: 0 0 40px rgba(0, 245, 255, 0.1);
+}
+
+.event-modal.historic {
+  border-color: rgba(255, 204, 0, 0.5);
+  box-shadow: 0 0 40px rgba(255, 204, 0, 0.15);
+}
+
+/* 历史事件徽章 */
+.historic-badge {
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 16px;
+  background: linear-gradient(135deg, #ffcc00, #ff9900);
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: bold;
+  color: #000;
+  box-shadow: 0 4px 15px rgba(255, 204, 0, 0.4);
+}
+
+.badge-icon {
+  font-size: 14px;
+}
+
+/* 事件头部 */
+.event-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.event-type-icon {
+  width: 48px;
+  height: 48px;
+  background: rgba(0, 245, 255, 0.1);
+  border: 1px solid rgba(0, 245, 255, 0.3);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+}
+
+.event-modal.historic .event-type-icon {
+  background: rgba(255, 204, 0, 0.1);
+  border-color: rgba(255, 204, 0, 0.3);
+}
+
+.event-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.event-type {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.event-year {
+  font-size: 13px;
+  color: #00f5ff;
+  font-weight: 500;
+}
+
+.event-modal.historic .event-year {
+  color: #ffcc00;
+}
+
+/* 事件标题 */
+.event-title {
+  font-size: 28px;
+  font-weight: bold;
+  color: #fff;
+  margin-bottom: 16px;
+  text-shadow: 0 0 20px rgba(0, 245, 255, 0.3);
+}
+
+.event-modal.historic .event-title {
+  color: #ffcc00;
+  text-shadow: 0 0 20px rgba(255, 204, 0, 0.3);
+}
+
+/* 事件描述 */
+.event-description {
+  font-size: 15px;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.85);
+  margin-bottom: 24px;
+  padding: 16px;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 8px;
+  border-left: 3px solid rgba(0, 245, 255, 0.5);
+}
+
+.event-modal.historic .event-description {
+  border-left-color: rgba(255, 204, 0, 0.5);
+}
+
+/* 选择列表 */
+.event-choices {
+  margin-bottom: 24px;
+}
+
+.choices-title {
+  font-size: 14px;
+  font-weight: bold;
+  color: rgba(255, 255, 255, 0.6);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 12px;
+}
+
+/* 选择按钮 */
+.choice-button {
+  width: 100%;
+  padding: 16px;
+  margin-bottom: 12px;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.choice-button::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background: linear-gradient(180deg, #00f5ff, #ff00ff);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.choice-button:hover:not(.disabled)::before {
+  opacity: 1;
+}
+
+.choice-button:hover:not(.disabled) {
+  background: rgba(0, 245, 255, 0.1);
+  border-color: rgba(0, 245, 255, 0.3);
+  transform: translateX(5px);
+}
+
+.choice-button.selected {
+  background: rgba(0, 245, 255, 0.15);
+  border-color: #00f5ff;
+}
+
+.choice-button.selected::before {
+  opacity: 1;
+}
+
+.choice-button.disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.choice-content {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.choice-text {
+  font-size: 16px;
+  font-weight: bold;
+  color: #fff;
+}
+
+.choice-description {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+/* 效果标签 */
+.choice-effects {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.effect-tag {
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 500;
+}
+
+.effect-tag.positive {
+  background: rgba(0, 255, 102, 0.15);
+  color: #00ff66;
+}
+
+.effect-tag.negative {
+  background: rgba(255, 0, 0, 0.15);
+  color: #ff6666;
+}
+
+/* 需求提示 */
+.requirements-hint {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 8px;
+  font-size: 12px;
+  color: #ff6666;
+}
+
+.hint-icon {
+  font-size: 14px;
+}
+
+/* 选中指示器 */
+.selected-indicator {
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 28px;
+  height: 28px;
+  background: #00f5ff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  color: #000;
+  font-weight: bold;
+}
+
+/* 底部装饰 */
+.event-footer {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 24px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.footer-line {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(0, 245, 255, 0.5), transparent);
+}
+
+.event-modal.historic .footer-line {
+  background: linear-gradient(90deg, transparent, rgba(255, 204, 0, 0.5), transparent);
+}
+
+.footer-text {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.4);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+/* ==================== 事件通知 ==================== */
+
+.event-notification {
+  position: fixed;
+  top: 100px;
+  right: 20px;
+  width: 320px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  background: linear-gradient(135deg, rgba(10, 10, 15, 0.95), rgba(20, 20, 30, 0.9));
+  border: 1px solid rgba(0, 245, 255, 0.3);
+  border-radius: 12px;
+  cursor: pointer;
+  z-index: 2000;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
+}
+
+.event-notification:hover {
+  transform: translateX(-5px);
+  box-shadow: 0 8px 30px rgba(0, 245, 255, 0.2);
+}
+
+.event-notification.historic {
+  border-color: rgba(255, 204, 0, 0.5);
+}
+
+.event-notification.historic:hover {
+  box-shadow: 0 8px 30px rgba(255, 204, 0, 0.2);
+}
+
+.notification-icon {
+  font-size: 32px;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 245, 255, 0.1);
+  border-radius: 10px;
+}
+
+.event-notification.historic .notification-icon {
+  background: rgba(255, 204, 0, 0.1);
+}
+
+.notification-content {
+  flex: 1;
+}
+
+.notification-title {
+  font-size: 15px;
+  font-weight: bold;
+  color: #fff;
+  margin-bottom: 4px;
+}
+
+.notification-desc {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.historic-indicator {
+  font-size: 20px;
+}
+
+.dismiss-btn {
+  width: 24px;
+  height: 24px;
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  border-radius: 50%;
+  color: rgba(255, 255, 255, 0.6);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  transition: all 0.2s ease;
+}
+
+.dismiss-btn:hover {
+  background: rgba(255, 0, 0, 0.3);
+  color: #fff;
+}

@@ -1,0 +1,383 @@
+/**
+ * 地图控制组件样式
+ */
+
+/* 控制器容器 */
+.map-controls-wrapper {
+  position: absolute;
+  z-index: 100;
+  display: flex;
+  gap: 8px;
+  padding: 12px;
+  background: rgba(10, 10, 15, 0.9);
+  border: 1px solid rgba(0, 245, 255, 0.3);
+  backdrop-filter: blur(5px);
+}
+
+/* 位置变体 */
+.map-controls-top-right {
+  top: 20px;
+  right: 20px;
+}
+
+.map-controls-top-left {
+  top: 20px;
+  left: 20px;
+}
+
+.map-controls-bottom-right {
+  bottom: 20px;
+  right: 20px;
+}
+
+.map-controls-bottom-left {
+  bottom: 20px;
+  left: 20px;
+}
+
+/* 方向变体 */
+.map-controls-wrapper.vertical {
+  flex-direction: column;
+}
+
+.map-controls-wrapper.horizontal {
+  flex-direction: row;
+}
+
+/* 控制组 */
+.controls-group {
+  display: flex;
+  gap: 4px;
+}
+
+.controls-group.vertical {
+  flex-direction: column;
+}
+
+.controls-group.horizontal {
+  flex-direction: row;
+}
+
+/* 分隔线 */
+.controls-divider {
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(0, 245, 255, 0.3),
+    transparent
+  );
+  margin: 4px 0;
+}
+
+.map-controls-wrapper.horizontal .controls-divider {
+  width: 1px;
+  height: auto;
+  margin: 0 4px;
+}
+
+/* 控制按钮 */
+.control-button {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: 1px solid rgba(0, 245, 255, 0.5);
+  border-radius: 6px;
+  color: #00f5ff;
+  font-size: 18px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.control-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(0, 245, 255, 0.2),
+    transparent
+  );
+  transition: left 0.5s ease;
+}
+
+.control-button:hover::before {
+  left: 100%;
+}
+
+.control-button:hover {
+  background: rgba(0, 245, 255, 0.15);
+  border-color: #00f5ff;
+  box-shadow: 0 0 15px rgba(0, 245, 255, 0.3);
+}
+
+.control-button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.control-button:disabled:hover {
+  background: transparent;
+  box-shadow: none;
+}
+
+.button-icon {
+  position: relative;
+  z-index: 1;
+}
+
+/* 缩放控制 */
+.zoom-controls {
+  align-items: center;
+}
+
+/* 缩放指示器 */
+.zoom-indicator {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 0;
+}
+
+.zoom-bar {
+  width: 4px;
+  height: 40px;
+  background: rgba(0, 245, 255, 0.1);
+  border-radius: 2px;
+  overflow: hidden;
+  position: relative;
+}
+
+.zoom-fill {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: linear-gradient(180deg, #00f5ff, #ff00ff);
+  border-radius: 2px;
+  transition: height 0.3s ease;
+}
+
+.zoom-value {
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.6);
+  font-weight: bold;
+}
+
+/* 重置按钮 */
+.control-button.reset {
+  color: #ffcc00;
+  border-color: rgba(255, 204, 0, 0.5);
+}
+
+.control-button.reset:hover {
+  background: rgba(255, 204, 0, 0.15);
+  border-color: #ffcc00;
+  box-shadow: 0 0 15px rgba(255, 204, 0, 0.3);
+}
+
+/* 网格切换按钮 */
+.control-button.grid-toggle {
+  color: #00ff66;
+  border-color: rgba(0, 255, 102, 0.5);
+}
+
+.control-button.grid-toggle:hover {
+  background: rgba(0, 255, 102, 0.15);
+  border-color: #00ff66;
+  box-shadow: 0 0 15px rgba(0, 255, 102, 0.3);
+}
+
+.control-button.grid-toggle.active {
+  background: rgba(0, 255, 102, 0.2);
+  border-color: #00ff66;
+}
+
+/* 攻击模式按钮 */
+.control-button.attack-mode {
+  color: #ff0066;
+  border-color: rgba(255, 0, 102, 0.5);
+}
+
+.control-button.attack-mode:hover {
+  background: rgba(255, 0, 102, 0.15);
+  border-color: #ff0066;
+  box-shadow: 0 0 15px rgba(255, 0, 102, 0.3);
+}
+
+.control-button.attack-mode.active {
+  background: rgba(255, 0, 102, 0.25);
+  border-color: #ff0066;
+  animation: pulse-attack 1.5s infinite;
+}
+
+@keyframes pulse-attack {
+  0%, 100% {
+    box-shadow: 0 0 5px rgba(255, 0, 102, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(255, 0, 102, 0.6);
+  }
+}
+
+/* 攻击指示器 */
+.attack-indicator {
+  position: absolute;
+  top: -2px;
+  right: -2px;
+  width: 8px;
+  height: 8px;
+  background: #ff0066;
+  border-radius: 50%;
+  animation: blink 1s infinite;
+}
+
+@keyframes blink {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.3;
+  }
+}
+
+/* 攻击提示 */
+.attack-hint {
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  background: rgba(255, 0, 50, 0.9);
+  border: 1px solid #ff0033;
+  border-radius: 8px;
+  white-space: nowrap;
+  box-shadow: 0 4px 20px rgba(255, 0, 50, 0.4);
+}
+
+.hint-icon {
+  font-size: 16px;
+}
+
+.hint-text {
+  font-size: 13px;
+  color: #fff;
+  font-weight: 500;
+}
+
+.hint-close {
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  border-radius: 50%;
+  color: #fff;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.hint-close:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* 水平布局时的缩放指示器 */
+.map-controls-wrapper.horizontal .zoom-indicator {
+  flex-direction: row;
+}
+
+.map-controls-wrapper.horizontal .zoom-bar {
+  width: 40px;
+  height: 4px;
+}
+
+.map-controls-wrapper.horizontal .zoom-fill {
+  height: 100%;
+  width: auto;
+  left: 0;
+  right: auto;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+  .map-controls-wrapper {
+    padding: 8px;
+    gap: 6px;
+  }
+
+  .control-button {
+    width: 36px;
+    height: 36px;
+    font-size: 16px;
+  }
+
+  .zoom-bar {
+    height: 30px;
+  }
+
+  .map-controls-wrapper.horizontal .zoom-bar {
+    width: 30px;
+  }
+
+  .zoom-value {
+    font-size: 9px;
+  }
+
+  .attack-hint {
+    padding: 8px 12px;
+    gap: 6px;
+  }
+
+  .hint-text {
+    font-size: 12px;
+  }
+}
+
+/* 暗色主题变体（可选） */
+.map-controls-wrapper.dark {
+  background: rgba(0, 0, 0, 0.95);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.map-controls-wrapper.dark .control-button {
+  border-color: rgba(255, 255, 255, 0.2);
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.map-controls-wrapper.dark .control-button:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.4);
+}
+
+/* 迷你模式 */
+.map-controls-wrapper.mini {
+  padding: 6px;
+  gap: 4px;
+}
+
+.map-controls-wrapper.mini .control-button {
+  width: 32px;
+  height: 32px;
+  font-size: 14px;
+}
+
+.map-controls-wrapper.mini .zoom-indicator {
+  display: none;
+}

@@ -1,0 +1,221 @@
+/**
+ * 游戏客户端样式
+ */
+
+/* 游戏容器 */
+.game-container {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(135deg, #0a0a0f 0%, #1a0f2e 50%, #0f0a1a 100%);
+}
+
+/* 游戏头部 */
+.game-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  background: linear-gradient(180deg, rgba(10, 10, 15, 0.95) 0%, rgba(10, 10, 15, 0.8) 100%);
+  border-bottom: 2px solid #00f5ff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  z-index: 1000;
+  backdrop-filter: blur(10px);
+}
+
+.game-header-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.game-menu-button {
+  width: 32px;
+  height: 24px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 4px;
+}
+
+.game-menu-button span {
+  display: block;
+  height: 2px;
+  background: #00f5ff;
+  transition: all 0.3s ease;
+}
+
+.game-menu-button:hover span {
+  background: #ff00ff;
+  box-shadow: 0 0 5px currentColor;
+}
+
+.game-title {
+  font-size: 24px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 4px;
+  background: linear-gradient(90deg, #00f5ff, #ff00ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: 0 0 20px rgba(0, 245, 255, 0.5);
+}
+
+.game-header-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.next-turn-button {
+  padding: 8px 20px;
+  font-size: 14px;
+}
+
+/* 游戏主体 */
+.game-body {
+  flex: 1;
+  display: flex;
+  position: relative;
+  margin-top: 60px;
+  height: calc(100vh - 60px);
+}
+
+/* 左侧面板 */
+.game-left-panel {
+  position: fixed;
+  left: 0;
+  top: 60px;
+  bottom: 0;
+  width: 280px;
+  background: linear-gradient(90deg, rgba(10, 10, 15, 0.95) 0%, rgba(10, 10, 15, 0.7) 100%);
+  border-right: 1px solid rgba(0, 245, 255, 0.3);
+  z-index: 900;
+  overflow-y: auto;
+  backdrop-filter: blur(10px);
+}
+
+/* 右侧面板 */
+.game-right-panel {
+  position: fixed;
+  right: 0;
+  top: 60px;
+  bottom: 0;
+  width: 320px;
+  background: linear-gradient(-90deg, rgba(10, 10, 15, 0.95) 0%, rgba(10, 10, 15, 0.7) 100%);
+  border-left: 1px solid rgba(0, 245, 255, 0.3);
+  z-index: 900;
+  overflow-y: auto;
+  backdrop-filter: blur(10px);
+}
+
+/* 地图容器 */
+.game-map-container {
+  flex: 1;
+  position: relative;
+  margin-left: 280px;
+  margin-right: 320px;
+  height: 100%;
+  overflow: hidden;
+}
+
+/* 赛博朋克按钮 */
+.cyber-button {
+  position: relative;
+  padding: 10px 24px;
+  background: transparent;
+  border: 1px solid #00f5ff;
+  color: #00f5ff;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  cursor: pointer;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
+}
+
+.cyber-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(0, 245, 255, 0.3), transparent);
+  transition: left 0.5s ease;
+}
+
+.cyber-button:hover::before {
+  left: 100%;
+}
+
+.cyber-button:hover {
+  background: rgba(0, 245, 255, 0.1);
+  box-shadow: 0 0 20px rgba(0, 245, 255, 0.5);
+  transform: translateY(-2px);
+}
+
+.cyber-button:active {
+  transform: translateY(0);
+}
+
+.cyber-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  border-color: #666;
+  color: #666;
+}
+
+/* 响应式设计 */
+@media (max-width: 1200px) {
+  .game-left-panel {
+    width: 240px;
+  }
+
+  .game-right-panel {
+    width: 280px;
+  }
+
+  .game-map-container {
+    margin-left: 240px;
+    margin-right: 280px;
+  }
+}
+
+@media (max-width: 768px) {
+  .game-left-panel,
+  .game-right-panel {
+    width: 100%;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+  }
+
+  .game-right-panel {
+    transform: translateX(100%);
+  }
+
+  .game-left-panel.open {
+    transform: translateX(0);
+  }
+
+  .game-right-panel.open {
+    transform: translateX(0);
+  }
+
+  .game-map-container {
+    margin-left: 0;
+    margin-right: 0;
+  }
+}

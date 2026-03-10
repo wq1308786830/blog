@@ -1,0 +1,399 @@
+/**
+ * 阶段页面通用样式
+ */
+.phase-container {
+  background: linear-gradient(180deg, rgba(20, 20, 40, 0.95) 0%, rgba(10, 10, 25, 0.98) 100%);
+  border: 1px solid rgba(100, 200, 255, 0.3);
+  border-radius: 16px;
+  padding: 24px;
+  margin: 16px 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.phase-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #00ccff, #00ff88, #ffd700);
+}
+
+.phase-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.phase-header h2 {
+  font-size: 24px;
+  margin: 0;
+  background: linear-gradient(135deg, #00ccff, #00ff88);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.phase-year {
+  font-size: 18px;
+  color: #ffd700;
+  font-weight: bold;
+}
+
+.phase-description {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.phase-description p {
+  margin: 8px 0;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.phase-era {
+  font-size: 16px;
+  color: rgba(255, 255, 255, 0.5);
+  font-style: italic;
+}
+
+.hegemon-display {
+  background: linear-gradient(135deg, rgba(255, 215, 0, 0.1) 0%, rgba(255, 165, 0, 0.1) 100%);
+  border: 1px solid rgba(255, 215, 0, 0.3);
+  border-radius: 12px;
+  padding: 16px;
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.hegemon-label {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.6);
+  margin-bottom: 8px;
+}
+
+.hegemon-name {
+  font-size: 24px;
+  font-weight: bold;
+  color: #ffd700;
+}
+
+.hegemon-state {
+  font-size: 16px;
+  margin-left: 8px;
+}
+
+.states-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.state-card {
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid;
+  border-radius: 8px;
+  padding: 12px;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.state-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 150, 255, 0.3);
+}
+
+.state-name {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.strength-ranking {
+  margin-bottom: 24px;
+}
+
+.strength-ranking h3 {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.7);
+  margin-bottom: 12px;
+}
+
+.states-strength {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.strength-bar-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.strength-state {
+  font-weight: bold;
+  min-width: 30px;
+}
+
+.strength-bar {
+  flex: 1;
+  height: 16px;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.strength-fill {
+  height: 100%;
+  border-radius: 8px;
+  transition: width 0.5s ease;
+}
+
+.strength-value {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.6);
+  min-width: 30px;
+  text-align: right;
+}
+
+.famous-figures,
+.figures-section {
+  margin-bottom: 24px;
+}
+
+.famous-figures h3,
+.figures-section h3 {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.7);
+  margin-bottom: 12px;
+}
+
+.figures-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+}
+
+.figure-card {
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(100, 200, 255, 0.2);
+  border-radius: 8px;
+  padding: 10px;
+  text-align: center;
+}
+
+.figure-card .figure-name {
+  display: block;
+  font-weight: bold;
+  color: #00ccff;
+  margin-bottom: 4px;
+}
+
+.figure-card .figure-role {
+  display: block;
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.figure-card .figure-state {
+  display: block;
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.4);
+  margin-top: 4px;
+}
+
+.figures-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.figure-badge {
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 215, 0, 0.3);
+  border-radius: 20px;
+  padding: 6px 12px;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.figure-badge .figure-name {
+  color: #ffd700;
+  font-weight: bold;
+}
+
+.figure-badge .figure-role {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 12px;
+}
+
+.emperor-display {
+  background: linear-gradient(135deg, rgba(255, 215, 0, 0.15) 0%, rgba(255, 165, 0, 0.15) 100%);
+  border: 2px solid rgba(255, 215, 0, 0.4);
+  border-radius: 16px;
+  padding: 24px;
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.emperor-title {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.6);
+  margin-bottom: 8px;
+}
+
+.emperor-name {
+  font-size: 32px;
+  font-weight: bold;
+  color: #ffd700;
+  margin-bottom: 8px;
+}
+
+.emperor-subtitle {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.policies-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.policy-card {
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(100, 200, 255, 0.2);
+  border-radius: 12px;
+  padding: 16px;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.policy-icon {
+  font-size: 28px;
+}
+
+.policy-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.policy-title {
+  font-weight: bold;
+  color: #00ff88;
+  margin-bottom: 4px;
+}
+
+.policy-desc {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.timeline-section {
+  margin-bottom: 24px;
+}
+
+.timeline-section h3 {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.7);
+  margin-bottom: 12px;
+}
+
+.timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.timeline-item {
+  display: flex;
+  gap: 12px;
+  padding: 8px 12px;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+  border-left: 3px solid rgba(100, 200, 255, 0.3);
+}
+
+.timeline-item.active {
+  border-left-color: #00ff88;
+  background: rgba(0, 255, 136, 0.1);
+}
+
+.timeline-year {
+  color: #00ccff;
+  font-weight: bold;
+  min-width: 60px;
+}
+
+.timeline-event {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.phase-features {
+  margin-bottom: 24px;
+}
+
+.phase-features h3 {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.7);
+  margin-bottom: 12px;
+}
+
+.phase-features ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.phase-features li {
+  padding: 8px 12px;
+  margin-bottom: 6px;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 6px;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.phase-advance-btn {
+  width: 100%;
+  padding: 14px 24px;
+  background: linear-gradient(135deg, #00ff88, #00cc6a);
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: bold;
+  color: #000;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.phase-advance-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 255, 136, 0.4);
+}
+
+.phase-end {
+  background: linear-gradient(135deg, rgba(255, 0, 0, 0.1) 0%, rgba(200, 0, 0, 0.1) 100%);
+  border: 1px solid rgba(255, 0, 0, 0.3);
+  border-radius: 12px;
+  padding: 16px;
+  text-align: center;
+  margin-top: 16px;
+}
+
+.phase-end h3 {
+  color: #ff4444;
+  margin-bottom: 8px;
+}
+
+.phase-end p {
+  color: rgba(255, 255, 255, 0.8);
+  margin: 0;
+}

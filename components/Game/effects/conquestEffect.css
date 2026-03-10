@@ -1,0 +1,264 @@
+/**
+ * 征服特效样式
+ */
+
+/* 征服特效遮罩层 */
+.conquest-effect-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.85);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 3000;
+  backdrop-filter: blur(5px);
+}
+
+/* 扫描线效果 */
+.conquest-scanlines {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 245, 255, 0.03) 2px,
+    rgba(0, 245, 255, 0.03) 4px
+  );
+  pointer-events: none;
+}
+
+/* 征服主效果 */
+.conquest-main {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+/* 领地名称 */
+.conquest-territory-name {
+  font-size: 48px;
+  font-weight: bold;
+  color: #fff;
+  margin-bottom: 30px;
+  text-transform: uppercase;
+  letter-spacing: 4px;
+}
+
+/* 征服动画 */
+.conquest-animation {
+  position: relative;
+  width: 200px;
+  height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 30px;
+}
+
+/* 扩散环 */
+.conquest-ring {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border: 3px solid;
+  border-radius: 50%;
+}
+
+/* 中心标志 */
+.conquest-icon {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 40px;
+  box-shadow: 0 0 30px currentColor;
+  z-index: 1;
+}
+
+/* 征服文字 */
+.conquest-text {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 40px;
+}
+
+.conquest-label {
+  font-size: 24px;
+  color: rgba(255, 255, 255, 0.7);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.conquest-faction {
+  font-size: 36px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+}
+
+/* 粒子效果 */
+.conquest-particles {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+
+.conquest-particle {
+  position: absolute;
+  font-size: 24px;
+  border-radius: 50%;
+  padding: 5px;
+}
+
+/* 领土边界高亮 */
+.territory-highlight {
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  border: 2px dashed;
+  border-radius: 50%;
+  animation: rotateBorder 10s linear infinite;
+}
+
+@keyframes rotateBorder {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* 底部信息 */
+.conquest-info {
+  display: flex;
+  gap: 30px;
+  margin-top: 40px;
+}
+
+.conquest-bonus {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 20px;
+  background: rgba(0, 245, 255, 0.1);
+  border: 1px solid rgba(0, 245, 255, 0.3);
+  border-radius: 8px;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.bonus-icon {
+  font-size: 20px;
+}
+
+/* ==================== 势力扩张特效 ==================== */
+
+.expansion-effect-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 3000;
+}
+
+.expansion-content {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 60px;
+}
+
+/* 扩张标题 */
+.expansion-title {
+  font-size: 36px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 6px;
+  margin-bottom: 30px;
+}
+
+/* 势力信息 */
+.expansion-faction {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.faction-emblem {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 30px;
+  box-shadow: 0 0 20px currentColor;
+}
+
+.faction-name-large {
+  font-size: 32px;
+  font-weight: bold;
+  color: #fff;
+}
+
+/* 领地数量显示 */
+.territory-count-display {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin-bottom: 30px;
+}
+
+.count-number {
+  font-size: 72px;
+  font-weight: bold;
+  color: #ffcc00;
+  text-shadow: 0 0 20px rgba(255, 204, 0, 0.5);
+}
+
+.count-label {
+  font-size: 24px;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* 扩张动画 */
+.expansion-animation {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+
+.expansion-wave {
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  border: 2px solid;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+}

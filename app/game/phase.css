@@ -1,0 +1,341 @@
+/* 阶段页面通用样式 */
+.phase-page {
+  min-height: 100vh;
+  padding: 40px 20px;
+  background: linear-gradient(135deg, rgba(5, 10, 20, 0.97), rgba(15, 25, 45, 0.97));
+}
+
+.phase-container {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.phase-header {
+  text-align: center;
+  margin-bottom: 40px;
+  padding: 30px;
+  background: linear-gradient(135deg, rgba(0, 255, 255, 0.1), rgba(0, 255, 136, 0.05));
+  border: 1px solid rgba(0, 255, 255, 0.3);
+  border-radius: 16px;
+}
+
+.phase-header h1 {
+  margin: 0 0 16px;
+  font-size: 2.5rem;
+  color: #00ffff;
+  text-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+  letter-spacing: 4px;
+}
+
+.phase-description {
+  margin: 0;
+  color: #aaa;
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+
+.phase-objectives {
+  margin-bottom: 40px;
+  padding: 24px;
+  background: rgba(0, 255, 255, 0.05);
+  border: 1px solid rgba(0, 255, 255, 0.2);
+  border-radius: 12px;
+}
+
+.phase-objectives h2 {
+  margin: 0 0 16px;
+  color: #00ff88;
+  font-size: 1.3rem;
+}
+
+.phase-objectives ul {
+  margin: 0;
+  padding-left: 24px;
+  color: #ccc;
+}
+
+.phase-objectives li {
+  margin-bottom: 8px;
+  font-size: 1rem;
+}
+
+.phase-events, .phase-factions {
+  margin-bottom: 40px;
+}
+
+.phase-events h2, .phase-factions h2 {
+  margin: 0 0 20px;
+  color: #00ff88;
+  font-size: 1.3rem;
+}
+
+.event-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 16px;
+}
+
+.event-card {
+  padding: 20px;
+  background: linear-gradient(135deg, rgba(255, 200, 0, 0.1), rgba(255, 150, 0, 0.05));
+  border: 1px solid rgba(255, 200, 0, 0.3);
+  border-radius: 12px;
+}
+
+.event-card h3 {
+  margin: 0 0 8px;
+  color: #ffc800;
+  font-size: 1.1rem;
+}
+
+.event-card p {
+  margin: 0 0 12px;
+  color: #999;
+  font-size: 0.9rem;
+}
+
+.event-year {
+  display: inline-block;
+  padding: 4px 12px;
+  background: rgba(255, 200, 0, 0.2);
+  border-radius: 20px;
+  color: #ffc800;
+  font-size: 0.85rem;
+}
+
+.factions-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 12px;
+}
+
+.faction-card {
+  padding: 16px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 2px solid;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.faction-card h3 {
+  margin: 0 0 6px;
+  color: #fff;
+  font-size: 1rem;
+}
+
+.faction-card p {
+  margin: 0;
+  color: #888;
+  font-size: 0.8rem;
+}
+
+.phase-bonuses {
+  margin-bottom: 40px;
+}
+
+.phase-bonuses h2 {
+  margin: 0 0 20px;
+  color: #00ff88;
+  font-size: 1.3rem;
+}
+
+.bonus-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+}
+
+.bonus-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  background: rgba(0, 255, 136, 0.08);
+  border: 1px solid rgba(0, 255, 136, 0.25);
+  border-radius: 10px;
+}
+
+.bonus-icon {
+  font-size: 1.5rem;
+}
+
+.bonus-name {
+  flex: 1;
+  color: #ccc;
+  font-size: 0.95rem;
+}
+
+.bonus-value {
+  color: #00ff88;
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+.phase-footer {
+  text-align: center;
+  padding: 30px 0;
+}
+
+.phase-button {
+  padding: 16px 40px;
+  background: linear-gradient(135deg, #00ffff, #00ff88);
+  border: none;
+  border-radius: 30px;
+  color: #000;
+  font-size: 1.1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.phase-button:hover {
+  box-shadow: 0 0 30px rgba(0, 255, 255, 0.5);
+  transform: translateY(-3px);
+}
+
+.phase-button.secondary {
+  background: transparent;
+  border: 2px solid #00ffff;
+  color: #00ffff;
+}
+
+.phase-button.secondary:hover {
+  background: rgba(0, 255, 255, 0.1);
+}
+
+/* 统一天下页面特殊样式 */
+.victory-header {
+  background: linear-gradient(135deg, rgba(255, 215, 0, 0.15), rgba(255, 150, 0, 0.1));
+  border-color: rgba(255, 215, 0, 0.4);
+}
+
+.victory-header h1 {
+  color: #ffd700;
+  text-shadow: 0 0 30px rgba(255, 215, 0, 0.6);
+}
+
+.victory-stats {
+  margin-bottom: 40px;
+  padding: 24px;
+  background: rgba(255, 215, 0, 0.08);
+  border: 1px solid rgba(255, 215, 0, 0.25);
+  border-radius: 12px;
+}
+
+.victory-stats h2 {
+  margin: 0 0 20px;
+  color: #ffd700;
+  font-size: 1.3rem;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+.stat-item {
+  text-align: center;
+}
+
+.stat-value {
+  display: block;
+  font-size: 2rem;
+  font-weight: bold;
+  color: #fff;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+}
+
+.stat-label {
+  color: #888;
+  font-size: 0.9rem;
+}
+
+.victory-achievements {
+  margin-bottom: 40px;
+}
+
+.victory-achievements h2 {
+  margin: 0 0 20px;
+  color: #00ff88;
+  font-size: 1.3rem;
+}
+
+.achievements-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.achievement {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 20px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+}
+
+.achievement.unlocked {
+  background: rgba(0, 255, 136, 0.1);
+  border-color: rgba(0, 255, 136, 0.3);
+}
+
+.achievement-icon {
+  font-size: 1.5rem;
+}
+
+.achievement-name {
+  flex: 1;
+  color: #fff;
+  font-weight: bold;
+}
+
+.achievement-desc {
+  color: #888;
+  font-size: 0.9rem;
+}
+
+.victory-congrats {
+  margin-bottom: 40px;
+}
+
+.congrats-box {
+  text-align: center;
+  padding: 40px;
+  background: linear-gradient(135deg, rgba(255, 215, 0, 0.2), rgba(255, 100, 0, 0.1));
+  border: 2px solid #ffd700;
+  border-radius: 16px;
+}
+
+.congrats-box h2 {
+  margin: 0 0 16px;
+  color: #ffd700;
+  font-size: 2rem;
+  text-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+}
+
+.congrats-box p {
+  margin: 0 0 12px;
+  color: #ccc;
+  font-size: 1.1rem;
+}
+
+.victory-button {
+  margin-top: 24px;
+  padding: 14px 50px;
+  background: linear-gradient(135deg, #ffd700, #ffaa00);
+  border: none;
+  border-radius: 30px;
+  color: #000;
+  font-size: 1.1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.victory-button:hover {
+  box-shadow: 0 0 30px rgba(255, 215, 0, 0.6);
+  transform: scale(1.05);
+}

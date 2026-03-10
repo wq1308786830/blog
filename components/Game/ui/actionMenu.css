@@ -1,0 +1,58 @@
+/**
+ * 行动菜单样式
+ */
+
+.action-menu {
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(0, 245, 255, 0.2);
+}
+
+.action-menu-title {
+  font-size: 14px;
+  font-weight: bold;
+  color: #00f5ff;
+  margin-bottom: 12px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.action-menu-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.action-menu-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  background: rgba(0, 245, 255, 0.05);
+  border: 1px solid transparent;
+  color: rgba(255, 255, 255, 0.7);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: left;
+  font-size: 14px;
+}
+
+.action-menu-item:hover {
+  background: rgba(0, 245, 255, 0.1);
+  border-color: rgba(0, 245, 255, 0.3);
+  color: #fff;
+}
+
+.action-menu-item.active {
+  background: rgba(0, 245, 255, 0.15);
+  border-color: #00f5ff;
+  color: #00f5ff;
+}
+
+.action-menu-icon {
+  font-size: 18px;
+}
+
+.action-menu-label {
+  font-weight: 500;
+}

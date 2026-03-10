@@ -1,0 +1,103 @@
+/**
+ * 资源面板样式
+ */
+
+.resource-panel {
+  padding: 16px;
+}
+
+.resource-panel-title {
+  font-size: 16px;
+  font-weight: bold;
+  color: #00f5ff;
+  margin-bottom: 16px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  text-align: center;
+}
+
+.resource-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.resource-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  background: linear-gradient(90deg, rgba(0, 245, 255, 0.05) 0%, transparent 100%);
+  border-left: 3px solid var(--resource-color, #00f5ff);
+  transition: all 0.3s ease;
+}
+
+.resource-item:hover {
+  background: linear-gradient(90deg, rgba(0, 245, 255, 0.1) 0%, transparent 100%);
+  transform: translateX(4px);
+}
+
+.resource-icon {
+  font-size: 20px;
+  width: 28px;
+  text-align: center;
+}
+
+.resource-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.resource-value {
+  font-size: 18px;
+  font-weight: bold;
+  color: #fff;
+  text-shadow: 0 0 10px var(--resource-color, #00f5ff);
+}
+
+.resource-label {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.5);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.territory-count {
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(0, 245, 255, 0.2);
+}
+
+.territory-count-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  background: linear-gradient(90deg, rgba(255, 0, 255, 0.1) 0%, transparent 100%);
+  border-left: 3px solid #ff00ff;
+}
+
+.territory-icon {
+  font-size: 24px;
+}
+
+.territory-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.territory-value {
+  font-size: 24px;
+  font-weight: bold;
+  color: #ff00ff;
+  text-shadow: 0 0 10px rgba(255, 0, 255, 0.5);
+}
+
+.territory-label {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.5);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
