@@ -1,5 +1,6 @@
 /**
  * 领土地图样式
+ * 古风水墨风格
  */
 
 .territory-map {
@@ -12,180 +13,183 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 20px;
+  background: linear-gradient(
+    135deg,
+    rgba(245, 240, 230, 0.95) 0%,
+    rgba(235, 225, 210, 0.95) 50%,
+    rgba(240, 235, 220, 0.95) 100%
+  );
+  /* 纸张纹理 */
+  background-image:
+    linear-gradient(135deg, rgba(245, 240, 230, 0.95), rgba(235, 225, 210, 0.95)),
+    url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.1'/%3E%3C/svg%3E");
 }
 
-.map-svg {
-  width: 100%;
-  height: 100%;
-}
-
-/* 连接线 */
-.connection-line {
-  stroke: rgba(0, 245, 255, 0.15);
-  stroke-width: 0.3;
-  transition: stroke 0.3s ease;
-}
-
-.connection-line:hover {
-  stroke: rgba(0, 245, 255, 0.4);
-}
-
-/* 领地节点 */
-.territory-node {
-  transition: all 0.3s ease;
-}
-
-.territory-node:hover {
-  filter: brightness(1.3);
-}
-
-.territory-circle {
-  stroke: rgba(0, 0, 0, 0.5);
-  stroke-width: 0.2;
-  transition: all 0.3s ease;
-}
-
-.territory-node:hover .territory-circle {
-  filter: drop-shadow(0 0 8px currentColor);
-}
-
-.territory-node.selected .territory-circle {
-  stroke: #00f5ff;
-  stroke-width: 0.5;
-  filter: drop-shadow(0 0 10px #00f5ff);
-}
-
-.territory-node.player-owned .territory-circle {
-  stroke: #00f5ff;
-  stroke-width: 0.3;
-}
-
-.territory-node.enemy-owned .territory-circle {
-  stroke: #ff0066;
-  stroke-width: 0.3;
-}
-
-.territory-node.neutral .territory-circle {
-  stroke: #666666;
-  stroke-width: 0.2;
-}
-
-.territory-node.capital .territory-circle {
-  stroke-width: 0.4;
-}
-
-/* 选中光环 */
-.selection-ring {
-  animation: pulse-ring 2s ease-in-out infinite;
-}
-
-@keyframes pulse-ring {
-  0%, 100% {
-    opacity: 0.6;
-    transform: scale(1);
-  }
-  50% {
-    opacity: 1;
-    transform: scale(1.1);
-  }
-}
-
-/* 领地标签 */
-.territory-label {
-  fill: rgba(255, 255, 255, 0.8);
-  font-family: 'Noto Sans SC', sans-serif;
-  font-weight: 500;
+/* 地图边框装饰 */
+.territory-map::before {
+  content: '';
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  right: 10px;
+  bottom: 10px;
+  border: 2px solid rgba(100, 80, 60, 0.3);
   pointer-events: none;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
+  z-index: 1;
 }
 
-.territory-node.player-owned .territory-label {
-  fill: #00f5ff;
-  font-weight: bold;
-}
-
-.territory-node.enemy-owned .territory-label {
-  fill: #ff99aa;
-}
-
-.territory-node.capital .territory-label {
-  fill: #ffd700;
-  font-weight: bold;
-}
-
-/* 首都标记 */
-.capital-marker {
-  fill: #ffd700;
-  filter: drop-shadow(0 0 5px rgba(255, 215, 0, 0.8));
+.territory-map::after {
+  content: '';
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  right: 15px;
+  bottom: 15px;
+  border: 1px solid rgba(100, 80, 60, 0.15);
   pointer-events: none;
+  z-index: 1;
 }
 
-/* 图例 */
+/* Canvas容器 */
+.territory-map canvas {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+/* 地图控制按钮 - 古风样式 */
+.map-controls {
+  position: absolute;
+  top: 30px;
+  right: 30px;
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.map-controls button {
+  width: 40px;
+  height: 40px;
+  border: 2px solid rgba(100, 80, 60, 0.5);
+  background: rgba(245, 240, 230, 0.95);
+  color: #5a4a3a;
+  font-size: 18px;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: 'Noto Serif SC', serif;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.map-controls button:hover {
+  background: rgba(220, 200, 180, 0.95);
+  border-color: rgba(100, 80, 60, 0.8);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.map-controls button.attack-btn {
+  font-size: 20px;
+}
+
+.map-controls button.attack-btn.active {
+  background: rgba(180, 60, 60, 0.9);
+  border-color: #8b0000;
+  color: #fff;
+  animation: pulse-attack 1s infinite;
+}
+
+@keyframes pulse-attack {
+  0%, 100% { box-shadow: 0 0 5px rgba(180, 60, 60, 0.5); }
+  50% { box-shadow: 0 0 15px rgba(180, 60, 60, 0.8); }
+}
+
+/* 图例 - 古风样式 */
 .map-legend {
   position: absolute;
-  bottom: 20px;
-  left: 20px;
-  background: rgba(10, 10, 15, 0.9);
-  border: 1px solid rgba(0, 245, 255, 0.3);
-  padding: 12px 16px;
-  backdrop-filter: blur(5px);
+  bottom: 30px;
+  left: 30px;
+  background: rgba(245, 240, 230, 0.95);
+  border: 2px solid rgba(100, 80, 60, 0.4);
+  padding: 15px 20px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  z-index: 20;
 }
 
 .legend-title {
-  font-size: 12px;
+  font-size: 14px;
   font-weight: bold;
-  color: #00f5ff;
-  margin-bottom: 8px;
-  text-transform: uppercase;
-  letter-spacing: 1px;
+  color: #5a4a3a;
+  margin-bottom: 10px;
+  font-family: 'Noto Serif SC', serif;
+  letter-spacing: 2px;
 }
 
 .legend-items {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 8px;
 }
 
 .legend-item {
   display: flex;
   align-items: center;
-  gap: 8px;
-  font-size: 11px;
-  color: rgba(255, 255, 255, 0.7);
+  gap: 10px;
+  font-size: 12px;
+  color: #4a3a2a;
+  font-family: 'Noto Sans SC', sans-serif;
 }
 
 .legend-color {
-  width: 12px;
-  height: 12px;
+  width: 14px;
+  height: 14px;
   border-radius: 50%;
+  border: 1px solid rgba(100, 80, 60, 0.3);
 }
 
 .legend-color.player {
-  background: #00f5ff;
-  box-shadow: 0 0 5px rgba(0, 245, 255, 0.5);
+  background: #4a90a4;
+  box-shadow: 0 0 5px rgba(74, 144, 164, 0.5);
 }
 
 .legend-color.neutral {
-  background: #666666;
+  background: #8a8a7a;
 }
 
 .legend-color.enemy {
-  background: #ff0066;
-  box-shadow: 0 0 5px rgba(255, 0, 102, 0.5);
+  background: #a45a5a;
+  box-shadow: 0 0 5px rgba(164, 90, 90, 0.5);
 }
+
+/* 攻击模式提示 */
+.attack-hint {
+  position: absolute;
+  top: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 20;
+  background: rgba(180, 60, 60, 0.95);
+  color: #fff;
+  padding: 10px 20px;
+  font-size: 14px;
+  font-family: 'Noto Sans SC', sans-serif;
+  border: 1px solid #8b0000;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  white-space: nowrap;
+}
+
 /* 加载状态 */
 .territory-map.loading {
   display: flex;
   align-items: center;
   justify-content: center;
   min-height: 400px;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(245, 240, 230, 0.95);
 }
 
 .loading-spinner {
-  color: #00f5ff;
+  color: #5a4a3a;
   font-size: 18px;
+  font-family: 'Noto Serif SC', serif;
   animation: pulse 1.5s ease-in-out infinite;
 }
 
@@ -194,67 +198,87 @@
   50% { opacity: 1; }
 }
 
-/* 地图控制按钮 */
-.map-controls {
+/* 地图标题装饰 */
+.map-title {
   position: absolute;
-  top: 20px;
-  right: 20px;
-  z-index: 20;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.map-controls button {
-  width: 36px;
-  height: 36px;
-  border: 1px solid rgba(0, 245, 255, 0.5);
-  background: rgba(10, 10, 15, 0.9);
-  color: #00f5ff;
-  font-size: 18px;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.map-controls button:hover {
-  background: rgba(0, 245, 255, 0.2);
-  border-color: #00f5ff;
-}
-
-.map-controls button.attack-btn {
-  font-size: 20px;
-}
-
-.map-controls button.attack-btn.active {
-  background: rgba(255, 0, 50, 0.3);
-  border-color: #ff0033;
-  animation: pulse-attack 1s infinite;
-}
-
-@keyframes pulse-attack {
-  0%, 100% { box-shadow: 0 0 5px rgba(255, 0, 50, 0.5); }
-  50% { box-shadow: 0 0 15px rgba(255, 0, 50, 0.8); }
-}
-
-/* 攻击模式提示 */
-.attack-hint {
-  position: absolute;
-  top: 20px;
+  top: 30px;
   left: 50%;
   transform: translateX(-50%);
   z-index: 20;
-  background: rgba(255, 0, 50, 0.9);
-  color: white;
-  padding: 8px 16px;
-  font-size: 14px;
+  font-size: 24px;
+  font-family: 'Noto Serif SC', serif;
+  color: #5a4a3a;
+  letter-spacing: 8px;
+  text-shadow: 0 1px 2px rgba(255, 255, 255, 0.8);
 }
 
-/* 攻击目标高亮 */
-.territory-node.attack-target {
-  animation: attack-target-pulse 0.8s infinite;
+/* 比例尺 */
+.map-scale {
+  position: absolute;
+  bottom: 30px;
+  right: 30px;
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 5px;
 }
 
-@keyframes attack-target-pulse {
-  0%, 100% { filter: brightness(1); }
-  50% { filter: brightness(1.5) drop-shadow(0 0 8px #ff0033); }
+.scale-bar {
+  width: 100px;
+  height: 4px;
+  background: #5a4a3a;
+  position: relative;
+}
+
+.scale-bar::before,
+.scale-bar::after {
+  content: '';
+  position: absolute;
+  width: 2px;
+  height: 10px;
+  background: #5a4a3a;
+  top: -3px;
+}
+
+.scale-bar::before {
+  left: 0;
+}
+
+.scale-bar::after {
+  right: 0;
+}
+
+.scale-text {
+  font-size: 11px;
+  color: #5a4a3a;
+  font-family: 'Noto Sans SC', sans-serif;
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+  .map-legend {
+    bottom: 20px;
+    left: 20px;
+    padding: 10px 15px;
+  }
+
+  .legend-title {
+    font-size: 12px;
+  }
+
+  .legend-item {
+    font-size: 11px;
+  }
+
+  .map-controls {
+    top: 20px;
+    right: 20px;
+  }
+
+  .map-controls button {
+    width: 35px;
+    height: 35px;
+    font-size: 16px;
+  }
 }
